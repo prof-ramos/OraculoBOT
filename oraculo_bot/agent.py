@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from agno.agent import Agent
-from agno.models.openai import OpenAIResponses
+from agno.models.deepseek import DeepSeek
 
 from oraculo_bot.config import HISTORY_RUNS, MODEL_ID
 
@@ -76,7 +76,7 @@ def create_agent() -> Agent:
     """Cria e retorna a instância do Agent Oráculo."""
     return Agent(
         name="Oráculo",
-        model=OpenAIResponses(id=MODEL_ID),
+        model=DeepSeek(id=MODEL_ID),
         instructions=SYSTEM_INSTRUCTIONS,
         add_history_to_context=True,
         num_history_runs=HISTORY_RUNS,

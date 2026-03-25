@@ -19,3 +19,6 @@ uv.lock
 .idea/
 *.swp
 *.swo
+
+# oh-my-claudecode state
+.omc/state/

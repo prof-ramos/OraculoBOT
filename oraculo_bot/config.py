@@ -3,6 +3,16 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
+
+# Carregar .env se existir
+try:
+    from dotenv import load_dotenv
+
+    _env_path = Path(__file__).parent.parent / ".env"
+    load_dotenv(_env_path)
+except ImportError:
+    pass
 
 
 def _require_env(key: str) -> str:
@@ -17,12 +27,15 @@ def _require_env(key: str) -> str:
 # ── Tokens (obrigatórios) ────────────────────────────────────
 DISCORD_BOT_TOKEN: str = _require_env("DISCORD_BOT_TOKEN")
 
+# ── LLM API ───────────────────────────────────────────────────
+DEEPSEEK_API_KEY: str = _require_env("DEEPSEEK_API_KEY")
+
 # ── IDs do Discord ───────────────────────────────────────────
 TARGET_GUILD_ID: int = int(os.getenv("TARGET_GUILD_ID", "1283924742851661844"))
 TARGET_CHANNEL_ID: int = int(os.getenv("TARGET_CHANNEL_ID", "1486301006659715143"))
 
 # ── LLM ──────────────────────────────────────────────────────
-MODEL_ID: str = os.getenv("MODEL_ID", "gpt-4.1")
+MODEL_ID: str = os.getenv("MODEL_ID", "deepseek-chat")
 HISTORY_RUNS: int = int(os.getenv("HISTORY_RUNS", "5"))
 
 # ── Discord ──────────────────────────────────────────────────
