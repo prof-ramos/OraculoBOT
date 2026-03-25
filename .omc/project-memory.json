@@ -41,32 +41,38 @@
   "hotPaths": [
     {
       "path": "oraculo_bot/bot.py",
-      "accessCount": 33,
-      "lastAccessed": 1774462047508,
+      "accessCount": 38,
+      "lastAccessed": 1774466053317,
       "type": "file"
     },
     {
       "path": "oraculo_bot/agent.py",
-      "accessCount": 26,
-      "lastAccessed": 1774461408381,
+      "accessCount": 28,
+      "lastAccessed": 1774465266956,
+      "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 23,
+      "lastAccessed": 1774465271513,
+      "type": "directory"
+    },
+    {
+      "path": "pyproject.toml",
+      "accessCount": 23,
+      "lastAccessed": 1774465297735,
       "type": "file"
     },
     {
       "path": "oraculo_bot/db.py",
-      "accessCount": 21,
-      "lastAccessed": 1774461331874,
-      "type": "file"
-    },
-    {
-      "path": "pyproject.toml",
-      "accessCount": 20,
-      "lastAccessed": 1774464781380,
+      "accessCount": 22,
+      "lastAccessed": 1774465270498,
       "type": "file"
     },
     {
       "path": "oraculo_bot/config.py",
-      "accessCount": 19,
-      "lastAccessed": 1774461326609,
+      "accessCount": 21,
+      "lastAccessed": 1774465300206,
       "type": "file"
     },
     {
@@ -76,21 +82,15 @@
       "type": "file"
     },
     {
-      "path": "",
-      "accessCount": 17,
-      "lastAccessed": 1774452844596,
-      "type": "directory"
-    },
-    {
       "path": "oraculo_bot/rag.py",
-      "accessCount": 16,
-      "lastAccessed": 1774461357626,
+      "accessCount": 17,
+      "lastAccessed": 1774465270341,
       "type": "file"
     },
     {
       "path": "oraculo_bot/__main__.py",
-      "accessCount": 16,
-      "lastAccessed": 1774461361676,
+      "accessCount": 17,
+      "lastAccessed": 1774465271469,
       "type": "file"
     },
     {
@@ -106,21 +106,21 @@
       "type": "directory"
     },
     {
+      "path": "oraculo_bot/models.py",
+      "accessCount": 10,
+      "lastAccessed": 1774465266937,
+      "type": "file"
+    },
+    {
       "path": ".env.example",
-      "accessCount": 9,
-      "lastAccessed": 1774457886745,
+      "accessCount": 10,
+      "lastAccessed": 1774465268470,
       "type": "file"
     },
     {
       "path": ".env",
       "accessCount": 9,
       "lastAccessed": 1774459219715,
-      "type": "file"
-    },
-    {
-      "path": "oraculo_bot/models.py",
-      "accessCount": 9,
-      "lastAccessed": 1774461331817,
       "type": "file"
     },
     {
@@ -148,6 +148,12 @@
       "type": "directory"
     },
     {
+      "path": "oraculo_bot/views.py",
+      "accessCount": 5,
+      "lastAccessed": 1774465266972,
+      "type": "file"
+    },
+    {
       "path": "agent.py",
       "accessCount": 4,
       "lastAccessed": 1774450322420,
@@ -163,12 +169,6 @@
       "path": "test_rag_integration.py",
       "accessCount": 4,
       "lastAccessed": 1774461351147,
-      "type": "file"
-    },
-    {
-      "path": "oraculo_bot/views.py",
-      "accessCount": 4,
-      "lastAccessed": 1774462165250,
       "type": "file"
     },
     {
