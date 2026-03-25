@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-from unittest.mock import AsyncMock, MagicMock, Mock, patch
-from datetime import datetime, timezone
+from unittest.mock import AsyncMock, MagicMock, Mock
 
 import discord
 import pytest
@@ -11,6 +10,7 @@ import pytest_asyncio
 
 from oraculo_bot.bot import OracleDiscordBot
 from oraculo_bot.agent import create_agent
+from oraculo_bot.views import ConfirmationView
 
 
 # ── E2E Bot Fixture ─────────────────────────────────────────────
@@ -26,9 +26,9 @@ async def e2e_bot(mock_env_vars, mock_agent_response):
     # Criar bot
     bot = OracleDiscordBot(agent=agent)
 
-    # Mock do client Discord
+    # Mock do client Discord com IDs inteiros
     bot.client._user = Mock()
-    bot.client._user.id = "bot_123"
+    bot.client._user.id = 123456789012345678
     bot.client._user.name = "OraculoBOT"
 
     yield bot
@@ -146,9 +146,9 @@ def e2e_message_in_thread():
     msg.guild = Mock()
     msg.guild.id = 1283924742851661844
     msg.channel = MagicMock(spec=discord.Thread)
-    msg.channel.id = "thread_123"
+    msg.channel.id = 1004
     msg.channel.parent_id = 1486301006659715143
-    msg.jump_url = "https://discord.com/channels/1283924742851661844/1486301006659715143/thread_123/1004"
+    msg.jump_url = "https://discord.com/channels/1283924742851661844/1486301006659715143/1004"
     return msg
 
 
@@ -164,17 +164,12 @@ def e2e_thread():
         async def __aexit__(self, *args):
             pass
 
-    def typing_method():
-        return TypingContextManager()
-
     thread = MagicMock()  # Removido spec=discord.Thread para evitar conflito
-    thread.id = "thread_123"
+    thread.id = 999123
     thread.name = "💬 Estudante123"
     thread.parent_id = 1486301006659715143
     thread.send = AsyncMock()
-
-    # Usar função simples em vez de Mock para evitar interceptação
-    object.__setattr__(thread, 'typing', typing_method)
+    thread.typing = Mock(return_value=TypingContextManager())
     return thread
 
 
@@ -185,7 +180,7 @@ def e2e_text_channel():
     channel.id = 1486301006659715143
     channel.name = "geral"
     channel.send = AsyncMock()
-    channel.create_thread = AsyncMock(return_value=MagicMock(spec=discord.Thread, id="thread_123"))
+    channel.create_thread = AsyncMock(return_value=MagicMock(spec=discord.Thread, id=999123))
     return channel
 
 
@@ -292,8 +287,6 @@ def e2e_session_history():
 @pytest.fixture
 def e2e_confirmation_view_confirmed():
     """View de confirmação com resultado True."""
-    from oraculo_bot.views import ConfirmationView
-
     view = ConfirmationView()
     view.value = True
     view.stop = Mock()
@@ -303,8 +296,6 @@ def e2e_confirmation_view_confirmed():
 @pytest.fixture
 def e2e_confirmation_view_cancelled():
     """View de confirmação com resultado False."""
-    from oraculo_bot.views import ConfirmationView
-
     view = ConfirmationView()
     view.value = False
     view.stop = Mock()
@@ -314,9 +305,8 @@ def e2e_confirmation_view_cancelled():
 @pytest.fixture
 def e2e_confirmation_view_timeout():
     """View de confirmação com timeout."""
-    from oraculo_bot.views import ConfirmationView
-
     view = ConfirmationView()
     view.value = None
-    view.wait = AsyncMock(return_value=None)  # Timeout
+    view.wait = AsyncMock(return_value=True)  # Timeout retorna True no discord.py
+    view.stop = Mock()
     return view

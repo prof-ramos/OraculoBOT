@@ -98,7 +98,10 @@ class E2ETestBot(discord.Client):
         agent: Agent,
         log_file: Optional[Path] = None,
     ):
-        intents = discord.Intents.all()
+        intents = discord.Intents.default()
+        intents.guilds = True
+        intents.messages = True
+        intents.message_content = True
         super().__init__(intents=intents)
 
         self.guild_id = guild_id
@@ -355,12 +358,26 @@ class E2ETestBot(discord.Client):
             await channel.send(text)
             return
 
-        batches = [
-            text[i : i + MAX_MESSAGE_LENGTH]
-            for i in range(0, len(text), MAX_MESSAGE_LENGTH)
-        ]
-        for idx, batch in enumerate(batches, 1):
-            await channel.send(f"[{idx}/{len(batches)}] {batch}")
+        # Calcula tamanho máximo considerando prefixo "[N/M] "
+        # Prefixo máximo: "[999/999] " = 12 caracteres
+        prefix_max_len = 12
+        chunk_size = MAX_MESSAGE_LENGTH - prefix_max_len
+
+        # Primeira passagem: divide em chunks
+        chunks = []
+        for i in range(0, len(text), chunk_size):
+            chunks.append(text[i : i + chunk_size])
+
+        # Segunda passagem: adiciona prefixo e verifica tamanho
+        for idx, chunk in enumerate(chunks, 1):
+            prefix = f"[{idx}/{len(chunks)}] "
+            message = f"{prefix}{chunk}"
+            # Se ainda exceder, corta o chunk
+            if len(message) > MAX_MESSAGE_LENGTH:
+                allowed_chunk_size = MAX_MESSAGE_LENGTH - len(prefix)
+                chunk = chunk[:allowed_chunk_size]
+                message = f"{prefix}{chunk}"
+            await channel.send(message)
 
 
 def validate_environment() -> dict[str, bool]:
@@ -527,7 +544,7 @@ def main() -> int:
         log_error("✗ Falha ao executar bot")
         return 1
     finally:
-        if bot.test_logger:
+        if bot is not None and hasattr(bot, 'test_logger') and bot.test_logger:
             bot.test_logger.info(
                 f"\n{'='*70}\n"
                 f"E2E TEST SESSION ENDED\n"
