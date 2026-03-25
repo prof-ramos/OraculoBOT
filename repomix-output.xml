@@ -1,0 +1,655 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+__init__.py
+__main__.py
+.env.example
+.gitignore
+agent.py
+bot.py
+config.py
+pyproject.toml
+README.md
+views.py
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="__init__.py">
+"""Oráculo Bot — Assistente Discord para concursos públicos brasileiros."""
+
+__version__ = "0.1.0"
+</file>
+
+<file path="__main__.py">
+"""Entrypoint: python -m oraculo_bot."""
+
+from oraculo_bot.agent import create_agent
+from oraculo_bot.bot import OracleDiscordBot
+
+
+def main() -> None:
+    agent = create_agent()
+    bot = OracleDiscordBot(agent=agent)
+    bot.serve()
+
+
+if __name__ == "__main__":
+    main()
+</file>
+
+<file path=".env.example">
+# Discord
+DISCORD_BOT_TOKEN=
+
+# OpenAI
+OPENAI_API_KEY=
+
+# Bot config (optional — defaults in config.py)
+# TARGET_GUILD_ID=1283924742851661844
+# TARGET_CHANNEL_ID=1486301006659715143
+# MODEL_ID=gpt-4.1
+# HISTORY_RUNS=5
+</file>
+
+<file path=".gitignore">
+# Environment
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+
+# uv
+uv.lock
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+</file>
+
+<file path="agent.py">
+"""Definição do Agent Oráculo."""
+
+from __future__ import annotations
+
+from agno.agent import Agent
+from agno.models.openai import OpenAIResponses
+
+from oraculo_bot.config import HISTORY_RUNS, MODEL_ID
+
+SYSTEM_INSTRUCTIONS: list[str] = [
+    # ── Identidade ────────────────────────────────────────────
+    (
+        "Você é o Oráculo, um assistente especializado em concursos públicos brasileiros. "
+        "Você domina as principais bancas (Cebraspe/CESPE, FGV, FCC, VUNESP, IBFC, Quadrix), "
+        "seus estilos de cobrança, pegadinhas recorrentes e critérios de correção discursiva."
+    ),
+    # ── Idioma e tom ──────────────────────────────────────────
+    (
+        "Responda sempre em português-BR. Seu tom padrão é direto, didático e acessível — "
+        "como um professor particular que explica bem sem ser prolixo."
+    ),
+    # ── Modos de operação ─────────────────────────────────────
+    "Adapte-se automaticamente ao contexto da mensagem:",
+    (
+        "MODO ESTUDO — Quando o usuário perguntar sobre editais, matérias, legislação, "
+        "jurisprudência, estratégias de estudo ou qualquer tema cobrado em provas: "
+        "responda com profundidade e precisão técnica. Cite dispositivos legais com "
+        "artigo/inciso/alínea, súmulas (vinculantes e do STJ/STF), doutrina majoritária e, "
+        "quando relevante, a posição específica da banca. Diferencie letra da lei vs. "
+        "entendimento jurisprudencial. Se houver divergência doutrinária, indique a corrente "
+        "adotada pela banca quando possível."
+    ),
+    (
+        "MODO PROFESSOR — Quando o usuário tirar dúvida acadêmica ou técnica "
+        "(direito, português, raciocínio lógico, informática, contabilidade, economia, etc.): "
+        "explique o conceito de forma clara e progressiva — do básico ao avançado. "
+        "Use exemplos práticos, analogias e, quando útil, esquematize com listas ou tabelas. "
+        "Ao final, se a dúvida envolver tema recorrente em provas, mencione como costuma ser cobrado."
+    ),
+    (
+        "MODO SIMULADO — Quando o usuário enviar uma questão de prova ou pedir para resolver "
+        "exercícios: primeiro resolva a questão com justificativa item a item (para CERTO/ERRADO) "
+        "ou alternativa a alternativa (para múltipla escolha). Indique a resposta correta com "
+        "destaque. Aponte armadilhas e erros comuns que candidatos cometem naquele tipo de questão."
+    ),
+    (
+        "MODO CASUAL — Quando o usuário apenas quiser conversar, desabafar sobre a rotina de "
+        "estudos, ou falar de qualquer outro assunto: seja natural, descontraído e empático. "
+        "Não force o tema de concursos. Acompanhe o tom da conversa como um colega acessível."
+    ),
+    # ── Restrições ────────────────────────────────────────────
+    (
+        "Nunca invente legislação, súmulas, jurisprudência ou dados. "
+        "Se não souber ou não tiver certeza, diga explicitamente e sugira que o usuário "
+        "verifique a fonte."
+    ),
+    (
+        "Não reproduza questões de provas integralmente protegidas por direito autoral — "
+        "parafraseie o enunciado quando necessário."
+    ),
+    # ── Formatação Discord ────────────────────────────────────
+    (
+        "Use formatação Markdown compatível com Discord: **negrito**, *itálico*, `código`, "
+        "```blocos de código```, > citações, listas com - ou 1. "
+        "Para respostas longas, use seções com **títulos em negrito** para facilitar a leitura."
+    ),
+    # ── Contexto de thread ────────────────────────────────────
+    (
+        "Considere todo o histórico da thread ao responder. Referencie mensagens anteriores "
+        "quando relevante para manter coerência e evitar repetição."
+    ),
+]
+
+
+def create_agent() -> Agent:
+    """Cria e retorna a instância do Agent Oráculo."""
+    return Agent(
+        name="Oráculo",
+        model=OpenAIResponses(id=MODEL_ID),
+        instructions=SYSTEM_INSTRUCTIONS,
+        add_history_to_context=True,
+        num_history_runs=HISTORY_RUNS,
+        add_datetime_to_context=True,
+        markdown=True,
+    )
+</file>
+
+<file path="bot.py">
+"""Core do bot Discord — filtro de guild/channel, threading, mídia, menção."""
+
+from __future__ import annotations
+
+from textwrap import dedent
+from typing import Optional, Union
+
+import discord
+import requests
+from agno.agent.agent import Agent, RunOutput
+from agno.media import Audio, File, Image, Video
+from agno.team.team import Team, TeamRunOutput
+from agno.utils.log import log_error, log_info
+from agno.utils.message import get_text_from_message
+
+from oraculo_bot.config import (
+    DISCORD_BOT_TOKEN,
+    ERROR_MESSAGE,
+    MAX_MESSAGE_LENGTH,
+    TARGET_CHANNEL_ID,
+    TARGET_GUILD_ID,
+    THREAD_NAME_PREFIX,
+)
+from oraculo_bot.views import ConfirmationView
+
+
+class OracleDiscordBot:
+    """Bot Discord filtrado por guild/channel. Responde sem menção, cita o autor."""
+
+    def __init__(
+        self,
+        agent: Optional[Agent] = None,
+        team: Optional[Team] = None,
+        *,
+        guild_id: int = TARGET_GUILD_ID,
+        channel_id: int = TARGET_CHANNEL_ID,
+    ) -> None:
+        if not agent and not team:
+            msg = "Forneça 'agent' ou 'team'."
+            raise ValueError(msg)
+
+        self.agent = agent
+        self.team = team
+        self.guild_id = guild_id
+        self.channel_id = channel_id
+
+        intents = discord.Intents.all()
+        self.client = discord.Client(intents=intents)
+        self._register_events()
+
+    # ── Helpers ───────────────────────────────────────────────
+
+    def _is_target_channel(self, channel: discord.abc.Messageable) -> bool:
+        """Retorna True se o canal é o alvo ou uma thread filha dele."""
+        if isinstance(channel, discord.TextChannel):
+            return channel.id == self.channel_id
+        if isinstance(channel, discord.Thread):
+            return channel.parent_id == self.channel_id
+        return False
+
+    @staticmethod
+    def _extract_media(
+        message: discord.Message,
+    ) -> tuple[
+        Optional[str],
+        Optional[bytes],
+        Optional[str],
+        Optional[bytes],
+        Optional[str],
+    ]:
+        """Extrai o primeiro attachment classificado por tipo MIME.
+
+        Returns:
+            (image_url, video_bytes, audio_url, file_bytes, media_url)
+        """
+        if not message.attachments:
+            return None, None, None, None, None
+
+        attachment = message.attachments[0]
+        mime = attachment.content_type or ""
+        url = attachment.url
+
+        if mime.startswith("image/"):
+            return url, None, None, None, url
+        if mime.startswith("video/"):
+            return None, requests.get(url, timeout=30).content, None, None, url
+        if mime.startswith("audio/"):
+            return None, None, url, None, url
+        if mime.startswith("application/"):
+            return None, None, None, requests.get(url, timeout=30).content, url
+
+        return None, None, None, None, url
+
+    @staticmethod
+    def _build_media_kwargs(
+        image: Optional[str],
+        video: Optional[bytes],
+        audio: Optional[str],
+        file: Optional[bytes],
+    ) -> dict:
+        """Monta dict de mídia para agent.arun()."""
+        kwargs: dict = {}
+        if image:
+            kwargs["images"] = [Image(url=image)]
+        if video:
+            kwargs["videos"] = [Video(content=video)]
+        if audio:
+            kwargs["audio"] = [Audio(url=audio)]
+        if file:
+            kwargs["files"] = [File(content=file)]
+        return kwargs
+
+    # ── Events ───────────────────────────────────────────────
+
+    def _register_events(self) -> None:
+        @self.client.event
+        async def on_ready() -> None:
+            log_info(f"Bot conectado como {self.client.user}")
+            log_info(f"Escutando guild={self.guild_id} channel={self.channel_id}")
+
+        @self.client.event
+        async def on_message(message: discord.Message) -> None:
+            if message.author == self.client.user:
+                return
+            if not message.guild or message.guild.id != self.guild_id:
+                return
+            if not self._is_target_channel(message.channel):
+                return
+
+            await self._process_message(message)
+
+    async def _process_message(self, message: discord.Message) -> None:
+        """Pipeline completo: mídia → thread → agent → resposta."""
+        img, vid, aud, fil, media_url = self._extract_media(message)
+        user_name = message.author.name
+        user_id = message.author.id
+
+        log_info(f"[{user_name}] {message.content} | media={media_url}")
+
+        # Thread management
+        if isinstance(message.channel, discord.Thread):
+            thread = message.channel
+        elif isinstance(message.channel, discord.TextChannel):
+            thread = await message.create_thread(
+                name=f"{THREAD_NAME_PREFIX} {user_name}"
+            )
+        else:
+            log_info(f"Canal não suportado: {type(message.channel)}")
+            return
+
+        mention = f"<@{user_id}>"
+        context = dedent(f"""
+            Discord username: {user_name}
+            Discord userid: {user_id}
+            Discord url: {message.jump_url}
+        """)
+        media_kwargs = self._build_media_kwargs(img, vid, aud, fil)
+
+        async with thread.typing():
+            runner = self.agent or self.team
+            runner.additional_context = context  # type: ignore[union-attr]
+
+            response = await runner.arun(  # type: ignore[union-attr]
+                input=message.content,
+                user_id=user_id,
+                session_id=str(thread.id),
+                **media_kwargs,
+            )
+
+            if response.status == "ERROR":
+                log_error(response.content)
+                response.content = ERROR_MESSAGE
+
+            await self._handle_response(response, thread, mention)
+
+    # ── Response handling ────────────────────────────────────
+
+    async def _handle_hitl(
+        self,
+        response: RunOutput,
+        thread: Union[discord.Thread, discord.TextChannel],
+    ) -> RunOutput:
+        """Human-in-the-Loop: pede confirmação via botões antes de executar tools."""
+        if not response.is_paused:
+            return response
+
+        for tool in response.tools_requiring_confirmation:
+            view = ConfirmationView()
+            await thread.send(
+                f"🔧 Tool requer confirmação: **{tool.tool_name}**",
+                view=view,
+            )
+            await view.wait()
+            tool.confirmed = view.value if view.value is not None else False
+
+        if self.agent:
+            response = await self.agent.acontinue_run(run_response=response)
+
+        return response
+
+    async def _handle_response(
+        self,
+        response: Union[RunOutput, TeamRunOutput],
+        thread: Union[discord.TextChannel, discord.Thread],
+        mention: str,
+    ) -> None:
+        """Processa resposta e envia ao Discord com menção."""
+        if isinstance(response, RunOutput):
+            response = await self._handle_hitl(response, thread)
+
+        if response.reasoning_content:
+            log_info(f"[Reasoning] {response.reasoning_content[:200]}...")
+
+        content = (
+            get_text_from_message(response.content)
+            if response.content is not None
+            else ""
+        )
+        await self._send_messages(thread, f"{mention} {content}")
+
+    async def _send_messages(
+        self,
+        thread: Union[discord.TextChannel, discord.Thread],
+        message: str,
+    ) -> None:
+        """Envia mensagem com split automático para textos longos."""
+        text = message.strip()
+        if not text:
+            return
+
+        if len(text) <= MAX_MESSAGE_LENGTH:
+            await thread.send(text)
+            return
+
+        batches = [
+            text[i : i + MAX_MESSAGE_LENGTH]
+            for i in range(0, len(text), MAX_MESSAGE_LENGTH)
+        ]
+        for idx, batch in enumerate(batches, 1):
+            await thread.send(f"[{idx}/{len(batches)}] {batch}")
+
+    # ── Entrypoint ───────────────────────────────────────────
+
+    def serve(self) -> None:
+        """Inicia o bot."""
+        self.client.run(DISCORD_BOT_TOKEN)
+</file>
+
+<file path="config.py">
+"""Configuração centralizada via variáveis de ambiente."""
+
+from __future__ import annotations
+
+import os
+
+
+def _require_env(key: str) -> str:
+    """Retorna o valor da env var ou levanta ValueError."""
+    value = os.getenv(key)
+    if not value:
+        msg = f"Variável de ambiente '{key}' não definida. Consulte .env.example."
+        raise ValueError(msg)
+    return value
+
+
+# ── Tokens (obrigatórios) ────────────────────────────────────
+DISCORD_BOT_TOKEN: str = _require_env("DISCORD_BOT_TOKEN")
+
+# ── IDs do Discord ───────────────────────────────────────────
+TARGET_GUILD_ID: int = int(os.getenv("TARGET_GUILD_ID", "1283924742851661844"))
+TARGET_CHANNEL_ID: int = int(os.getenv("TARGET_CHANNEL_ID", "1486301006659715143"))
+
+# ── LLM ──────────────────────────────────────────────────────
+MODEL_ID: str = os.getenv("MODEL_ID", "gpt-4.1")
+HISTORY_RUNS: int = int(os.getenv("HISTORY_RUNS", "5"))
+
+# ── Discord ──────────────────────────────────────────────────
+MAX_MESSAGE_LENGTH: int = 1500
+THREAD_NAME_PREFIX: str = "💬"
+ERROR_MESSAGE: str = "Desculpe, ocorreu um erro. Tente novamente."
+</file>
+
+<file path="pyproject.toml">
+[project]
+name = "oraculo-bot"
+version = "0.1.0"
+description = "Bot Discord de estudos para concursos públicos brasileiros"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = [
+    "agno>=1.0.0",
+    "discord.py>=2.4.0",
+    "requests>=2.32.0",
+    "openai>=1.0.0",
+]
+
+[project.scripts]
+oraculo-bot = "oraculo_bot.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/oraculo_bot"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "SIM"]
+</file>
+
+<file path="README.md">
+# 🔮 Oráculo Bot
+
+Bot Discord de estudos para concursos públicos brasileiros, construído com [Agno](https://docs.agno.com) + [discord.py](https://discordpy.readthedocs.io/).
+
+## Features
+
+- Responde automaticamente no canal configurado (sem necessidade de menção)
+- Cria threads por conversa com histórico preservado
+- Menciona o autor (`@user`) em cada resposta
+- 4 modos adaptativos: **Estudo**, **Professor**, **Simulado** e **Casual**
+- Suporte a mídia: imagens, vídeos, áudio e documentos
+- Split automático de mensagens longas (>1500 chars)
+- Human-in-the-loop com botões de confirmação para tools
+- Typing indicator durante processamento
+
+## Requisitos
+
+- Python 3.11+
+- [uv](https://docs.astral.sh/uv/) (gerenciador de pacotes)
+
+## Setup
+
+### 1. Clonar e instalar dependências
+
+```bash
+git clone <repo-url> && cd oraculo-bot
+uv sync
+```
+
+### 2. Configurar variáveis de ambiente
+
+```bash
+cp .env.example .env
+# Edite .env com seus tokens
+```
+
+### 3. Configurar bot no Discord Developer Portal
+
+1. Criar aplicação em [discord.com/developers](https://discord.com/developers/applications)
+2. Em **Bot**, ativar:
+   - `MESSAGE CONTENT INTENT`
+   - `SERVER MEMBERS INTENT`
+   - `PRESENCE INTENT`
+3. Copiar o token para `.env`
+4. Gerar link de convite em **OAuth2 > URL Generator**:
+   - Scopes: `bot`
+   - Permissions: `Send Messages`, `Create Public Threads`, `Send Messages in Threads`, `Read Message History`, `Attach Files`
+
+### 4. Executar
+
+```bash
+uv run python -m oraculo_bot
+```
+
+## Configuração
+
+Edite `src/oraculo_bot/config.py` para alterar:
+
+| Variável | Descrição |
+|----------|-----------|
+| `DISCORD_BOT_TOKEN` | Token do bot Discord |
+| `OPENAI_API_KEY` | Chave da API OpenAI |
+| `TARGET_GUILD_ID` | ID do servidor Discord |
+| `TARGET_CHANNEL_ID` | ID do canal de escuta |
+| `MODEL_ID` | Modelo LLM (default: `gpt-4.1`) |
+| `HISTORY_RUNS` | Quantidade de mensagens no histórico (default: `5`) |
+
+## Estrutura
+
+```
+oraculo-bot/
+├── src/oraculo_bot/
+│   ├── __init__.py
+│   ├── __main__.py        # Entrypoint
+│   ├── config.py           # Configuração via env vars
+│   ├── agent.py            # Definição do Agent + instructions
+│   ├── bot.py              # OracleDiscordBot (core)
+│   └── views.py            # UI components (HITL buttons)
+├── .env.example
+├── .gitignore
+├── pyproject.toml
+└── README.md
+```
+
+## Licença
+
+MIT
+</file>
+
+<file path="views.py">
+"""Componentes de UI do Discord (Human-in-the-Loop)."""
+
+from __future__ import annotations
+
+from typing import Optional
+
+import discord
+from agno.utils.log import log_warning
+
+
+class ConfirmationView(discord.ui.View):
+    """Botões de confirmação/cancelamento para execução de tools."""
+
+    def __init__(self, timeout: float = 60.0) -> None:
+        super().__init__(timeout=timeout)
+        self.value: Optional[bool] = None
+
+    @discord.ui.button(label="✅ Confirmar", style=discord.ButtonStyle.primary)
+    async def confirm(
+        self, interaction: discord.Interaction, button: discord.ui.Button
+    ) -> None:
+        self.value = True
+        button.disabled = True
+        await interaction.response.edit_message(view=self)
+        self.clear_items()
+        self.stop()
+
+    @discord.ui.button(label="❌ Cancelar", style=discord.ButtonStyle.secondary)
+    async def cancel(
+        self, interaction: discord.Interaction, button: discord.ui.Button
+    ) -> None:
+        self.value = False
+        button.disabled = True
+        await interaction.response.edit_message(view=self)
+        self.clear_items()
+        self.stop()
+
+    async def on_timeout(self) -> None:
+        log_warning("ConfirmationView: timeout atingido")
+</file>
+
+</files>
