@@ -6,6 +6,11 @@ from agno.agent import Agent
 from agno.models.deepseek import DeepSeek
 
 from oraculo_bot.config import HISTORY_RUNS, MODEL_ID
+from oraculo_bot.db import SessionDAO
+from oraculo_bot.models import DiscordSession
+
+# Instância global do DAO
+_session_dao = SessionDAO()
 
 SYSTEM_INSTRUCTIONS: list[str] = [
     # ── Identidade ────────────────────────────────────────────
@@ -83,3 +88,85 @@ def create_agent() -> Agent:
         add_datetime_to_context=True,
         markdown=True,
     )
+
+
+def initialize_session(thread_id: str, user_id: str, mode: str = "estudo") -> DiscordSession:
+    """Inicializa ou recupera uma sessão do Discord.
+
+    Args:
+        thread_id: ID do thread Discord.
+        user_id: ID do usuário Discord.
+        mode: Modo de operação (estudo, professor, simulado, casual).
+
+    Returns:
+        A sessão criada ou recuperada.
+    """
+    return _session_dao.get_or_create_session(thread_id, user_id, mode)
+
+
+def save_session_history(thread_id: str, messages: list) -> None:
+    """Salva o histórico de mensagens de uma sessão.
+
+    Args:
+        thread_id: ID do thread Discord.
+        messages: Lista de mensagens do RunOutput.
+    """
+    _session_dao.update_session_data(thread_id, {"history": messages})
+
+
+def get_session_history(thread_id: str) -> list:
+    """Recupera o histórico de mensagens de uma sessão.
+
+    Args:
+        thread_id: ID do thread Discord.
+
+    Returns:
+        Lista de mensagens anteriores ou lista vazia.
+    """
+    session = _session_dao.get_session(thread_id)
+    if session:
+        return session.session_data.get("history", [])
+    return []
+
+
+def cleanup_old_sessions(days: int = 30) -> int:
+    """Remove sessões antigas do banco.
+
+    Args:
+        days: Número de dias para considerar uma sessão como antiga.
+
+    Returns:
+        Número de sessões removidas.
+    """
+    return _session_dao.cleanup_old_sessions(days)
+
+
+def enrich_with_rag(query: str, top_k: int = 3) -> str:
+    """Enriquece query com legislação relevante via RAG.
+
+    Args:
+        query: Texto da query do usuário.
+        top_k: Número de chunks a recuperar.
+
+    Returns:
+        Contexto RAG formatado para adicionar ao agent.
+    """
+    try:
+        from oraculo_bot.rag import retrieve_relevant_legislation
+
+        rag_context = retrieve_relevant_legislation(
+            query_text=query,
+            top_k=top_k,
+        )
+
+        if rag_context:
+            return f"\n\n[CONTEXTO LEGISLATIVO RELEVANTE]\n{rag_context}\n"
+
+    except Exception as e:
+        # Se RAG falhar, retorna string vazia (não quebra o bot)
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.warning(f"RAG fallback: {e}")
+        return ""
+
+    return ""

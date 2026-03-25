@@ -1,0 +1,344 @@
+{
+  "version": "1.0.0",
+  "lastScanned": 1774449925872,
+  "projectRoot": "/Users/gabrielramos/repos/OraculoBOT",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Python",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "pyproject.toml"
+        ]
+      }
+    ],
+    "frameworks": [],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": "pytest",
+    "lintCommand": "ruff check",
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [],
+    "gitBranches": null
+  },
+  "customNotes": [],
+  "directoryMap": {},
+  "hotPaths": [
+    {
+      "path": "oraculo_bot/bot.py",
+      "accessCount": 25,
+      "lastAccessed": 1774455415343,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/agent.py",
+      "accessCount": 22,
+      "lastAccessed": 1774458299835,
+      "type": "file"
+    },
+    {
+      "path": "prd.json",
+      "accessCount": 18,
+      "lastAccessed": 1774453734187,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/db.py",
+      "accessCount": 18,
+      "lastAccessed": 1774454269165,
+      "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 17,
+      "lastAccessed": 1774452844596,
+      "type": "directory"
+    },
+    {
+      "path": "pyproject.toml",
+      "accessCount": 16,
+      "lastAccessed": 1774458212573,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/__main__.py",
+      "accessCount": 15,
+      "lastAccessed": 1774454176091,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/config.py",
+      "accessCount": 15,
+      "lastAccessed": 1774457880864,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/rag.py",
+      "accessCount": 13,
+      "lastAccessed": 1774459250206,
+      "type": "file"
+    },
+    {
+      "path": ".venv/lib/python3.14/site-packages/agno",
+      "accessCount": 10,
+      "lastAccessed": 1774452878404,
+      "type": "directory"
+    },
+    {
+      "path": ".env.example",
+      "accessCount": 9,
+      "lastAccessed": 1774457886745,
+      "type": "file"
+    },
+    {
+      "path": ".env",
+      "accessCount": 9,
+      "lastAccessed": 1774459219715,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot",
+      "accessCount": 6,
+      "lastAccessed": 1774453766870,
+      "type": "directory"
+    },
+    {
+      "path": "oraculo_bot/models.py",
+      "accessCount": 6,
+      "lastAccessed": 1774454279487,
+      "type": "file"
+    },
+    {
+      "path": "AGENTS.md",
+      "accessCount": 5,
+      "lastAccessed": 1774451147373,
+      "type": "file"
+    },
+    {
+      "path": ".venv/lib/python3.14/site-packages/agno/run/agent.py",
+      "accessCount": 5,
+      "lastAccessed": 1774452872821,
+      "type": "directory"
+    },
+    {
+      "path": ".venv/lib/python3.14/site-packages/agno/agent",
+      "accessCount": 5,
+      "lastAccessed": 1774452901330,
+      "type": "directory"
+    },
+    {
+      "path": "agent.py",
+      "accessCount": 4,
+      "lastAccessed": 1774450322420,
+      "type": "file"
+    },
+    {
+      "path": ".venv/lib/python3.14/site-packages/agno/db",
+      "accessCount": 4,
+      "lastAccessed": 1774451444522,
+      "type": "directory"
+    },
+    {
+      "path": "oraculo_bot/rag_retriever.py",
+      "accessCount": 4,
+      "lastAccessed": 1774455674954,
+      "type": "file"
+    },
+    {
+      "path": "config.py",
+      "accessCount": 3,
+      "lastAccessed": 1774450350125,
+      "type": "file"
+    },
+    {
+      "path": ".venv/lib/python3.14/site-packages/agno/db/postgres/schemas.py",
+      "accessCount": 3,
+      "lastAccessed": 1774452053673,
+      "type": "file"
+    },
+    {
+      "path": ".venv/lib/python3.14/site-packages/agno/agent/agent.py",
+      "accessCount": 3,
+      "lastAccessed": 1774452882877,
+      "type": "directory"
+    },
+    {
+      "path": ".venv/lib/python3.14/site-packages/agno/agent/_messages.py",
+      "accessCount": 3,
+      "lastAccessed": 1774452905443,
+      "type": "file"
+    },
+    {
+      "path": ".venv",
+      "accessCount": 2,
+      "lastAccessed": 1774451417872,
+      "type": "directory"
+    },
+    {
+      "path": ".venv/lib/python3.14/site-packages/agno/db/postgres/postgres.py",
+      "accessCount": 2,
+      "lastAccessed": 1774451441187,
+      "type": "file"
+    },
+    {
+      "path": ".venv/lib/python3.14/site-packages/agno/agent/_session.py",
+      "accessCount": 2,
+      "lastAccessed": 1774452889365,
+      "type": "file"
+    },
+    {
+      "path": "discover_tables.py",
+      "accessCount": 2,
+      "lastAccessed": 1774454759801,
+      "type": "file"
+    },
+    {
+      "path": "test_vector_search.py",
+      "accessCount": 2,
+      "lastAccessed": 1774455196234,
+      "type": "file"
+    },
+    {
+      "path": "README.md",
+      "accessCount": 1,
+      "lastAccessed": 1774450148052,
+      "type": "file"
+    },
+    {
+      "path": "bot.py",
+      "accessCount": 1,
+      "lastAccessed": 1774450160272,
+      "type": "file"
+    },
+    {
+      "path": "views.py",
+      "accessCount": 1,
+      "lastAccessed": 1774450160300,
+      "type": "file"
+    },
+    {
+      "path": "__main__.py",
+      "accessCount": 1,
+      "lastAccessed": 1774450160323,
+      "type": "file"
+    },
+    {
+      "path": "__init__.py",
+      "accessCount": 1,
+      "lastAccessed": 1774450160376,
+      "type": "file"
+    },
+    {
+      "path": ".venv/lib/python3.14/site-packages/agno/db/__init__.py",
+      "accessCount": 1,
+      "lastAccessed": 1774451346127,
+      "type": "file"
+    },
+    {
+      "path": ".venv/lib/python3.14/site-packages/agno/db/postgres",
+      "accessCount": 1,
+      "lastAccessed": 1774451346150,
+      "type": "directory"
+    },
+    {
+      "path": ".venv/lib/python3.14/site-packages/agno/db/postgres/__init__.py",
+      "accessCount": 1,
+      "lastAccessed": 1774451346181,
+      "type": "file"
+    },
+    {
+      "path": ".venv/lib/python3.14/site-packages/agno/db/base.py",
+      "accessCount": 1,
+      "lastAccessed": 1774451349482,
+      "type": "file"
+    },
+    {
+      "path": ".venv/lib/python3.14/site-packages/agno/db/migrations",
+      "accessCount": 1,
+      "lastAccessed": 1774451354729,
+      "type": "directory"
+    },
+    {
+      "path": "oraculo_bot/views.py",
+      "accessCount": 1,
+      "lastAccessed": 1774451913100,
+      "type": "file"
+    },
+    {
+      "path": ".venv/lib/python3.14/site-packages/agno/agent/_run.py",
+      "accessCount": 1,
+      "lastAccessed": 1774452895946,
+      "type": "file"
+    },
+    {
+      "path": "explore_supabase.py",
+      "accessCount": 1,
+      "lastAccessed": 1774454562413,
+      "type": "file"
+    },
+    {
+      "path": "analyze_rag_tables.py",
+      "accessCount": 1,
+      "lastAccessed": 1774454786687,
+      "type": "file"
+    },
+    {
+      "path": "analyze_rag_metadata.py",
+      "accessCount": 1,
+      "lastAccessed": 1774454818355,
+      "type": "file"
+    },
+    {
+      "path": "check_vector_extension.py",
+      "accessCount": 1,
+      "lastAccessed": 1774455132026,
+      "type": "file"
+    },
+    {
+      "path": "check_embedding_format.py",
+      "accessCount": 1,
+      "lastAccessed": 1774455229381,
+      "type": "file"
+    },
+    {
+      "path": "test_simple_vector_search.py",
+      "accessCount": 1,
+      "lastAccessed": 1774455260309,
+      "type": "file"
+    },
+    {
+      "path": "test_rag_integration.py",
+      "accessCount": 1,
+      "lastAccessed": 1774455488920,
+      "type": "file"
+    },
+    {
+      "path": "setup_rag.sh",
+      "accessCount": 1,
+      "lastAccessed": 1774455579363,
+      "type": "file"
+    },
+    {
+      "path": "test_rag_db_connection.py",
+      "accessCount": 1,
+      "lastAccessed": 1774455612504,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}

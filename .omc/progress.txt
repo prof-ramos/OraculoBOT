@@ -1,0 +1,27 @@
+# RALPH Progress - OraculoBOT Supabase Integration
+
+**Started:** 2025-03-25
+**Plan:** .omc/plans/supabase-integration.md
+
+## Iteration 1
+
+### Pending Stories
+- US-001: Adicionar dependências SQLAlchemy
+- US-002: Criar modelo DiscordSession
+- US-003: Criar DAO SessionDAO
+- US-004: Atualizar config.py
+- US-005: Modificar agent.py
+- US-006: Modificar bot.py
+- US-007: Modificar __main__.py
+- US-008: Atualizar .env.example
+- US-009: Criar mode_detector.py (opcional)
+- US-010: Testar persistência
+
+### Completed Stories
+(none yet)
+
+### Codebase Patterns Discovered
+- Bot já usa Agno com DeepSeek model
+- Estrutura: pacote oraculo_bot/ com agent.py, bot.py, config.py, views.py
+- Bot atual roda em background (task b2x5j3g9v)
+- .env já configurado com DISCORD_BOT_TOKEN e DEEPSEEK_API_KEY

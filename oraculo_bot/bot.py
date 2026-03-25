@@ -21,6 +21,7 @@ from oraculo_bot.config import (
     TARGET_GUILD_ID,
     THREAD_NAME_PREFIX,
 )
+from oraculo_bot.agent import initialize_session, save_session_history, get_session_history, enrich_with_rag
 from oraculo_bot.views import ConfirmationView
 
 
@@ -149,16 +150,33 @@ class OracleDiscordBot:
             return
 
         mention = f"<@{user_id}>"
+
+        # Inicializa sessão no banco
+        session = initialize_session(str(thread.id), str(user_id), mode="estudo")
+
+        # Carrega histórico anterior
+        history = get_session_history(str(thread.id))
+
         context = dedent(f"""
             Discord username: {user_name}
             Discord userid: {user_id}
             Discord url: {message.jump_url}
+            Session mode: {session.mode}
+            Previous messages count: {len(history)}
         """)
+
+        # Enriquece com legislação relevante via RAG
+        rag_context = enrich_with_rag(message.content, top_k=3)
+
         media_kwargs = self._build_media_kwargs(img, vid, aud, fil)
 
         async with thread.typing():
             runner = self.agent or self.team
-            runner.additional_context = context  # type: ignore[union-attr]
+
+            # Adiciona contexto RAG ao context existente
+            full_context = context + rag_context
+
+            runner.additional_context = full_context  # type: ignore[union-attr]
 
             response = await runner.arun(  # type: ignore[union-attr]
                 input=message.content,
@@ -170,6 +188,10 @@ class OracleDiscordBot:
             if response.status == "ERROR":
                 log_error(response.content)
                 response.content = ERROR_MESSAGE
+
+            # Salva histórico após execução
+            if hasattr(response, 'messages') and response.messages:
+                save_session_history(str(thread.id), response.messages)
 
             await self._handle_response(response, thread, mention)
 

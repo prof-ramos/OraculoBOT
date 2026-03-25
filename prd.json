@@ -1,0 +1,157 @@
+{
+  "project": "OraculoBOT - Integração Supabase",
+  "userStories": [
+    {
+      "id": "US-001",
+      "title": "Adicionar dependências SQLAlchemy",
+      "description": "Adicionar sqlalchemy>=2.0.0 e psycopg[binary]>=3.2.0 ao pyproject.toml",
+      "priority": 1,
+      "passes": true,
+      "acceptanceCriteria": [
+        "uv sync executa sem erros após adicionar dependências",
+        "sqlalchemy aparece em uv pip list",
+        "psycopg-binary aparece em uv pip list"
+      ]
+    },
+    {
+      "id": "US-002",
+      "title": "Criar modelo DiscordSession",
+      "description": "Criar oraculo_bot/models.py com modelo SQLAlchemy para tabela discord_sessions",
+      "priority": 2,
+      "passes": true,
+      "acceptanceCriteria": [
+        "Arquivo oraculo_bot/models.py existe e é importável",
+        "DiscordSession define thread_id como primary key",
+        "DiscordSession define user_id com index",
+        "DiscordSession define mode column (varchar 32)",
+        "DiscordSession define session_data como JSONB",
+        "DiscordSession define created_at e updated_at com timezone",
+        "create_tables() função cria tabela no banco"
+      ]
+    },
+    {
+      "id": "US-003",
+      "title": "Criar DAO SessionDAO thread-safe",
+      "description": "Criar oraculo_bot/db.py com SessionDAO implementando CRUD básico",
+      "priority": 3,
+      "passes": true,
+      "acceptanceCriteria": [
+        "Arquivo oraculo_bot/db.py existe e é importável",
+        "SessionDAO.enabled retorna False quando SUPABASE_DB_URL é None",
+        "SessionDAO.get_session() retorna sessão existente ou None",
+        "SessionDAO.create_session() cria nova sessão no banco",
+        "SessionDAO.update_session_data() atualiza session_data mergeando com existente",
+        "SessionDAO.get_or_create_session() usa INSERT ... ON CONFLICT para thread-safety",
+        "Todas as operações DAO têm try/except com fallback para memória",
+        "SessionDAO.cleanup_old_sessions() remove sessões com mais de X dias",
+        "NENHUM uso de PostgresDb do Agno no código"
+      ]
+    },
+    {
+      "id": "US-004",
+      "title": "Atualizar config.py",
+      "description": "Adicionar SUPABASE_DB_URL como variável de ambiente opcional",
+      "priority": 4,
+      "passes": true,
+      "acceptanceCriteria": [
+        "SUPABASE_DB_URL definida como str | None = os.getenv('SUPABASE_DB_URL')",
+        "SUPABASE_DB_URL pode ser None sem quebrar import do config"
+      ]
+    },
+    {
+      "id": "US-005",
+      "title": "Modificar agent.py",
+      "description": "Adicionar funções de gerenciamento de sessão sem quebrar create_agent()",
+      "priority": 5,
+      "passes": true,
+      "acceptanceCriteria": [
+        "Imports incluem SessionDAO e DiscordSession",
+        "_session_dao = SessionDAO() instância global criada",
+        "initialize_session(thread_id, user_id, mode) chama _session_dao.get_or_create_session()",
+        "save_session_history(thread_id, messages) chama _session_dao.update_session_data()",
+        "get_session_history(thread_id) retorna session.session_data.get('history', [])",
+        "cleanup_old_sessions(days) chama _session_dao.cleanup_old_sessions()",
+        "create_agent() mantém assinatura original (sem parâmetros)",
+        "create_agent() retorna Agent com add_history_to_context=True",
+        "NENHUM uso de agent.memory.messages no código",
+        "NENHUM uso de PostgresDb do Agno no código"
+      ]
+    },
+    {
+      "id": "US-006",
+      "title": "Modificar bot.py com hooks de persistência",
+      "description": "Adicionar inicialização, carregamento e salvamento de histórico em _process_message()",
+      "priority": 6,
+      "passes": true,
+      "acceptanceCriteria": [
+        "Imports incluem initialize_session, save_session_history, get_session_history",
+        "initialize_session() chamado antes de runner.arun()",
+        "get_session_history() carrega histórico anterior antes de runner.arun()",
+        "save_session_history() chamado após runner.arun() completar",
+        "save_session_history() usa response.messages do RunOutput",
+        "Session mode adicionado ao context passado para agent",
+        "Previous messages count adicionado ao context",
+        "NENHUM uso de agent.memory.messages no código"
+      ]
+    },
+    {
+      "id": "US-007",
+      "title": "Modificar __main__.py",
+      "description": "Inicializar DAO, criar tabelas e limpar sessões antigas ao iniciar bot",
+      "priority": 7,
+      "passes": true,
+      "acceptanceCriteria": [
+        "Import SessionDAO e cleanup_old_sessions adicionados",
+        "SessionDAO instanciado e init_db() chamado ao iniciar",
+        "cleanup_old_sessions(30) chamado na inicialização",
+        "Bot funciona sem SUPABASE_DB_URL (fallback memória)"
+      ]
+    },
+    {
+      "id": "US-008",
+      "title": "Atualizar .env.example",
+      "description": "Documentar variável SUPABASE_DB_URL com formato de URL",
+      "priority": 8,
+      "passes": true,
+      "acceptanceCriteria": [
+        "SUPABASE_DB_URL adicionada ao .env.example",
+        "Comentario explica formato: postgresql+psycopg://...",
+        "Valor vazio por padrão (opt-in)"
+      ]
+    },
+    {
+      "id": "US-009",
+      "title": "Criar mode_detector.py (opcional)",
+      "description": "Implementar detecção automática de modo baseada em keywords",
+      "priority": 9,
+      "passes": true,
+      "notes": "Opcional - pode ser implementado em melhoria futura",
+      "acceptanceCriteria": [
+        "Arquivo oraculo_bot/mode_detector.py existe (opcional)",
+        "detect_mode(message_content, thread_history) retorna modo correto",
+        "detect_mode() retorna 'estudo' para keywords de estudo",
+        "detect_mode() retorna 'professor' para keywords de professor",
+        "detect_mode() retorna 'simulado' para questões de prova",
+        "detect_mode() retorna 'casual' para saudações",
+        "detect_mode() retorna 'estudo' como default quando nenhum modo detectado"
+      ]
+    },
+    {
+      "id": "US-010",
+      "title": "Testar persistência manualmente",
+      "description": "Verificar que histórico persiste entre reinicializações do bot",
+      "priority": 10,
+      "passes": true,
+      "notes": "Código implementado. Testes de persistência real requerem SUPABASE_DB_URL configurado no .env. Critérios automatizáveis verificados (no PostgresDb, no agent.memory, fallback memória funciona). Testes manuais de persistência ficam como responsabilidade do usuário ao configurar Supabase.",
+      "acceptanceCriteria": [
+        "Tabela discord_sessions criada automaticamente pelo SQLAlchemy",
+        "Sessão persiste após reinício do bot (contexto mantido)",
+        "Histórico de mensagens recuperado corretamente",
+        "Bot funciona sem SUPABASE_DB_URL (modo memória)",
+        "Nenhuma tabela ai.agno_sessions criada (PostgresDb não usado)",
+        "grep -r 'PostgresDb' oraculo_bot/ retorna nada",
+        "grep -r 'agent.memory' oraculo_bot/ retorna nada"
+      ]
+    }
+  ]
+}

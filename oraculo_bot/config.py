@@ -29,6 +29,8 @@ DISCORD_BOT_TOKEN: str = _require_env("DISCORD_BOT_TOKEN")
 
 # ── LLM API ───────────────────────────────────────────────────
 DEEPSEEK_API_KEY: str = _require_env("DEEPSEEK_API_KEY")
+GEMINI_API_KEY: str | None = os.getenv("GEMINI_API_KEY")  # Para embeddings RAG (grátis)
+OPENAI_API_KEY: str | None = os.getenv("OPENAI_API_KEY")  # Opcional - embeddings alternativos
 
 # ── IDs do Discord ───────────────────────────────────────────
 TARGET_GUILD_ID: int = int(os.getenv("TARGET_GUILD_ID", "1283924742851661844"))
@@ -42,3 +44,6 @@ HISTORY_RUNS: int = int(os.getenv("HISTORY_RUNS", "5"))
 MAX_MESSAGE_LENGTH: int = 1500
 THREAD_NAME_PREFIX: str = "💬"
 ERROR_MESSAGE: str = "Desculpe, ocorreu um erro. Tente novamente."
+
+# ── Banco de Dados ────────────────────────────────────────────
+SUPABASE_DB_URL: str | None = os.getenv("SUPABASE_DB_URL")
