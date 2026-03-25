@@ -71,6 +71,10 @@ class RAGRetriever:
             logger.warning("RAG desabilitado (SUPABASE_DB_URL não configurada)")
             return []
 
+        if query_embedding is None:
+            logger.warning("Embedding None fornecido, retornando lista vazia")
+            return []
+
         try:
             with self.conn.cursor() as cur:
                 # Construir query base
