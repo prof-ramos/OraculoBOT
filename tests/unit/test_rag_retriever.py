@@ -479,3 +479,161 @@ class TestRAGRetrieverEdgeCases:
         assert results[0]["banca"] == "FCC"
         assert results[0]["tipo"] == "CF"
         assert results[0]["artigo"] == "22"
+
+
+class TestExtractKeywords:
+    """Testes para extract_keywords()."""
+
+    def test_extract_keywords_basic(self):
+        """Deve extrair keywords de texto simples."""
+        from oraculo_bot.rag import extract_keywords
+
+        text = "Qual é a competência da União para legislar sobre direito do trabalho?"
+        keywords = extract_keywords(text)
+
+        # Deve extrair palavras relevantes
+        assert "competencia" in keywords or "competência" in keywords
+        assert "uniao" in keywords or "união" in keywords
+        assert "legislar" in keywords
+        assert "direito" in keywords
+        assert "trabalho" in keywords
+
+    def test_extract_keywords_removes_stop_words(self):
+        """Deve remover stop words em português."""
+        from oraculo_bot.rag import extract_keywords
+
+        text = "o a os as de em para que qual quem quando"
+        keywords = extract_keywords(text)
+
+        # Stop words não devem aparecer
+        assert "o" not in keywords
+        assert "a" not in keywords
+        assert "que" not in keywords
+        assert len(keywords) == 0  # Todas eram stop words
+
+    def test_extract_keywords_min_length_filter(self):
+        """Deve filtrar palavras curtas (< 4 chars)."""
+        from oraculo_bot.rag import extract_keywords
+
+        text = "o bom dia sol de lei hoje"
+        keywords = extract_keywords(text, min_length=4)
+
+        # "bom" (3), "dia" (3), "sol" (3), "lei" (3) não devem aparecer
+        assert "bom" not in keywords
+        assert "dia" not in keywords
+        assert "hoje" in keywords  # 4 caracteres
+
+    def test_extract_keywords_max_limit(self):
+        """Deve limitar número de keywords."""
+        from oraculo_bot.rag import extract_keywords
+
+        text = "constituição federal legislacao trabalhista previdenciaria administrativa tributaria penal civil processual"
+        keywords = extract_keywords(text, max_keywords=3)
+
+        assert len(keywords) == 3
+        # Deve manter as primeiras 3
+        assert keywords[0] == "constituicao" or keywords[0] == "constituição"
+
+    def test_extract_keywords_lowercase_normalization(self):
+        """Deve retornar tudo em minúsculas."""
+        from oraculo_bot.rag import extract_keywords
+
+        text = "CONSTITUIÇÃO Federal LEGISLAÇÃO"
+        keywords = extract_keywords(text)
+
+        for kw in keywords:
+            assert kw.islower()
+        assert "constituicao" in keywords or "constituição" in keywords
+
+    def test_extract_keywords_remove_punctuation(self):
+        """Deve remover pontuação."""
+        from oraculo_bot.rag import extract_keywords
+
+        text = "Art. 22, da Constituição Federal - competência"
+        keywords = extract_keywords(text, min_length=3)  # min_length=3 para permitir "art"
+
+        # Não deve conter pontuação
+        assert "art" in keywords
+        assert "constituicao" in keywords or "constituição" in keywords
+        assert "competencia" in keywords or "competência" in keywords
+
+    def test_extract_keywords_no_duplicates(self):
+        """Deve remover duplicatas mantendo ordem."""
+        from oraculo_bot.rag import extract_keywords
+
+        text = "direito direito civil civil administrativo"
+        keywords = extract_keywords(text)
+
+        assert keywords.count("direito") == 1
+        assert keywords.count("civil") == 1
+        assert len(keywords) == 3
+
+    def test_extract_keywords_empty_text(self):
+        """Deve retornar lista vazia para texto vazio."""
+        from oraculo_bot.rag import extract_keywords
+
+        assert extract_keywords("") == []
+        assert extract_keywords("   ") == []
+
+    def test_extract_keywords_only_stopwords(self):
+        """Deve retornar vazio se só houver stop words."""
+        from oraculo_bot.rag import extract_keywords
+
+        text = "o de a para em e que"
+        keywords = extract_keywords(text)
+
+        assert keywords == []
+
+
+class TestRetrieveRelevantLegislationFallback:
+    """Testes para fallback por keywords em retrieve_relevant_legislation()."""
+
+    def test_fallback_to_keywords_when_no_openai(self, mock_psycopg_connection, mocker):
+        """Deve usar busca por keywords quando OpenAI não disponível."""
+        from oraculo_bot.rag import retrieve_relevant_legislation
+
+        # Mock: sem embedding model
+        mocker.patch("oraculo_bot.rag._embedding_model", None)
+        mocker.patch("oraculo_bot.rag.OPENAI_API_KEY", None)
+
+        # Mock: keyword search retorna resultados
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = [
+            (1, "doc1", "Art. 22 CF - competência", {}, "2021", "FCC")
+        ]
+
+        result = retrieve_relevant_legislation(
+            query_text="competência união legislar",
+            top_k=3
+        )
+
+        # Deve retornar contexto formatado
+        assert result != ""
+        assert "Art. 22 CF" in result or "competência" in result
+
+    def test_fallback_logs_keywords(self, mock_psycopg_connection, mocker, caplog):
+        """Deve logar as keywords extraídas."""
+        from oraculo_bot.rag import retrieve_relevant_legislation
+
+        mocker.patch("oraculo_bot.rag._embedding_model", None)
+        mocker.patch("oraculo_bot.rag.OPENAI_API_KEY", None)
+
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = []
+
+        with caplog.at_level(logging.INFO):
+            retrieve_relevant_legislation("direito constitucional")
+
+        # Deve logar keywords usadas
+        assert any("keywords" in record.message.lower() for record in caplog.records)
+
+    def test_fallback_no_keywords_returns_empty(self, mock_psycopg_connection, mocker):
+        """Deve retornar vazio se nenhuma keyword válida."""
+        from oraculo_bot.rag import retrieve_relevant_legislation
+
+        mocker.patch("oraculo_bot.rag._embedding_model", None)
+        mocker.patch("oraculo_bot.rag.OPENAI_API_KEY", None)
+
+        result = retrieve_relevant_legislation("o a de para", top_k=3)
+
+        assert result == ""

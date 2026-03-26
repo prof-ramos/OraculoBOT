@@ -54,7 +54,67 @@ def init_rag(api_key: Optional[str] = None) -> None:
             logger.warning(f"RAG: erro ao inicializar embeddings OpenAI: {e}")
             _embedding_model = None
     else:
-        logger.info("RAG: sem API key OpenAI, usando fallback (embeddings aleatórios)")
+        logger.info("RAG: sem API key OpenAI, usando fallback (busca por keywords)")
+
+
+# Constante de stop words em português para extração de keywords
+_PORTUGUESE_STOP_WORDS = {
+    # Artigos e pronomes
+    "o", "a", "os", "as", "um", "uma", "uns", "umas",
+    "ele", "ela", "eles", "elas", "eu", "tu", "voce", "nos", "vos",
+    "me", "te", "se", "lhe", "lhes", "nos", "vos",
+    # Verbos comuns
+    "e", "ser", "estar", "ter", "haver", "fazer", "dar", "dizer",
+    "ir", "vir", "poder", "querer", "saber", "ver", "pensar",
+    # Preposições e conjunções
+    "de", "do", "da", "dos", "das", "em", "no", "na", "nos", "nas",
+    "por", "para", "como", "mas", "que", "qual", "quais",
+    # Outros
+    "muito", "pouco", "mais", "menos", "tambem", "ainda", "so",
+    "nem", "ou", "ja", "onde", "quando", "como", "quem",
+}
+
+
+def extract_keywords(text: str, max_keywords: int = 10, min_length: int = 4) -> list[str]:
+    """Extrai palavras-chave do texto para busca por keywords.
+
+    Remove stop words em português, filtra palavras curtas e limita quantidade.
+
+    Args:
+        text: Texto da query do usuário.
+        max_keywords: Número máximo de keywords a retornar.
+        min_length: Tamanho mínimo das palavras (caracteres).
+
+    Returns:
+        Lista de keywords em minúsculas, sem duplicatas.
+    """
+    import re
+
+    # Normalizar: lowercase
+    text = text.lower()
+
+    # Remove pontuação e mantém apenas letras/espacos
+    text = re.sub(r"[^\w\s]", " ", text)
+
+    # Tokenizar
+    words = text.split()
+
+    # Filtrar: remover stop words e palavras curtas
+    keywords = [
+        w for w in words
+        if len(w) >= min_length and w not in _PORTUGUESE_STOP_WORDS
+    ]
+
+    # Remover duplicatas mantendo ordem
+    seen = set()
+    unique_keywords = []
+    for kw in keywords:
+        if kw not in seen:
+            seen.add(kw)
+            unique_keywords.append(kw)
+
+    # Limitar quantidade
+    return unique_keywords[:max_keywords]
 
 
 def retrieve_relevant_legislation(
@@ -82,42 +142,38 @@ def retrieve_relevant_legislation(
         return ""
 
     try:
-        # Gerar embedding da query se modelo disponível
-        query_embedding = None
+        chunks = []
+
+        # Caminho 1: Busca semântica com embeddings (requer OpenAI)
         if _embedding_model:
             query_embedding = _embedding_model.get_embedding(query_text)
             logger.info(f"RAG: embedding gerado (dim={len(query_embedding)})")
+
+            if not query_embedding:
+                logger.error("RAG: impossível gerar embedding")
+                return ""
+
+            chunks = _rag_retriever.retrieve(
+                query_text=query_text,
+                query_embedding=query_embedding,
+                top_k=top_k,
+                filters=filters,
+            )
+
+        # Caminho 2: Fallback por keywords (sem OpenAI)
         else:
-            # Fallback: pegar embedding de um chunk aleatório para teste
-            import psycopg
+            keywords = extract_keywords(query_text)
 
-            with psycopg.connect(_rag_retriever.db_url) as conn:
-                with conn.cursor() as cur:
-                    cur.execute("""
-                        SELECT embedding
-                        FROM rag_chunks
-                        WHERE embedding IS NOT NULL
-                        ORDER BY random()
-                        LIMIT 1;
-                    """)
-                    result = cur.fetchone()
-                    if result:
-                        # Converter string para lista de floats
-                        emb_str = result[0].strip("[]")
-                        query_embedding = [float(x) for x in emb_str.split(",")]
-                        logger.warning("RAG: usando embedding aleatório (fallback)")
-
-        if not query_embedding:
-            logger.error("RAG: impossível gerar embedding")
-            return ""
-
-        # Buscar chunks similares
-        chunks = _rag_retriever.retrieve(
-            query_text=query_text,
-            query_embedding=query_embedding,
-            top_k=top_k,
-            filters=filters,
-        )
+            if keywords:
+                logger.info(f"RAG: usando busca por keywords: {keywords}")
+                chunks = _rag_retriever.retrieve_by_keywords(
+                    keywords=keywords,
+                    top_k=top_k,
+                    filters=filters,
+                )
+            else:
+                logger.warning("RAG: nenhuma keyword válida extraída da query")
+                chunks = []
 
         if not chunks:
             return ""
@@ -125,13 +181,18 @@ def retrieve_relevant_legislation(
         # Format chunks como contexto
         context_parts = []
         for i, chunk in enumerate(chunks, 1):
-            similarity = chunk.get("similarity", 0)
+            # Keyword search não retorna 'similarity'
+            similarity = chunk.get("similarity")
             texto = chunk.get("texto", "")
             ano = chunk.get("ano", "N/A")
             banca = chunk.get("banca", "N/A")
             tipo = chunk.get("tipo", "N/A")
 
-            meta_str = f" (ano: {ano}, banca: {banca}, tipo: {tipo}, sim: {similarity:.2f})"
+            # Meta string condicional (sem similarity se keyword search)
+            if similarity is not None:
+                meta_str = f" (ano: {ano}, banca: {banca}, tipo: {tipo}, sim: {similarity:.2f})"
+            else:
+                meta_str = f" (ano: {ano}, banca: {banca}, tipo: {tipo})"
 
             context_parts.append(f"[Fonte {i}{meta_str}]")
             context_parts.append(texto)
