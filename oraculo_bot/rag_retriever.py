@@ -6,6 +6,7 @@ import logging
 from typing import Optional
 
 import psycopg
+from psycopg import sql as psql_sql
 
 from oraculo_bot.config import SUPABASE_DB_URL
 
@@ -89,7 +90,9 @@ class RAGRetriever:
                         if key not in ALLOWED_METADATA_FILTERS:
                             logger.warning("Ignorando filtro RAG não permitido: %s", key)
                             continue
-                        where_clauses.append(f"metadados->>'{key}' = %s")
+                        # Usar psql_sql.Identifier() para prevenir SQL injection
+                        identifier = psql_sql.Identifier(key)
+                        where_clauses.append(f"metadados->>{identifier} = %s")
                         params.append(str(value))
 
                 where_sql = " AND ".join(where_clauses)
