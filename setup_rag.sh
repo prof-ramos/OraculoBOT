@@ -36,8 +36,8 @@ fi
 if [ -z "$SUPABASE_DB_URL" ]; then
     echo "📝 Para configurar o SUPABASE_DB_URL:"
     echo "   Formato: postgresql://postgres:[PASSWORD]@db.[PROJECT].supabase.co:5432/postgres"
-    echo "   Exemplo para seu projeto:"
-    echo "   SUPABASE_DB_URL=\"postgres://postgres.edckgpfzoditeiphilhy:Alcione2025**@aws-1-sa-east-1.pooler.supabase.com:5432/postgres?sslmode=require\""
+    echo "   Exemplo:"
+    echo "   SUPABASE_DB_URL=\"postgresql://postgres:YOUR-PASSWORD@db.your-project.supabase.co:5432/postgres\""
     echo ""
 fi
 

@@ -1,10 +1,13 @@
 """Camada de acesso a dados do OraculoBOT."""
 
+from __future__ import annotations
+
 import logging
 from datetime import datetime, timedelta, timezone
 from typing import Optional
 
 from sqlalchemy import create_engine, delete, select, text
+from sqlalchemy.engine import Engine
 from sqlalchemy.orm import Session
 
 from oraculo_bot.config import SUPABASE_DB_URL
@@ -32,7 +35,7 @@ class SessionDAO:
         self._memory_store: dict[str, DiscordSession] = {}
 
     @property
-    def engine(self):
+    def engine(self) -> Engine:
         """Lazy initialization da engine."""
         if self._engine is None:
             if not self.db_url:

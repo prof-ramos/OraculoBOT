@@ -1,5 +1,7 @@
 """Entrypoint: python -m oraculo_bot."""
 
+from __future__ import annotations
+
 import logging
 
 from oraculo_bot.agent import create_agent

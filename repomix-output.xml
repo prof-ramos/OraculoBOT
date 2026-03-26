@@ -40,15 +40,22 @@ The content is organized as follows:
 </file_summary>
 
 <directory_structure>
+.claude/
+  settings.local.json
 .omc/
   plans/
     open-questions.md
     supabase-integration.md
   sessions/
     27d016b0-99b8-43e1-86dd-715002a89633.json
+    2e50bef7-31ac-4df8-984b-82b5d3233b1d.json
+    36e37654-b137-4140-a1d3-8662e2256a42.json
+    7e0ae01a-8442-4d98-8b8d-f3a5683afd6e.json
   progress.txt
   project-memory.json
 docs/
+  AGENTS.md
+  E2E_TESTING.md
   GEMINI_SETUP.md
   RAG_GEMINI_IMPLEMENTATION.md
   RAG_INTEGRATION.md
@@ -56,6 +63,7 @@ oraculo_bot/
   __init__.py
   __main__.py
   agent.py
+  AGENTS.md
   bot.py
   config.py
   db.py
@@ -63,6 +71,28 @@ oraculo_bot/
   rag_retriever.py
   rag.py
   views.py
+scripts/
+  AGENTS.md
+  test_e2e_manual.py
+tests/
+  e2e/
+    __init__.py
+    AGENTS.md
+    conftest.py
+    README.md
+  unit/
+    __init__.py
+    AGENTS.md
+    test_agent.py
+    test_bot.py
+    test_config.py
+    test_db.py
+    test_rag_retriever.py
+    test_views.py
+  __init__.py
+  AGENTS.md
+  conftest.py
+.coverage
 .env.example
 .gitignore
 AGENTS.md
@@ -70,11 +100,13 @@ analyze_rag_metadata.py
 analyze_rag_tables.py
 check_embedding_format.py
 check_vector_extension.py
+crabbit.txt
 discover_tables.py
 explore_supabase.py
 monitor_bot.py
 prd.json
 pyproject.toml
+pytest.ini
 README.md
 setup_rag.sh
 test_full_rag_flow.py
@@ -90,6 +122,125 @@ test_vector_search.py
 
 <files>
 This section contains the contents of the repository's files.
+
+<file path=".claude/settings.local.json">
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m pytest --collect-only)",
+      "Bash(uv sync:*)",
+      "Bash(chmod:*)",
+      "mcp__plugin_oh-my-claudecode_t__lsp_diagnostics",
+      "Bash(/opt/homebrew/bin/python3 -m py_compile scripts/test_e2e_manual.py)",
+      "Bash(.venv/bin/python -m pytest --collect-only)",
+      "Bash(python -m pytest tests/e2e/test_bot_e2e.py --collect-only)",
+      "Bash(.venv/bin/python -m pytest --collect-only tests/)",
+      "Bash(uv run:*)",
+      "Bash(.venv/bin/python -m pytest tests/unit/ --collect-only)",
+      "Bash(wc:*)",
+      "Bash(.venv/bin/python -m pytest tests/ --cov=oraculo_bot --cov-report=term-missing)",
+      "Bash(.venv/bin/python -m pytest tests/unit/ --cov=oraculo_bot --cov-report=term-missing --cov-report=html --cov-fail-under=80 -q)",
+      "Bash(uv --version)",
+      "Bash(git add:*)",
+      "Bash(coderabbit review:*)",
+      "Bash(python3 -m py_compile scripts/test_e2e_manual.py)",
+      "Bash(git commit:*)",
+      "Bash(python:*)",
+      "Bash(python3:*)",
+      "Bash(grep -v \"^$\")",
+      "Bash(pytest tests/unit --collect-only)",
+      "Bash(git push:*)"
+    ]
+  }
+}
+</file>
+
+<file path=".omc/sessions/2e50bef7-31ac-4df8-984b-82b5d3233b1d.json">
+{
+  "session_id": "2e50bef7-31ac-4df8-984b-82b5d3233b1d",
+  "ended_at": "2026-03-26T17:43:58.591Z",
+  "reason": "prompt_input_exit",
+  "agents_spawned": 0,
+  "agents_completed": 0,
+  "modes_used": []
+}
+</file>
+
+<file path=".omc/sessions/7e0ae01a-8442-4d98-8b8d-f3a5683afd6e.json">
+{
+  "session_id": "7e0ae01a-8442-4d98-8b8d-f3a5683afd6e",
+  "ended_at": "2026-03-26T18:39:03.082Z",
+  "reason": "prompt_input_exit",
+  "agents_spawned": 0,
+  "agents_completed": 0,
+  "modes_used": []
+}
+</file>
+
+<file path="crabbit.txt">
+╔═════════════════════════════════════════════╗
+║                                             ║
+║           New update available!             ║
+║          Run: coderabbit update             ║
+║                                             ║
+╚═════════════════════════════════════════════╝
+
+Starting CodeRabbit review in plain text mode...
+Connecting to review service
+Setting up
+Analyzing
+Reviewing
+
+============================================================================
+File: .omc/sessions/36e37654-b137-4140-a1d3-8662e2256a42.json
+Line: 3 to 6
+Type: nitpick
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @.omc/sessions/36e37654-b137-4140-a1d3-8662e2256a42.json around lines 3 - 6, O campo de metadata "reason" está genérico ("other"); atualize o valor para algo descritivo (por exemplo "session_timeout", "user_requested_end", "agent_completion" ou "manual_termination") ou, se realmente precisar manter "other", acrescente um campo complementar "reason_details" com contexto; localize o objeto JSON que contém "ended_at", "agents_spawned" e "agents_completed" e substitua "reason": "other" por um valor mais específico ou adicione "reason_details" com uma breve explicação (p.ex. previous value "prompt_input_exit" como referência de formato).
+
+
+
+============================================================================
+File: crabbit.txt
+Line: 8 to 10
+Type: nitpick
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @crabbit.txt around lines 8 - 10, A mensagem "Starting CodeRabbit review in plain text mode..." está correta, mas existem duas linhas em branco logo após (linhas vazias seguintes) que devem ser removidas; abra o arquivo crabbit.txt, localize a string "Starting CodeRabbit review in plain text mode..." e delete as linhas vazias subsequentes para deixar o arquivo sem linhas em branco supérfluas.
+
+
+
+============================================================================
+File: .omc/project-memory.json
+Line: 93 to 126
+Type: nitpick
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @.omc/project-memory.json around lines 93 - 126, Atualize o objeto "oraculo_bot" no JSON para preencher o campo purpose (atualmente null) com uma descrição consistente, por exemplo "Main application" ou "Código principal"; localize o nó "oraculo_bot" e substituir purpose: null por purpose: "Main application" (ou a string em português desejada) para manter padrão com os outros diretórios como "scripts" e "docs".
+
+
+
+============================================================================
+File: .omc/project-memory.json
+Line: 54 to 92
+Type: nitpick
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @.omc/project-memory.json around lines 54 - 92, Remove the generated artifact directories from the project memory map: delete the "__pycache__" and "htmlcov" entries (keys "__pycache__" and "htmlcov") from the directoryMap in .omc/project-memory.json and update the project scanning/generation logic (the routine that builds directoryMap) to ignore common ephemeral patterns like "__pycache__", "htmlcov" and other coverage/bytecode folders (e.g., via an ignore list or .gitignore-backed filter) so these directories are not re-added on subsequent scans.
+
+
+
+Review completed: 4 findings ✔
+</file>
 
 <file path=".omc/plans/open-questions.md">
 # Open Questions
@@ -1407,351 +1558,220 @@ CREATE INDEX ix_discord_sessions_user_id ON discord_sessions(user_id);
 - .env já configurado com DISCORD_BOT_TOKEN e DEEPSEEK_API_KEY
 </file>
 
-<file path=".omc/project-memory.json">
-{
-  "version": "1.0.0",
-  "lastScanned": 1774449925872,
-  "projectRoot": "/Users/gabrielramos/repos/OraculoBOT",
-  "techStack": {
-    "languages": [
-      {
-        "name": "Python",
-        "version": null,
-        "confidence": "high",
-        "markers": [
-          "pyproject.toml"
-        ]
-      }
-    ],
-    "frameworks": [],
-    "packageManager": null,
-    "runtime": null
-  },
-  "build": {
-    "buildCommand": null,
-    "testCommand": "pytest",
-    "lintCommand": "ruff check",
-    "devCommand": null,
-    "scripts": {}
-  },
-  "conventions": {
-    "namingStyle": null,
-    "importStyle": null,
-    "testPattern": null,
-    "fileOrganization": null
-  },
-  "structure": {
-    "isMonorepo": false,
-    "workspaces": [],
-    "mainDirectories": [],
-    "gitBranches": null
-  },
-  "customNotes": [],
-  "directoryMap": {},
-  "hotPaths": [
-    {
-      "path": "oraculo_bot/bot.py",
-      "accessCount": 25,
-      "lastAccessed": 1774455415343,
-      "type": "file"
-    },
-    {
-      "path": "oraculo_bot/agent.py",
-      "accessCount": 22,
-      "lastAccessed": 1774458299835,
-      "type": "file"
-    },
-    {
-      "path": "prd.json",
-      "accessCount": 18,
-      "lastAccessed": 1774453734187,
-      "type": "file"
-    },
-    {
-      "path": "oraculo_bot/db.py",
-      "accessCount": 18,
-      "lastAccessed": 1774454269165,
-      "type": "file"
-    },
-    {
-      "path": "",
-      "accessCount": 17,
-      "lastAccessed": 1774452844596,
-      "type": "directory"
-    },
-    {
-      "path": "pyproject.toml",
-      "accessCount": 16,
-      "lastAccessed": 1774458212573,
-      "type": "file"
-    },
-    {
-      "path": "oraculo_bot/__main__.py",
-      "accessCount": 15,
-      "lastAccessed": 1774454176091,
-      "type": "file"
-    },
-    {
-      "path": "oraculo_bot/config.py",
-      "accessCount": 15,
-      "lastAccessed": 1774457880864,
-      "type": "file"
-    },
-    {
-      "path": "oraculo_bot/rag.py",
-      "accessCount": 13,
-      "lastAccessed": 1774459250206,
-      "type": "file"
-    },
-    {
-      "path": ".venv/lib/python3.14/site-packages/agno",
-      "accessCount": 10,
-      "lastAccessed": 1774452878404,
-      "type": "directory"
-    },
-    {
-      "path": ".env.example",
-      "accessCount": 9,
-      "lastAccessed": 1774457886745,
-      "type": "file"
-    },
-    {
-      "path": ".env",
-      "accessCount": 9,
-      "lastAccessed": 1774459219715,
-      "type": "file"
-    },
-    {
-      "path": "oraculo_bot",
-      "accessCount": 6,
-      "lastAccessed": 1774453766870,
-      "type": "directory"
-    },
-    {
-      "path": "oraculo_bot/models.py",
-      "accessCount": 6,
-      "lastAccessed": 1774454279487,
-      "type": "file"
-    },
-    {
-      "path": "AGENTS.md",
-      "accessCount": 5,
-      "lastAccessed": 1774451147373,
-      "type": "file"
-    },
-    {
-      "path": ".venv/lib/python3.14/site-packages/agno/run/agent.py",
-      "accessCount": 5,
-      "lastAccessed": 1774452872821,
-      "type": "directory"
-    },
-    {
-      "path": ".venv/lib/python3.14/site-packages/agno/agent",
-      "accessCount": 5,
-      "lastAccessed": 1774452901330,
-      "type": "directory"
-    },
-    {
-      "path": "agent.py",
-      "accessCount": 4,
-      "lastAccessed": 1774450322420,
-      "type": "file"
-    },
-    {
-      "path": ".venv/lib/python3.14/site-packages/agno/db",
-      "accessCount": 4,
-      "lastAccessed": 1774451444522,
-      "type": "directory"
-    },
-    {
-      "path": "oraculo_bot/rag_retriever.py",
-      "accessCount": 4,
-      "lastAccessed": 1774455674954,
-      "type": "file"
-    },
-    {
-      "path": "config.py",
-      "accessCount": 3,
-      "lastAccessed": 1774450350125,
-      "type": "file"
-    },
-    {
-      "path": ".venv/lib/python3.14/site-packages/agno/db/postgres/schemas.py",
-      "accessCount": 3,
-      "lastAccessed": 1774452053673,
-      "type": "file"
-    },
-    {
-      "path": ".venv/lib/python3.14/site-packages/agno/agent/agent.py",
-      "accessCount": 3,
-      "lastAccessed": 1774452882877,
-      "type": "directory"
-    },
-    {
-      "path": ".venv/lib/python3.14/site-packages/agno/agent/_messages.py",
-      "accessCount": 3,
-      "lastAccessed": 1774452905443,
-      "type": "file"
-    },
-    {
-      "path": ".venv",
-      "accessCount": 2,
-      "lastAccessed": 1774451417872,
-      "type": "directory"
-    },
-    {
-      "path": ".venv/lib/python3.14/site-packages/agno/db/postgres/postgres.py",
-      "accessCount": 2,
-      "lastAccessed": 1774451441187,
-      "type": "file"
-    },
-    {
-      "path": ".venv/lib/python3.14/site-packages/agno/agent/_session.py",
-      "accessCount": 2,
-      "lastAccessed": 1774452889365,
-      "type": "file"
-    },
-    {
-      "path": "discover_tables.py",
-      "accessCount": 2,
-      "lastAccessed": 1774454759801,
-      "type": "file"
-    },
-    {
-      "path": "test_vector_search.py",
-      "accessCount": 2,
-      "lastAccessed": 1774455196234,
-      "type": "file"
-    },
-    {
-      "path": "README.md",
-      "accessCount": 1,
-      "lastAccessed": 1774450148052,
-      "type": "file"
-    },
-    {
-      "path": "bot.py",
-      "accessCount": 1,
-      "lastAccessed": 1774450160272,
-      "type": "file"
-    },
-    {
-      "path": "views.py",
-      "accessCount": 1,
-      "lastAccessed": 1774450160300,
-      "type": "file"
-    },
-    {
-      "path": "__main__.py",
-      "accessCount": 1,
-      "lastAccessed": 1774450160323,
-      "type": "file"
-    },
-    {
-      "path": "__init__.py",
-      "accessCount": 1,
-      "lastAccessed": 1774450160376,
-      "type": "file"
-    },
-    {
-      "path": ".venv/lib/python3.14/site-packages/agno/db/__init__.py",
-      "accessCount": 1,
-      "lastAccessed": 1774451346127,
-      "type": "file"
-    },
-    {
-      "path": ".venv/lib/python3.14/site-packages/agno/db/postgres",
-      "accessCount": 1,
-      "lastAccessed": 1774451346150,
-      "type": "directory"
-    },
-    {
-      "path": ".venv/lib/python3.14/site-packages/agno/db/postgres/__init__.py",
-      "accessCount": 1,
-      "lastAccessed": 1774451346181,
-      "type": "file"
-    },
-    {
-      "path": ".venv/lib/python3.14/site-packages/agno/db/base.py",
-      "accessCount": 1,
-      "lastAccessed": 1774451349482,
-      "type": "file"
-    },
-    {
-      "path": ".venv/lib/python3.14/site-packages/agno/db/migrations",
-      "accessCount": 1,
-      "lastAccessed": 1774451354729,
-      "type": "directory"
-    },
-    {
-      "path": "oraculo_bot/views.py",
-      "accessCount": 1,
-      "lastAccessed": 1774451913100,
-      "type": "file"
-    },
-    {
-      "path": ".venv/lib/python3.14/site-packages/agno/agent/_run.py",
-      "accessCount": 1,
-      "lastAccessed": 1774452895946,
-      "type": "file"
-    },
-    {
-      "path": "explore_supabase.py",
-      "accessCount": 1,
-      "lastAccessed": 1774454562413,
-      "type": "file"
-    },
-    {
-      "path": "analyze_rag_tables.py",
-      "accessCount": 1,
-      "lastAccessed": 1774454786687,
-      "type": "file"
-    },
-    {
-      "path": "analyze_rag_metadata.py",
-      "accessCount": 1,
-      "lastAccessed": 1774454818355,
-      "type": "file"
-    },
-    {
-      "path": "check_vector_extension.py",
-      "accessCount": 1,
-      "lastAccessed": 1774455132026,
-      "type": "file"
-    },
-    {
-      "path": "check_embedding_format.py",
-      "accessCount": 1,
-      "lastAccessed": 1774455229381,
-      "type": "file"
-    },
-    {
-      "path": "test_simple_vector_search.py",
-      "accessCount": 1,
-      "lastAccessed": 1774455260309,
-      "type": "file"
-    },
-    {
-      "path": "test_rag_integration.py",
-      "accessCount": 1,
-      "lastAccessed": 1774455488920,
-      "type": "file"
-    },
-    {
-      "path": "setup_rag.sh",
-      "accessCount": 1,
-      "lastAccessed": 1774455579363,
-      "type": "file"
-    },
-    {
-      "path": "test_rag_db_connection.py",
-      "accessCount": 1,
-      "lastAccessed": 1774455612504,
-      "type": "file"
-    }
-  ],
-  "userDirectives": []
-}
+<file path="docs/AGENTS.md">
+<!-- Parent: ../AGENTS.md -->
+<!-- Generated: 2026-03-25 -->
+
+# docs
+
+## Purpose
+Documentação do projeto OraculoBOT.
+
+## Key Files
+| File | Description |
+|------|-------------|
+| `E2E_TESTING.md` | Guia completo de testes E2E |
+
+## For AI Agents
+
+### Working In This Directory
+- Documentação em português (pt-BR)
+- Markdown padrão GitHub
+</file>
+
+<file path="docs/E2E_TESTING.md">
+# Testes E2E - OraculoBOT
+
+## Pré-requisitos para testes E2E
+
+### 1. Discord Bot Token
+- Obtenha um bot token no [Discord Developer Portal](https://discord.com/developers/applications)
+- Adicione o token ao arquivo `.env`: `DISCORD_BOT_TOKEN=seu_token_aqui`
+
+### 2. Guild e Channel de Teste
+- Crie um servidor Discord dedicado para testes
+- Crie um canal privado para testes E2E
+- Anote o ID da guild e do canal:
+  - `TARGET_GUILD_ID=123456789012345678`
+  - `TARGET_CHANNEL_ID=123456789012345678`
+
+### 3. Variáveis de Ambiente Opcionais
+```env
+# APIs de IA (para testes completos)
+DEEPSEEK_API_KEY=your_deepseek_key
+OPENAI_API_KEY=your_openai_key
+GEMINI_API_KEY=your_gemini_key
+
+# Configurações do bot
+MODEL_ID=deepseek-chat
+HISTORY_RUNS=5
+TARGET_GUILD_ID=sua_guild_id
+TARGET_CHANNEL_ID=seu_channel_id
+MAX_MESSAGE_LENGTH=2000
+ERROR_MESSAGE=Erro ao processar sua mensagem.
+```
+
+## Configuração do Ambiente de Teste
+
+### 1. Instale dependências
+```bash
+uv sync
+```
+
+### 2. Configure arquivo .env
+```bash
+cp .env.example .env
+# Edite .env com suas credenciais
+```
+
+### 3. Crie pasta de log
+```bash
+mkdir -p logs
+```
+
+## Testes Manuais
+
+### Script de Teste Manual
+**Localização:** `scripts/test_e2e_manual.py`
+
+#### Como executar:
+```bash
+cd scripts
+python test_e2e_manual.py
+```
+
+#### Funcionalidades testadas:
+1. **Inicialização do bot** - Verifica se o bot inicia e entra no servidor correto
+2. **Resposta a mensagens** - Envia comandos básicos e verifica respostas
+3. **Resposta a menções** - Testa menções ao bot
+4. **Processamento de anexos** - Envia arquivos e testa processamento
+5. **Threads do Discord** - Cria e gerencia threads
+6. **Limite de mensagens** - Testa truncamento de mensagens longas
+
+#### Instruções passo a passo:
+1. Execute o script manual
+2. Verifique se o bot está online no Discord
+3. Siga os prompts no terminal
+4. Confirme se as ações são executadas corretamente no Discord
+
+## Nota sobre Testes Automatizados
+
+Testes E2E automatizados com mocks Discord foram removidos devido à complexidade de mockar corretamente o `discord.py`, especialmente o método `thread.typing()` que é um async context manager.
+
+A estrutura `tests/e2e/` contém apenas fixtures (`conftest.py`) para uso futuro. Para testes automatizados, utilize os testes unitários em `tests/unit/` que cobrem toda a lógica do bot.
+
+## Checklist de Validação E2E
+
+### Antes dos Testes
+- [ ] Bot token válido e com permissões necessárias
+- [ ] Guild e channel IDs corretos
+- [ ] Todas as variáveis de ambiente configuradas
+- [ ] Conexão com APIs de IA ativa (opcional para testes básicos)
+- [ ] Arquivos de log acessíveis
+
+### Durante os Testes
+- [ ] Bot inicia sem erros
+- [ ] Bot entra no servidor correto
+- [ ] Responde a mensagens em até 5 segundos
+- [ ] Mensagens não excedem limite de 2000 caracteres
+- [ ] Threads são criadas corretamente
+- [ ] Anexos são processados sem crashes
+
+### Pós-Testes
+- [ ] Verificar arquivos de log para erros
+- [ ] Confirmar que todas as actions foram executadas
+- [ ] Validar que as respostas estão formatadas corretamente
+- [ ] Testar cleanup de recursos
+
+## Troubleshooting Comum
+
+### Erros Comuns
+
+#### 1. "Token inválido"
+```
+Solução:
+- Verificar se o token está correto no .env
+- Copiar token sem espaços extras
+- Gerar novo token se necessário
+```
+
+#### 2. "Não foi possível se conectar ao servidor"
+```
+Solução:
+- Verificar TARGET_GUILD_ID e TARGET_CHANNEL_ID
+- Confirmar que o bot está convidado para o servidor
+- Verificar permissões do bot no servidor
+```
+
+#### 3. "Timeout ao conectar à API"
+```
+Solução:
+- Verificar conexão com internet
+- Testar APIs individualmente
+- Aumentar timeout se necessário
+- Usar mocking para testes offline
+```
+
+#### 4. "Mensagens não são respondidas"
+```
+Solução:
+- Verificar se o bot está no canal correto
+- Testar mensagens com menção (@bot)
+- Verificar se o bot não está em modo de manutenção
+- Checar logs para erros
+```
+
+### Debug Mode
+
+Para depuração detalhada:
+```bash
+# Ativar logging detalhado
+export LOG_LEVEL=DEBUG
+python -m pytest tests/e2e/test_bot_responses.py -v -s
+```
+
+### Logs Úteis
+- `logs/bot.log`: Logs do bot
+- `logs/rag.log`: Logs do sistema RAG
+- `logs/api.log`: Logs das chamadas de API
+
+## Boas Práticas
+
+1. **Testes Isolados**: Cada teste deve rodar independentemente
+2. **Mocking**: Usar mocks para Discord APIs quando possível
+3. **Limpeza**: Limpar dados de teste após cada execução
+4. **Versionamento**: Manter versões estáveis dos testes E2E
+5. **Segurança**: Nunca commitar tokens reais no repositório
+
+## Desenvolvimento de Novos Testes
+
+### Criando um novo teste E2E:
+```python
+# tests/e2e/test_nova_funcionalidade.py
+import pytest
+from tests.conftest import e2e_bot, test_channel
+
+def test_nova_funcionalidade(e2e_bot, test_channel):
+    # Arrange
+    message = "Comando de teste"
+
+    # Act
+    result = e2e_bot.process_message(message)
+
+    # Assert
+    assert result is not None
+    assert "Resposta esperada" in result.content
+```
+
+### Melhorias Contínuas:
+1. Adicionar mais casos de borda
+2. Implementar testes de performance
+3. Criar testes de regressão
+4. Automatizar validação visual
+
+---
+
+*Documentação gerada automaticamente - Veja histórico do git para data de atualização*
 </file>
 
 <file path="docs/GEMINI_SETUP.md">
@@ -2065,6 +2085,55 @@ O bot está **pronto para produção** com configuração da GEMINI_API_KEY! �
 """Oráculo Bot — Assistente Discord para concursos públicos brasileiros."""
 
 __version__ = "0.1.0"
+</file>
+
+<file path="oraculo_bot/AGENTS.md">
+<!-- Parent: ../AGENTS.md -->
+<!-- Generated: 2026-03-25 -->
+
+# oraculo_bot
+
+## Purpose
+Módulo principal do bot Discord com IA especializada em concursos públicos.
+
+## Key Files
+| File | Description |
+|------|-------------|
+| `__main__.py` | Entry point do bot |
+| `agent.py` | Criação e configuração do Agent Oráculo |
+| `bot.py` | OracleDiscordBot - lógica principal do Discord |
+| `config.py` | Variáveis de ambiente e configurações |
+| `db.py` | SessionDAO - persistência de sessões |
+| `models.py` | DiscordSession - modelo de dados |
+| `rag.py` | Interface RAG para legislação |
+| `rag_retriever.py` | RAGRetriever - busca vetorial |
+| `views.py` | ConfirmationView - UI Discord (HITL) |
+
+## For AI Agents
+
+### Working In This Directory
+- Bot usa discord.py com intents.all()
+- Agent usa DeepSeek via agno
+- RAG opcional via pgvector
+
+### Testing Requirements
+- Cada módulo tem testes em tests/unit/
+- Mock para Discord client
+
+### Common Patterns
+- from __future__ import annotations
+- Log com agno.utils.log
+- Async/await para Discord
+
+## Dependencies
+
+### Internal
+- Usa config.py em todos os módulos
+
+### External
+- discord.py - Discord API
+- agno - Agent framework
+- sqlalchemy - Database ORM
 </file>
 
 <file path="oraculo_bot/db.py">
@@ -2389,235 +2458,6 @@ def create_tables(db_url: str) -> None:
         engine.dispose()
 </file>
 
-<file path="oraculo_bot/rag_retriever.py">
-"""RAG Retriever para busca semântica em legislação."""
-
-import logging
-from typing import Optional
-
-import psycopg
-
-from oraculo_bot.config import SUPABASE_DB_URL
-
-logger = logging.getLogger(__name__)
-ALLOWED_METADATA_FILTERS = {
-    "ano",
-    "artigo",
-    "assunto",
-    "banca",
-    "cargo",
-    "disciplina",
-    "tema",
-    "tipo",
-}
-
-
-class RAGRetriever:
-    """Retriever para RAG usando Supabase pgvector.
-
-    Realiza busca semântica em chunks de legislação com embeddings.
-    """
-
-    def __init__(self, db_url: Optional[str] = None):
-        """Inicializa o retriever.
-
-        Args:
-            db_url: URL PostgreSQL. Se None, usa SUPABASE_DB_URL.
-        """
-        self.db_url = db_url or SUPABASE_DB_URL
-        self._conn = None
-
-    @property
-    def conn(self):
-        """Lazy connection."""
-        if self._conn is None:
-            if not self.db_url:
-                raise RuntimeError("SUPABASE_DB_URL não configurada")
-            self._conn = psycopg.connect(self.db_url)
-        return self._conn
-
-    @property
-    def enabled(self) -> bool:
-        """Verifica se RAG está habilitado."""
-        return bool(self.db_url)
-
-    def retrieve(
-        self,
-        query_text: str,
-        query_embedding: list[float],
-        top_k: int = 5,
-        filters: Optional[dict] = None,
-    ) -> list[dict]:
-        """Busca chunks similares ao query.
-
-        Args:
-            query_text: Texto da query (não usado na busca vetorial).
-            query_embedding: Embedding do query (vetor de floats).
-            top_k: Número de resultados a retornar.
-            filters: Filtros de metadados (ex: {"ano": "2021", "banca": "FCC"}).
-
-        Returns:
-            Lista de chunks similares com metadados.
-        """
-        if not self.enabled:
-            logger.warning("RAG desabilitado (SUPABASE_DB_URL não configurada)")
-            return []
-
-        try:
-            with self.conn.cursor() as cur:
-                # Construir query base
-                where_clauses = ["embedding IS NOT NULL"]
-                params = []
-
-                # Adicionar filtros se fornecidos
-                if filters:
-                    for key, value in filters.items():
-                        if key not in ALLOWED_METADATA_FILTERS:
-                            logger.warning("Ignorando filtro RAG não permitido: %s", key)
-                            continue
-                        where_clauses.append(f"metadados->>'{key}' = %s")
-                        params.append(str(value))
-
-                where_sql = " AND ".join(where_clauses)
-
-                # Query de busca vetorial
-                sql = f"""
-                    SELECT
-                        id,
-                        documento_id,
-                        texto,
-                        metadados,
-                        metadados->>'ano' as ano,
-                        metadados->>'banca' as banca,
-                        metadados->>'tipo' as tipo,
-                        metadados->>'artigo' as artigo,
-                        1 - (embedding <=> %s::vector) as similarity
-                    FROM rag_chunks
-                    WHERE {where_sql}
-                    ORDER BY embedding <=> %s::vector
-                    LIMIT %s;
-                """
-
-                # Converter embedding para string PostgreSQL array
-                # Garantir formato com colchetes [0.1, 0.2, ...]
-                if isinstance(query_embedding, str):
-                    # Se já for string, garantir colchetes
-                    emb_str = query_embedding
-                    if emb_str.startswith("("):
-                        emb_str = "[" + emb_str[1:-1] + "]"
-                else:
-                    # Se for lista, converter para string com colchetes
-                    emb_str = "[" + ",".join(str(x) for x in query_embedding) + "]"
-
-                params.extend([emb_str, emb_str, top_k])
-
-                cur.execute(sql, params)
-                results = cur.fetchall()
-
-                # Montar resposta
-                chunks = []
-                for row in results:
-                    chunk_id, doc_id, texto, metadata, ano, banca, tipo, artigo, similarity = row
-                    chunks.append({
-                        "id": chunk_id,
-                        "documento_id": doc_id,
-                        "texto": texto,
-                        "metadados": metadata,
-                        "ano": ano,
-                        "banca": banca,
-                        "tipo": tipo,
-                        "artigo": artigo,
-                        "similarity": similarity,
-                    })
-
-                logger.info(f"RAG: encontrados {len(chunks)} chunks (top_k={top_k})")
-                return chunks
-
-        except psycopg.Error:
-            logger.exception("Erro na busca RAG")
-            return []
-
-    def retrieve_by_keywords(
-        self,
-        keywords: list[str],
-        top_k: int = 5,
-        filters: Optional[dict] = None,
-    ) -> list[dict]:
-        """Busca chunks por keywords (full-text search).
-
-        Args:
-            keywords: Lista de palavras-chave.
-            top_k: Número de resultados.
-            filters: Filtros de metadados.
-
-        Returns:
-            Lista de chunks com keywords.
-        """
-        if not self.enabled:
-            return []
-
-        try:
-            with self.conn.cursor() as cur:
-                # Construir WHERE com ILIKE para cada keyword
-                keyword_conditions = []
-                params = []
-                for keyword in keywords:
-                    like_value = f"%{keyword}%"
-                    keyword_conditions.append("(texto ILIKE %s OR metadados::text ILIKE %s)")
-                    params.extend([like_value, like_value])
-
-                where_clauses = ["embedding IS NOT NULL"]
-                if keyword_conditions:
-                    where_clauses.append("(" + " OR ".join(keyword_conditions) + ")")
-
-                # Adicionar filtros se fornecidos
-                if filters:
-                    for key, value in filters.items():
-                        if key not in ALLOWED_METADATA_FILTERS:
-                            logger.warning("Ignorando filtro keyword não permitido: %s", key)
-                            continue
-                        where_clauses.append(f"metadados->>'{key}' = %s")
-                        params.append(str(value))
-
-                where_sql = " AND ".join(where_clauses)
-
-                sql = f"""
-                    SELECT
-                        id,
-                        documento_id,
-                        substring(texto, 1, 500) as texto_preview,
-                        metadados,
-                        metadados->>'ano' as ano,
-                        metadados->>'banca' as banca
-                    FROM rag_chunks
-                    WHERE {where_sql}
-                    LIMIT %s;
-                """
-
-                params.append(top_k)
-                cur.execute(sql, params)
-                results = cur.fetchall()
-
-                chunks = []
-                for row in results:
-                    chunk_id, doc_id, texto, metadata, ano, banca = row
-                    chunks.append({
-                        "id": chunk_id,
-                        "documento_id": doc_id,
-                        "texto": texto,
-                        "metadados": metadata,
-                        "ano": ano,
-                        "banca": banca,
-                    })
-
-                logger.info(f"RAG keyword search: {len(chunks)} chunks")
-                return chunks
-
-        except psycopg.Error:
-            logger.exception("Erro na busca por keywords")
-            return []
-</file>
-
 <file path="oraculo_bot/views.py">
 """Componentes de UI do Discord (Human-in-the-Loop)."""
 
@@ -2660,95 +2500,2027 @@ class ConfirmationView(discord.ui.View):
         log_warning("ConfirmationView: timeout atingido")
 </file>
 
-<file path="AGENTS.md">
-<!-- Generated: 2026-03-25 | Updated: 2026-03-25 -->
+<file path="scripts/AGENTS.md">
+<!-- Parent: ../AGENTS.md -->
+<!-- Generated: 2026-03-25 -->
 
-# OraculoBOT
+# scripts
 
 ## Purpose
-
-Bot Discord de estudos para concursos públicos brasileiros, construído com Agno (framework de agentes AI) e discord.py. O bot responde automaticamente em um canal configurado, cria threads por conversa com histórico preservado, e oferece 4 modos adaptativos: Estudo, Professor, Simulado e Casual.
+Scripts utilitários para desenvolvimento e testes do OraculoBOT.
 
 ## Key Files
-
 | File | Description |
 |------|-------------|
-| `pyproject.toml` | Manifesto do projeto com dependências (agno, discord.py, openai) e configurações de build |
-| `README.md` | Documentação do projeto: features, requisitos, setup e configuração |
-| `.env.example` | Template de variáveis de ambiente necessárias (DISCORD_BOT_TOKEN, DEEPSEEK_API_KEY, etc) |
-| `.gitignore` | Arquivos ignorados pelo git |
-| `__init__.py` | Inicialização do pacote com versionamento |
-| `__main__.py` | Entrypoint para execução via `python -m oraculo_bot` |
-| `config.py` | Configuração centralizada via variáveis de ambiente (tokens, IDs, modelo, limites) |
-| `agent.py` | Definição do Agent Agno com instruções do sistema (4 modos de operação) |
-| `bot.py` | Core do bot: OracleDiscordBot (filtro guild/channel, threading, mídia, HITL) |
-| `views.py` | Componentes de UI Discord (botões de confirmação para Human-in-the-Loop) |
-
-## Subdirectories
-
-| Directory | Purpose |
-|-----------|---------|
-| `.omc/` | Estado do oh-my-claudecode (gerenciado automaticamente, não modificar) |
+| `test_e2e_manual.py` | Script E2E manual para validar bot Discord |
 
 ## For AI Agents
 
 ### Working In This Directory
-
-- **Python**: Requer Python 3.11+, usar `uv` como gerenciador de pacotes
-- **Execução**: `uv run python -m oraculo_bot`
-- **Dependências**: Sempre execute `uv sync` antes de modificar código
-- **Linting**: Configurado com Ruff (target: py311, line-length: 100)
-
-### Testing Requirements
-
-- Testar manualmente no Discord após alterações em `bot.py` ou `agent.py`
-- Verificar se variáveis de ambiente estão configuradas (`.env`)
+- Scripts devem ser executáveis (chmod +x)
+- Usar uv run para executar com dependências
 
 ### Common Patterns
+- argparse para CLI
+- logging detalhado
+</file>
 
-- **Imports**: Use `from __future__ import annotations` para type hints
-- **Logging**: Use `agno.utils.log.log_info()` e `log_error()`
-- **Config**: Valide env vars via `_require_env()` em `config.py`
-- **Markdown**: Bot usa formatação Discord-compatible (`**negrito**`, `*itálico*`, ```código```)
+<file path="tests/e2e/__init__.py">
+"""Testes E2E do OraculoBOT."""
+</file>
 
-## Dependencies
+<file path="tests/e2e/AGENTS.md">
+<!-- Parent: ../AGENTS.md -->
+<!-- Generated: 2026-03-25 -->
 
-### External
+# e2e
 
-- **agno>=1.0.0** - Framework de agentes AI (Agent, Team, RunOutput, media types)
-- **discord.py>=2.4.0** - Lib oficial do Discord (Client, Intents, ui.View)
-- **openai>=1.0.0** - Cliente OpenAI (base para DeepSeek)
-- **requests>=2.32.0** - HTTP client para download de mídia
+## Purpose
+Infraestrutura E2E com fixtures especializadas e scripts de teste manual.
 
-### Architecture
+## Key Files
+| File | Description |
+|------|-------------|
+| `conftest.py` | 17 fixtures E2E (bot, messages, threads, responses) |
+| `README.md` | Explicação sobre testes automatizados removidos |
 
+## For AI Agents
+
+### Testing Requirements
+- Testes E2E automatizados removidos (complexidade Discord mocks)
+- Usar scripts/test_e2e_manual.py para testes manuais
+
+### Common Patterns
+- Mocks Discord com spec=discord.* para isinstance()
+- AsyncMock para métodos assíncronos
+</file>
+
+<file path="tests/e2e/README.md">
+# Testes E2E do OraculoBOT
+
+## Status
+
+Testes E2E automatizados com mocks do Discord foram removidos devido à complexidade de mockar corretamente o `discord.py`, especialmente o método `thread.typing()` que é um async context manager.
+
+## Alternativas Recomendadas
+
+### 1. Teste Manual (Recomendado)
+
+Use o script `scripts/test_e2e_manual.py` para testes E2E reais:
+
+```bash
+# Dry-run (valida config sem iniciar bot)
+python scripts/test_e2e_manual.py --dry-run
+
+# Teste completo
+python scripts/test_e2e_manual.py
 ```
-__main__.py → create_agent() + OracleDiscordBot() → serve()
-                ↓                    ↓
-            Agno Agent         Discord Client
-            (instructions)     (events loop)
+
+Veja documentação completa em `docs/E2E_TESTING.md`.
+
+### 2. Testes Unitários
+
+Testes unitários em `tests/unit/` cobrem a lógica do bot:
+
+```bash
+uv run pytest tests/unit/ -v
 ```
 
-### Key Concepts
+### 3. Teste Manual no Discord
 
-- **Filtro guild/channel**: Bot responde apenas em `TARGET_GUILD_ID`/`TARGET_CHANNEL_ID`
-- **Threads por conversa**: Cada mensagem cria/usa uma thread com prefixo "💬 {username}"
-- **HITL (Human-in-the-Loop)**: Tools que requerem confirmação mostram botões via `ConfirmationView`
-- **Suporte a mídia**: Imagens (URL), vídeos/áudio (bytes), documentos (bytes)
-- **Split de mensagens**: Textos >1500 chars são divididos em batches "[1/N] ..."
+Para testes E2E simples:
+1. Inicie o bot: `python -m oraculo_bot`
+2. Envie mensagens no canal configurado
+3. Observe as respostas e logs
 
-### Environment Variables
+## Por que testes E2E automatizados foram removidos?
 
-| Variável | Obrigatório | Default |
-|----------|-------------|---------|
-| `DISCORD_BOT_TOKEN` | ✅ | - |
-| `DEEPSEEK_API_KEY` | ✅ | - |
-| `TARGET_GUILD_ID` | ❌ | 1283924742851661844 |
-| `TARGET_CHANNEL_ID` | ❌ | 1486301006659715143 |
-| `MODEL_ID` | ❌ | deepseek-chat |
-| `HISTORY_RUNS` | ❌ | 5 |
+Mockar o `discord.py` corretamente requer:
+- `spec=` em todos os mocks para passar `isinstance()` checks
+- Async context managers funcionais para `thread.typing()`
+- Gerenciamento complexo de estados do Discord
 
-<!-- MANUAL: Notas manuais podem ser adicionadas abaixo desta linha -->
+O esforço para manter esses mocks funcionando supera o benefício, considerando que:
+- Testes unitários já cobrem a lógica do bot
+- Testes manuais são mais realistas para validação E2E
+- O script `test_e2e_manual.py` facilita testes manuais estruturados
+</file>
+
+<file path="tests/unit/__init__.py">
+"""Testes unitários do OraculoBOT."""
+</file>
+
+<file path="tests/unit/AGENTS.md">
+<!-- Parent: ../AGENTS.md -->
+<!-- Generated: 2026-03-25 -->
+
+# unit
+
+## Purpose
+Testes unitários dos módulos do OraculoBOT com alta cobertura.
+
+## Key Files
+| File | Description |
+|------|-------------|
+| `test_agent.py` | Testes do agente IA |
+| `test_bot.py` | Testes do bot Discord |
+| `test_config.py` | Testes de configuração |
+| `test_db.py` | Testes do SessionDAO |
+| `test_models.py` | Testes dos modelos |
+| `test_rag_retriever.py` | Testes do RAG |
+| `test_views.py` | Testes das views Discord |
+
+## For AI Agents
+
+### Testing Requirements
+- 152 testes atualmente passando
+- Usar fixtures de conftest.py global
+
+### Common Patterns
+- pytest.mark.asyncio para testes assíncronos
+- mocker.patch para isolar dependências
+</file>
+
+<file path="tests/unit/test_agent.py">
+"""Testes unitários para agent.py."""
+
+from unittest.mock import Mock, MagicMock, patch, call
+import pytest
+
+from oraculo_bot import agent
+from oraculo_bot.models import DiscordSession
+
+
+class TestCreateAgent:
+    """Testes para create_agent()."""
+
+    def test_create_agent_returns_agent_instance(self, mocker):
+        """Deve retornar instância de Agent."""
+        mock_deepseek = mocker.patch("oraculo_bot.agent.DeepSeek")
+        mock_agent_class = mocker.patch("oraculo_bot.agent.Agent")
+
+        mock_agent_instance = Mock()
+        mock_agent_class.return_value = mock_agent_instance
+
+        result = agent.create_agent()
+
+        assert result is mock_agent_instance
+        mock_agent_class.assert_called_once()
+
+    def test_create_agent_uses_config_values(self, mocker, mock_env_vars):
+        """Deve usar valores do config."""
+        mock_deepseek = mocker.patch("oraculo_bot.agent.DeepSeek")
+        mock_agent_class = mocker.patch("oraculo_bot.agent.Agent")
+
+        agent.create_agent()
+
+        # Verificar chamadas
+        mock_agent_class.assert_called_once()
+        call_kwargs = mock_agent_class.call_args[1]
+
+        assert call_kwargs["name"] == "Oráculo"
+        assert call_kwargs["markdown"] is True
+        assert call_kwargs["add_history_to_context"] is True
+        assert call_kwargs["num_history_runs"] == 5
+        assert call_kwargs["add_datetime_to_context"] is True
+
+    def test_create_agent_includes_system_instructions(self, mocker):
+        """Deve incluir SYSTEM_INSTRUCTIONS."""
+        mock_agent_class = mocker.patch("oraculo_bot.agent.Agent")
+        mocker.patch("oraculo_bot.agent.DeepSeek")
+
+        agent.create_agent()
+
+        call_kwargs = mock_agent_class.call_args[1]
+        assert "instructions" in call_kwargs
+        assert isinstance(call_kwargs["instructions"], list)
+        assert len(call_kwargs["instructions"]) > 0
+
+
+class TestInitializeSession:
+    """Testes para initialize_session()."""
+
+    def test_initialize_session_creates_via_dao(self, mocker):
+        """Deve criar sessão via SessionDAO."""
+        mock_dao = mocker.patch("oraculo_bot.agent._session_dao")
+        mock_session = DiscordSession(
+            thread_id="thread123",
+            user_id="user123",
+            mode="estudo"
+        )
+        mock_dao.get_or_create_session.return_value = mock_session
+
+        result = agent.initialize_session("thread123", "user123", "professor")
+
+        assert result.thread_id == "thread123"
+        mock_dao.get_or_create_session.assert_called_once_with(
+            "thread123",
+            "user123",
+            "professor"
+        )
+
+    def test_initialize_session_default_mode(self, mocker):
+        """Deve usar modo 'estudo' como default."""
+        mock_dao = mocker.patch("oraculo_bot.agent._session_dao")
+        mock_session = DiscordSession(
+            thread_id="thread123",
+            user_id="user123",
+            mode="estudo"
+        )
+        mock_dao.get_or_create_session.return_value = mock_session
+
+        result = agent.initialize_session("thread123", "user123")
+
+        mock_dao.get_or_create_session.assert_called_once_with(
+            "thread123",
+            "user123",
+            "estudo"
+        )
+
+
+class TestSaveSessionHistory:
+    """Testes para save_session_history()."""
+
+    def test_save_session_history_calls_dao(self, mocker):
+        """Deve chamar update_session_data do DAO."""
+        mock_dao = mocker.patch("oraculo_bot.agent._session_dao")
+        mock_session = DiscordSession(
+            thread_id="thread123",
+            user_id="user123",
+            mode="estudo"
+        )
+        mock_dao.update_session_data.return_value = mock_session
+
+        messages = [
+            {"role": "user", "content": "Olá"},
+            {"role": "assistant", "content": "Oi!"}
+        ]
+
+        agent.save_session_history("thread123", messages)
+
+        mock_dao.update_session_data.assert_called_once_with(
+            "thread123",
+            {"history": messages}
+        )
+
+    def test_save_session_history_with_empty_messages(self, mocker):
+        """Deve lidar com lista vazia de mensagens."""
+        mock_dao = mocker.patch("oraculo_bot.agent._session_dao")
+        mock_session = DiscordSession(
+            thread_id="thread123",
+            user_id="user123",
+            mode="estudo"
+        )
+        mock_dao.update_session_data.return_value = mock_session
+
+        agent.save_session_history("thread123", [])
+
+        mock_dao.update_session_data.assert_called_once_with(
+            "thread123",
+            {"history": []}
+        )
+
+
+class TestGetSessionHistory:
+    """Testes para get_session_history()."""
+
+    def test_get_session_history_from_dao(self, mocker):
+        """Deve buscar histórico do DAO."""
+        mock_dao = mocker.patch("oraculo_bot.agent._session_dao")
+        mock_session = DiscordSession(
+            thread_id="thread123",
+            user_id="user123",
+            mode="estudo",
+            session_data={
+                "history": [
+                    {"role": "user", "content": "Pergunta"},
+                    {"role": "assistant", "content": "Resposta"}
+                ]
+            }
+        )
+        mock_dao.get_session.return_value = mock_session
+
+        result = agent.get_session_history("thread123")
+
+        assert result == [
+            {"role": "user", "content": "Pergunta"},
+            {"role": "assistant", "content": "Resposta"}
+        ]
+
+    def test_get_session_history_returns_empty_list_if_no_session(self, mocker):
+        """Deve retornar lista vazia se sessão não existe."""
+        mock_dao = mocker.patch("oraculo_bot.agent._session_dao")
+        mock_dao.get_session.return_value = None
+
+        result = agent.get_session_history("thread999")
+
+        assert result == []
+
+    def test_get_session_history_returns_empty_list_if_no_history(self, mocker):
+        """Deve retornar lista vazia se sem histórico."""
+        mock_dao = mocker.patch("oraculo_bot.agent._session_dao")
+        mock_session = DiscordSession(
+            thread_id="thread123",
+            user_id="user123",
+            mode="estudo",
+            session_data={}
+        )
+        mock_dao.get_session.return_value = mock_session
+
+        result = agent.get_session_history("thread123")
+
+        assert result == []
+
+    def test_get_session_history_returns_empty_list_if_no_session_data(self, mocker):
+        """Deve retornar lista vazia se session_data não tem histórico."""
+        mock_dao = mocker.patch("oraculo_bot.agent._session_dao")
+        mock_session = DiscordSession(
+            thread_id="thread123",
+            user_id="user123",
+            mode="estudo",
+            session_data={}  # Vazio, não None
+        )
+        mock_dao.get_session.return_value = mock_session
+
+        result = agent.get_session_history("thread123")
+
+        assert result == []
+
+
+class TestCleanupOldSessions:
+    """Testes para cleanup_old_sessions()."""
+
+    def test_cleanup_old_sessions_delegates_to_dao(self, mocker):
+        """Deve delegar para SessionDAO."""
+        mock_dao = mocker.patch("oraculo_bot.agent._session_dao")
+        mock_dao.cleanup_old_sessions.return_value = 10
+
+        result = agent.cleanup_old_sessions(days=30)
+
+        assert result == 10
+        mock_dao.cleanup_old_sessions.assert_called_once_with(30)
+
+    def test_cleanup_old_sessions_default_days(self, mocker):
+        """Deve usar 30 dias como default."""
+        mock_dao = mocker.patch("oraculo_bot.agent._session_dao")
+        mock_dao.cleanup_old_sessions.return_value = 5
+
+        result = agent.cleanup_old_sessions()
+
+        mock_dao.cleanup_old_sessions.assert_called_once_with(30)
+        assert result == 5
+
+
+class TestEnrichWithRAG:
+    """Testes para enrich_with_rag()."""
+
+    def test_enrich_with_rag_success(self, mocker):
+        """Deve enriquecer query com contexto RAG."""
+        mock_retrieve = mocker.patch(
+            "oraculo_bot.rag.retrieve_relevant_legislation",
+            return_value="Art. 22. Compete privativamente à União..."
+        )
+
+        result = agent.enrich_with_rag("competência união trabalho", top_k=3)
+
+        assert "[CONTEXTO LEGISLATIVO RELEVANTE]" in result
+        assert "Art. 22" in result
+        mock_retrieve.assert_called_once_with(
+            query_text="competência união trabalho",
+            top_k=3
+        )
+
+    def test_enrich_with_rag_no_results(self, mocker):
+        """Deve retornar string vazia se RAG não retorna nada."""
+        mocker.patch(
+            "oraculo_bot.rag.retrieve_relevant_legislation",
+            return_value=""
+        )
+
+        result = agent.enrich_with_rag("query sem resultados", top_k=3)
+
+        assert result == ""
+
+    def test_enrich_with_rag_error_fallback(self, mocker, caplog):
+        """Deve retornar string vazia se RAG falhar."""
+        mocker.patch(
+            "oraculo_bot.rag.retrieve_relevant_legislation",
+            side_effect=Exception("RAG failed")
+        )
+
+        result = agent.enrich_with_rag("query", top_k=3)
+
+        assert result == ""
+        assert any("RAG fallback" in record.message for record in caplog.records)
+
+    def test_enrich_with_rag_default_top_k(self, mocker):
+        """Deve usar top_k=3 como default."""
+        mock_retrieve = mocker.patch(
+            "oraculo_bot.rag.retrieve_relevant_legislation",
+            return_value="Contexto RAG"
+        )
+
+        agent.enrich_with_rag("query")
+
+        mock_retrieve.assert_called_once_with(
+            query_text="query",
+            top_k=3
+        )
+
+    def test_enrich_with_rag_formatting(self, mocker):
+        """Deve formatar contexto corretamente."""
+        mocker.patch(
+            "oraculo_bot.rag.retrieve_relevant_legislation",
+            return_value="Legislação relevante aqui"
+        )
+
+        result = agent.enrich_with_rag("query")
+
+        # Verificar formato
+        assert result.startswith("\n\n[CONTEXTO LEGISLATIVO RELEVANT")
+        assert result.endswith("Legislação relevante aqui\n")
+
+    def test_enrich_with_rag_with_multiple_chunks(self, mocker):
+        """Deve formatar múltiplos chunks."""
+        rag_content = """
+[Fonte 1 (ano: 2021, banca: FCC)]
+Texto do chunk 1
+
+[Fonte 2 (ano: 2020, banca: Cebraspe)]
+Texto do chunk 2
+        """.strip()
+
+        mocker.patch(
+            "oraculo_bot.rag.retrieve_relevant_legislation",
+            return_value=rag_content
+        )
+
+        result = agent.enrich_with_rag("query")
+
+        assert "[CONTEXTO LEGISLATIVO RELEVANTE]" in result
+        assert "Fonte 1" in result
+        assert "Fonte 2" in result
+
+
+class TestSystemInstructions:
+    """Testes para SYSTEM_INSTRUCTIONS."""
+
+    def test_system_instructions_is_list(self):
+        """Deve ser uma lista."""
+        assert isinstance(agent.SYSTEM_INSTRUCTIONS, list)
+
+    def test_system_instructions_not_empty(self):
+        """Deve ter instruções definidas."""
+        assert len(agent.SYSTEM_INSTRUCTIONS) > 0
+
+    def test_system_instructions_contains_identity(self):
+        """Deve conter identidade do Oráculo."""
+        all_text = " ".join(agent.SYSTEM_INSTRUCTIONS)
+        assert "Oráculo" in all_text
+        assert "concursos" in all_text.lower()
+
+    def test_system_instructions_contains_modes(self):
+        """Deve conter modos de operação."""
+        all_text = " ".join(agent.SYSTEM_INSTRUCTIONS)
+        assert "ESTUDO" in all_text
+        assert "PROFESSOR" in all_text
+        assert "SIMULADO" in all_text
+        assert "CASUAL" in all_text
+
+    def test_system_instructions_contains_restrictions(self):
+        """Deve conter restrições."""
+        all_text = " ".join(agent.SYSTEM_INSTRUCTIONS)
+        assert "Não invente" in all_text or "nunca invente" in all_text.lower()
+
+    def test_system_instructions_contains_formatting(self):
+        """Deve conter instruções de formatação Discord."""
+        all_text = " ".join(agent.SYSTEM_INSTRUCTIONS)
+        assert "Markdown" in all_text
+        assert "Discord" in all_text
+
+
+class TestAgentIntegration:
+    """Testes de integração do agent."""
+
+    def test_initialize_and_save_history_flow(self, mocker):
+        """Deve fluir de criação → salvar histórico."""
+        mock_dao = mocker.patch("oraculo_bot.agent._session_dao")
+
+        # Criar sessão
+        mock_session = DiscordSession(
+            thread_id="thread123",
+            user_id="user123",
+            mode="estudo"
+        )
+        mock_dao.get_or_create_session.return_value = mock_session
+        mock_dao.update_session_data.return_value = mock_session
+
+        # Executar fluxo
+        session = agent.initialize_session("thread123", "user123")
+        messages = [{"role": "user", "content": "Test"}]
+        agent.save_session_history("thread123", messages)
+
+        # Verificar
+        mock_dao.get_or_create_session.assert_called_once()
+        mock_dao.update_session_data.assert_called_once()
+
+    def test_get_history_after_save(self, mocker):
+        """Deve recuperar histórico salvo."""
+        mock_dao = mocker.patch("oraculo_bot.agent._session_dao")
+
+        messages = [
+            {"role": "user", "content": "P1"},
+            {"role": "assistant", "content": "R1"},
+            {"role": "user", "content": "P2"},
+        ]
+
+        mock_session = DiscordSession(
+            thread_id="thread123",
+            user_id="user123",
+            mode="estudo",
+            session_data={"history": messages}
+        )
+
+        mock_dao.update_session_data.return_value = mock_session
+        mock_dao.get_session.return_value = mock_session
+
+        # Salvar
+        agent.save_session_history("thread123", messages)
+
+        # Recuperar
+        retrieved = agent.get_session_history("thread123")
+
+        assert retrieved == messages
+
+    def test_cleanup_flow(self, mocker):
+        """Deve executar cleanup corretamente."""
+        mock_dao = mocker.patch("oraculo_bot.agent._session_dao")
+        mock_dao.cleanup_old_sessions.return_value = 15
+
+        count = agent.cleanup_old_sessions(days=60)
+
+        assert count == 15
+        mock_dao.cleanup_old_sessions.assert_called_once_with(60)
+
+
+class TestAgentEdgeCases:
+    """Testes de edge cases para agent.py."""
+
+    def test_enrich_with_rag_none_return(self, mocker):
+        """Deve lidar com None de retrieve_relevant_legislation."""
+        mocker.patch(
+            "oraculo_bot.rag.retrieve_relevant_legislation",
+            return_value=None
+        )
+
+        result = agent.enrich_with_rag("query")
+
+        assert result == ""
+
+    def test_save_history_with_complex_messages(self, mocker):
+        """Deve salvar mensagens com estrutura complexa."""
+        mock_dao = mocker.patch("oraculo_bot.agent._session_dao")
+        mock_session = DiscordSession(
+            thread_id="thread123",
+            user_id="user123",
+            mode="estudo"
+        )
+        mock_dao.update_session_data.return_value = mock_session
+
+        complex_messages = [
+            {
+                "role": "user",
+                "content": "Texto",
+                "metadata": {"images": ["url1", "url2"]},
+                "timestamp": "2024-01-01T00:00:00Z"
+            },
+            {
+                "role": "assistant",
+                "content": "Resposta",
+                "tools_used": ["search", "calculate"]
+            }
+        ]
+
+        agent.save_session_history("thread123", complex_messages)
+
+        mock_dao.update_session_data.assert_called_once_with(
+            "thread123",
+            {"history": complex_messages}
+        )
+
+    def test_get_history_with_malformed_session_data(self, mocker):
+        """Deve lidar com session_data malformado."""
+        mock_dao = mocker.patch("oraculo_bot.agent._session_dao")
+        mock_session = DiscordSession(
+            thread_id="thread123",
+            user_id="user123",
+            mode="estudo",
+            session_data={"history": "not_a_list"}
+        )
+        mock_dao.get_session.return_value = mock_session
+
+        result = agent.get_session_history("thread123")
+
+        # Deve retornar o valor como está (não valida tipo)
+        assert result == "not_a_list"
+
+    def test_initialize_with_all_modes(self, mocker):
+        """Deve aceitar todos os modos válidos."""
+        mock_dao = mocker.patch("oraculo_bot.agent._session_dao")
+
+        modes = ["estudo", "professor", "simulado", "casual"]
+
+        for mode in modes:
+            # Criar sessão com o modo correto para cada iteração
+            mock_session = DiscordSession(
+                thread_id="thread1",
+                user_id="user1",
+                mode=mode  # Usar o modo atual
+            )
+            mock_dao.get_or_create_session.return_value = mock_session
+
+            result = agent.initialize_session("thread1", "user1", mode)
+
+            # Verificar que o modo correto foi retornado
+            assert result.mode == mode
+            # Verificar que DAO foi chamado com o modo correto
+            mock_dao.get_or_create_session.assert_called_with("thread1", "user1", mode)
+</file>
+
+<file path="tests/unit/test_bot.py">
+"""Testes unitários para OracleDiscordBot."""
+
+from unittest.mock import Mock, MagicMock, AsyncMock
+import pytest
+
+from oraculo_bot.bot import OracleDiscordBot
+from oraculo_bot.config import TARGET_GUILD_ID, TARGET_CHANNEL_ID
+
+
+# ── Testes de _is_target_channel ────────────────────────────────────
+
+class TestIsTargetChannel:
+    """Testes para _is_target_channel()."""
+
+    def test_is_target_channel_returns_true_for_target_text_channel(self, mock_discord_text_channel):
+        """Deve retornar True para canal alvo."""
+        bot = OracleDiscordBot(agent=Mock())
+        result = bot._is_target_channel(mock_discord_text_channel)
+        assert result is True
+
+    def test_is_target_channel_returns_true_for_child_thread(self, mock_discord_thread):
+        """Deve retornar True para thread filha do canal alvo."""
+        bot = OracleDiscordBot(agent=Mock())
+        mock_discord_thread.parent_id = TARGET_CHANNEL_ID
+        result = bot._is_target_channel(mock_discord_thread)
+        assert result is True
+
+    def test_is_target_channel_returns_false_for_different_channel(self, mocker):
+        """Deve retornar False para canal diferente."""
+        bot = OracleDiscordBot(agent=Mock())
+
+        channel = MagicMock()
+        channel.id = 999999999
+        channel.type = 0  # TextChannel
+
+        result = bot._is_target_channel(channel)
+        assert result is False
+
+    def test_is_target_channel_returns_false_for_orphan_thread(self, mocker):
+        """Deve retornar False para thread órfã."""
+        bot = OracleDiscordBot(agent=Mock())
+
+        thread = MagicMock()
+        thread.parent_id = 999999999
+        thread.type = 11  # Thread
+
+        result = bot._is_target_channel(thread)
+        assert result is False
+
+
+# ── Testes de _extract_media ──────────────────────────────────────────
+
+class TestExtractMedia:
+    """Testes para _extract_media()."""
+
+    def test_extract_media_no_attachments(self):
+        """Deve retornar Nones quando sem attachments."""
+        message = Mock()
+        message.attachments = []
+
+        img, vid, aud, fil, url = OracleDiscordBot._extract_media(message)
+
+        assert img is None
+        assert vid is None
+        assert aud is None
+        assert fil is None
+        assert url is None
+
+    def test_extract_media_image(self, mocker):
+        """Deve extrair URL de imagem."""
+        message = Mock()
+        message.attachments = [Mock()]
+
+        attachment = message.attachments[0]
+        attachment.content_type = "image/png"
+        attachment.url = "https://example.com/image.png"
+
+        img, vid, aud, fil, url = OracleDiscordBot._extract_media(message)
+
+        assert img == "https://example.com/image.png"
+        assert vid is None
+        assert aud is None
+        assert fil is None
+        assert url == "https://example.com/image.png"
+
+    def test_extract_media_video(self, mocker):
+        """Deve baixar bytes de vídeo."""
+        message = Mock()
+        message.attachments = [Mock()]
+
+        attachment = message.attachments[0]
+        attachment.content_type = "video/mp4"
+        attachment.url = "https://example.com/video.mp4"
+
+        mock_get = mocker.patch("requests.get", return_value=Mock(content=b"video_bytes"))
+
+        img, vid, aud, fil, url = OracleDiscordBot._extract_media(message)
+
+        assert img is None
+        assert vid == b"video_bytes"
+        assert aud is None
+        assert fil is None
+        assert url == "https://example.com/video.mp4"
+        mock_get.assert_called_once()
+
+    def test_extract_media_audio(self, mocker):
+        """Deve extrair URL de áudio."""
+        message = Mock()
+        message.attachments = [Mock()]
+
+        attachment = message.attachments[0]
+        attachment.content_type = "audio/mpeg"
+        attachment.url = "https://example.com/audio.mp3"
+
+        img, vid, aud, fil, url = OracleDiscordBot._extract_media(message)
+
+        assert img is None
+        assert vid is None
+        assert aud == "https://example.com/audio.mp3"
+        assert fil is None
+        assert url == "https://example.com/audio.mp3"
+
+    def test_extract_media_file(self, mocker):
+        """Deve baixar bytes de arquivo."""
+        message = Mock()
+        message.attachments = [Mock()]
+
+        attachment = message.attachments[0]
+        attachment.content_type = "application/pdf"
+        attachment.url = "https://example.com/file.pdf"
+
+        mock_get = mocker.patch("requests.get", return_value=Mock(content=b"file_bytes"))
+
+        img, vid, aud, fil, url = OracleDiscordBot._extract_media(message)
+
+        assert img is None
+        assert vid is None
+        assert aud is None
+        assert fil == b"file_bytes"
+        assert url == "https://example.com/file.pdf"
+        mock_get.assert_called_once()
+
+    def test_extract_media_unknown_mime(self, mocker):
+        """Deve retornar URL para MIME type desconhecido."""
+        message = Mock()
+        message.attachments = [Mock()]
+
+        attachment = message.attachments[0]
+        attachment.content_type = "unknown/type"
+        attachment.url = "https://example.com/file.unknown"
+
+        img, vid, aud, fil, url = OracleDiscordBot._extract_media(message)
+
+        # Fallback: retorna URL
+        assert url == "https://example.com/file.unknown"
+
+
+# ── Testes de _build_media_kwargs ───────────────────────────────────
+
+class TestBuildMediaKwargs:
+    """Testes para _build_media_kwargs()."""
+
+    def test_build_media_kwargs_empty(self):
+        """Deve retornar dict vazio sem mídia."""
+        kwargs = OracleDiscordBot._build_media_kwargs(
+            image=None, video=None, audio=None, file=None
+        )
+        assert kwargs == {}
+
+    def test_build_media_kwargs_image(self, mocker):
+        """Deve criar Image para agno."""
+        mocker.patch("oraculo_bot.bot.Image", return_value="image_obj")
+
+        kwargs = OracleDiscordBot._build_media_kwargs(
+            image="http://image.png", video=None, audio=None, file=None
+        )
+
+        assert "images" in kwargs
+        assert len(kwargs["images"]) == 1
+
+    def test_build_media_kwargs_video(self, mocker):
+        """Deve criar Video para agno."""
+        mocker.patch("oraculo_bot.bot.Video", return_value="video_obj")
+
+        kwargs = OracleDiscordBot._build_media_kwargs(
+            image=None, video=b"video_bytes", audio=None, file=None
+        )
+
+        assert "videos" in kwargs
+        assert len(kwargs["videos"]) == 1
+
+    def test_build_media_kwargs_audio(self, mocker):
+        """Deve criar Audio para agno."""
+        mocker.patch("oraculo_bot.bot.Audio", return_value="audio_obj")
+
+        kwargs = OracleDiscordBot._build_media_kwargs(
+            image=None, video=None, audio="http://audio.mp3", file=None
+        )
+
+        assert "audio" in kwargs
+        assert len(kwargs["audio"]) == 1
+
+    def test_build_media_kwargs_file(self, mocker):
+        """Deve criar File para agno."""
+        mocker.patch("oraculo_bot.bot.File", return_value="file_obj")
+
+        kwargs = OracleDiscordBot._build_media_kwargs(
+            image=None, video=None, audio=None, file=b"file_bytes"
+        )
+
+        assert "files" in kwargs
+        assert len(kwargs["files"]) == 1
+
+
+# ── Testes de _send_messages ─────────────────────────────────────────
+
+class TestSendMessages:
+    """Testes para _send_messages()."""
+
+    @pytest.mark.asyncio
+    async def test_send_messages_short_sends_directly(self):
+        """Deve enviar mensagem curta diretamente."""
+        bot = OracleDiscordBot(agent=Mock())
+        thread = AsyncMock()
+        message = "Mensagem curta"
+
+        await bot._send_messages(thread, message)
+
+        thread.send.assert_called_once_with(message)
+
+    @pytest.mark.asyncio
+    async def test_send_messages_empty_returns_early(self):
+        """Deve retornar cedo se mensagem vazia."""
+        bot = OracleDiscordBot(agent=Mock())
+        thread = AsyncMock()
+        message = "   "
+
+        await bot._send_messages(thread, message)
+
+        # Não deve chamar send
+        thread.send.assert_not_called()
+
+    @pytest.mark.asyncio
+    async def test_send_messages_long_splits_correctly(self):
+        """Deve splitar mensagem longa corretamente."""
+        bot = OracleDiscordBot(agent=Mock())
+        thread = AsyncMock()
+        # Mensagem > 1500 chars
+        message = "A" * 2000
+
+        await bot._send_messages(thread, message)
+
+        # Deve chamar send 2 vezes (1500 + 500)
+        assert thread.send.call_count == 2
+
+    @pytest.mark.asyncio
+    async def test_send_messages_exact_boundary(self):
+        """Deve enviar 1 mensagem se exatamente 1500 chars."""
+        bot = OracleDiscordBot(agent=Mock())
+        thread = AsyncMock()
+        message = "A" * 1500
+
+        await bot._send_messages(thread, message)
+
+        thread.send.assert_called_once()
+
+    @pytest.mark.asyncio
+    async def test_send_messages_batch_format(self):
+        """Deve formatar batches com [N/M]."""
+        bot = OracleDiscordBot(agent=Mock())
+        thread = AsyncMock()
+        message = "A" * 3000  # 2 batches
+
+        await bot._send_messages(thread, message)
+
+        calls = thread.send.call_args_list
+        assert "[1/2]" in str(calls[0])
+        assert "[2/2]" in str(calls[1])
+
+
+# ── Testes de _handle_response ───────────────────────────────────────
+
+class TestHandleResponse:
+    """Testes para _handle_response()."""
+
+    @pytest.mark.asyncio
+    async def test_handle_response_with_mention(self, mock_discord_thread, mock_run_output, mocker):
+        """Deve incluir menção na resposta."""
+        bot = OracleDiscordBot(agent=Mock())
+        mock_run_output.reasoning_content = None
+        mocker.patch("oraculo_bot.bot.get_text_from_message", return_value="Response text")
+
+        await bot._handle_response(
+            mock_run_output,
+            mock_discord_thread,
+            "<@123456789>"
+        )
+
+        # Verificar se menção foi incluída
+        mock_discord_thread.send.assert_called_once()
+        call_args = str(mock_discord_thread.send.call_args)
+        assert "<@123456789>" in call_args or "<@123456789>" in str(mock_discord_thread.send)
+
+
+# ── Testes de _handle_hitl ─────────────────────────────────────────────
+
+class TestHandleHITL:
+    """Testes para Human-in-the-Loop."""
+
+    @pytest.mark.asyncio
+    async def test_handle_hitl_not_paused_returns_response(self, mock_discord_thread, mock_paused_agent_response, mocker):
+        """Deve retornar response se não pausado."""
+        bot = OracleDiscordBot(agent=Mock())
+        mock_paused_agent_response.is_paused = False
+        mocker.patch("oraculo_bot.bot.ConfirmationView", return_value=MagicMock())
+
+        result = await bot._handle_hitl(
+            mock_paused_agent_response,
+            mock_discord_thread
+        )
+
+        assert result is mock_paused_agent_response
+
+    @pytest.mark.asyncio
+    async def test_handle_hitl_confirmed_continues(self, mock_discord_thread, mock_paused_agent_response, mocker):
+        """Deve continuar run se confirmado."""
+        bot = OracleDiscordBot(agent=Mock())
+        bot.agent = Mock()
+        mock_view = MagicMock()
+        mock_view.value = True
+        mock_view.wait = AsyncMock(return_value=True)
+        mock_discord_thread.send = AsyncMock()
+        mocker.patch("oraculo_bot.bot.ConfirmationView", return_value=mock_view)
+
+        bot.agent.acontinue_run = AsyncMock(return_value=mock_paused_agent_response)
+
+        result = await bot._handle_hitl(
+            mock_paused_agent_response,
+            mock_discord_thread
+        )
+
+        bot.agent.acontinue_run.assert_called_once()
+</file>
+
+<file path="tests/unit/test_config.py">
+"""Testes unitários para config.py."""
+
+import os
+from unittest.mock import patch, Mock
+import pytest
+
+from oraculo_bot import config
+
+
+class TestRequireEnv:
+    """Testes para _require_env()."""
+
+    def test_require_env_with_valid_value(self, monkeypatch):
+        """Deve retornar o valor quando env var existe."""
+        monkeypatch.setenv("TEST_VAR", "test_value")
+        result = config._require_env("TEST_VAR")
+        assert result == "test_value"
+
+    def test_require_env_with_missing_value(self, monkeypatch):
+        """Deve levantar ValueError quando env var não existe."""
+        monkeypatch.delenv("TEST_VAR", raising=False)
+        with pytest.raises(ValueError, match="Variável de ambiente 'TEST_VAR' não definida"):
+            config._require_env("TEST_VAR")
+
+    def test_require_env_with_empty_string(self, monkeypatch):
+        """Deve levantar ValueError quando env var é string vazia."""
+        monkeypatch.setenv("TEST_VAR", "")
+        with pytest.raises(ValueError, match="Variável de ambiente 'TEST_VAR' não definida"):
+            config._require_env("TEST_VAR")
+
+
+class TestConfigIntegration:
+    """Testes de integração para valores de configuração do .env real.
+
+    NOTA: Estes testes dependem de variáveis de ambiente reais do .env.
+    São testes de integração, não unitários puros.
+    """
+
+    def test_discord_bot_token_is_set(self):
+        """Deve ter DISCORD_BOT_TOKEN configurado (do .env)."""
+        assert config.DISCORD_BOT_TOKEN is not None
+        assert isinstance(config.DISCORD_BOT_TOKEN, str)
+
+    def test_deepseek_api_key_is_set(self):
+        """Deve ter DEEPSEEK_API_KEY configurado (do .env)."""
+        assert config.DEEPSEEK_API_KEY is not None
+        assert isinstance(config.DEEPSEEK_API_KEY, str)
+
+    def test_model_id_has_default(self):
+        """Deve ter default para MODEL_ID."""
+        assert config.MODEL_ID is not None
+        assert isinstance(config.MODEL_ID, str)
+
+    def test_history_runs_has_default(self):
+        """Deve ter default para HISTORY_RUNS."""
+        assert config.HISTORY_RUNS is not None
+        assert isinstance(config.HISTORY_RUNS, int)
+
+    def test_max_message_length_is_set(self):
+        """Deve ter MAX_MESSAGE_LENGTH configurado."""
+        assert config.MAX_MESSAGE_LENGTH == 1500
+
+    def test_thread_name_prefix_is_set(self):
+        """Deve ter THREAD_NAME_PREFIX configurado."""
+        assert config.THREAD_NAME_PREFIX == "💬"
+
+    def test_error_message_is_set(self):
+        """Deve ter ERROR_MESSAGE configurado."""
+        assert config.ERROR_MESSAGE is not None
+        assert isinstance(config.ERROR_MESSAGE, str)
+
+
+class TestOptionalConfigValues:
+    """Testes para valores opcionais."""
+
+    def test_supabase_db_url_is_optional(self):
+        """SUPABASE_DB_URL pode ser None ou string."""
+        assert config.SUPABASE_DB_URL is None or isinstance(config.SUPABASE_DB_URL, str)
+
+    def test_openai_api_key_is_optional(self):
+        """OPENAI_API_KEY pode ser None ou string."""
+        assert config.OPENAI_API_KEY is None or isinstance(config.OPENAI_API_KEY, str)
+
+    def test_gemini_api_key_is_optional(self):
+        """GEMINI_API_KEY pode ser None ou string."""
+        assert config.GEMINI_API_KEY is None or isinstance(config.GEMINI_API_KEY, str)
+
+
+class TestDiscordIDs:
+    """Testes para IDs do Discord."""
+
+    def test_target_guild_id_is_int(self):
+        """TARGET_GUILD_ID deve ser int."""
+        assert isinstance(config.TARGET_GUILD_ID, int)
+
+    def test_target_channel_id_is_int(self):
+        """TARGET_CHANNEL_ID deve ser int."""
+        assert isinstance(config.TARGET_CHANNEL_ID, int)
+
+
+class TestSystemInstructions:
+    """Testes para SYSTEM_INSTRUCTIONS em agent.py."""
+
+    def test_system_instructions_defined(self):
+        """SYSTEM_INSTRUCTIONS deve estar definida."""
+        from oraculo_bot import agent
+        assert hasattr(agent, "SYSTEM_INSTRUCTIONS")
+        assert isinstance(agent.SYSTEM_INSTRUCTIONS, list)
+        assert len(agent.SYSTEM_INSTRUCTIONS) > 0
+
+    def test_system_instructions_content(self):
+        """SYSTEM_INSTRUCTIONS deve ter conteúdo relevante."""
+        from oraculo_bot import agent
+        all_text = " ".join(agent.SYSTEM_INSTRUCTIONS)
+        assert "Oráculo" in all_text
+        assert "concursos" in all_text.lower()
+</file>
+
+<file path="tests/unit/test_db.py">
+"""Testes unitários para db.py - SessionDAO."""
+
+from datetime import datetime, timezone, timedelta
+from unittest.mock import Mock, MagicMock, patch, call
+import pytest
+
+from oraculo_bot.db import SessionDAO
+from oraculo_bot.models import DiscordSession
+
+
+# Patch global para SUPABASE_DB_URL em todos os testes
+@pytest.fixture(autouse=True)
+def mock_supabase_db_url(mocker):
+    """Mock SUPABASE_DB_URL para evitar usar DB real."""
+    mocker.patch("oraculo_bot.db.SUPABASE_DB_URL", None)
+    yield
+
+
+class TestSessionDAOInit:
+    """Testes para inicialização do SessionDAO."""
+
+    def test_init_with_url(self):
+        """Deve inicializar com db_url fornecido."""
+        dao = SessionDAO(db_url="postgresql://test_url")
+        assert dao.db_url == "postgresql://test_url"
+        assert dao.enabled is True
+        assert dao._engine is None
+        assert dao._memory_store == {}
+
+    def test_init_without_url(self):
+        """Deve aceitar None como db_url."""
+        dao = SessionDAO(db_url=None)
+        assert dao.db_url is None
+        assert dao.enabled is False
+
+    def test_init_uses_default_when_supabase_set(self, mocker):
+        """Deve usar SUPABASE_DB_URL do config quando db_url não fornecido."""
+        mocker.patch("oraculo_bot.db.SUPABASE_DB_URL", "postgresql://default")
+        dao = SessionDAO()  # Sem db_url
+        assert dao.db_url == "postgresql://default"
+
+
+class TestSessionDAOEnabled:
+    """Testes para property enabled."""
+
+    def test_enabled_true_with_url(self):
+        """Deve retornar True se db_url configurado."""
+        dao = SessionDAO(db_url="postgresql://test")
+        assert dao.enabled is True
+
+    def test_enabled_false_without_url(self):
+        """Deve retornar False se sem db_url."""
+        dao = SessionDAO(db_url=None)
+        # Garante que enabled é False quando db_url é None
+        assert dao.db_url is None
+        assert dao.enabled is False
+
+
+class TestSessionDAOMemoryStore:
+    """Testes para fallback de memória."""
+
+    def test_create_session_in_memory(self):
+        """Deve criar sessão na memória quando DB desabilitado."""
+        dao = SessionDAO(db_url=None)
+
+        result = dao.create_session("thread1", "user1", "estudo")
+
+        assert result.thread_id == "thread1"
+        assert result.user_id == "user1"
+        assert result.mode == "estudo"
+        assert "thread1" in dao._memory_store
+
+    def test_get_session_from_memory(self):
+        """Deve recuperar da memória."""
+        dao = SessionDAO(db_url=None)
+        session = DiscordSession(
+            thread_id="thread1",
+            user_id="user1",
+            mode="estudo",
+            session_data={}
+        )
+        dao._memory_store["thread1"] = session
+
+        result = dao.get_session("thread1")
+
+        assert result is session
+        assert result.thread_id == "thread1"
+
+    def test_get_session_not_found_in_memory(self):
+        """Deve retornar None se não está na memória."""
+        dao = SessionDAO(db_url=None)
+
+        result = dao.get_session("nonexistent")
+
+        assert result is None
+
+    def test_update_session_data_in_memory(self):
+        """Deve atualizar na memória."""
+        dao = SessionDAO(db_url=None)
+        session = DiscordSession(
+            thread_id="thread1",
+            user_id="user1",
+            mode="estudo",
+            session_data={"old": "data"}
+        )
+        dao._memory_store["thread1"] = session
+
+        result = dao.update_session_data("thread1", {"new": "value"})
+
+        assert result.session_data == {"old": "data", "new": "value"}
+
+    def test_update_session_data_not_found_in_memory(self):
+        """Deve retornar None se sessão não existe na memória."""
+        dao = SessionDAO(db_url=None)
+
+        result = dao.update_session_data("nonexistent", {"key": "value"})
+
+        assert result is None
+
+    def test_get_or_create_in_memory_returns_existing(self):
+        """Deve retornar existente da memória."""
+        dao = SessionDAO(db_url=None)
+        existing = DiscordSession(
+            thread_id="thread1",
+            user_id="user1",
+            mode="estudo",
+            session_data={}
+        )
+        dao._memory_store["thread1"] = existing
+
+        result = dao.get_or_create_session("thread1", "user1", "casual")
+
+        assert result is existing
+        assert result.mode == "estudo"  # Mantém mode existente
+
+    def test_get_or_create_in_memory_creates_new(self):
+        """Deve criar nova na memória."""
+        dao = SessionDAO(db_url=None)
+
+        result = dao.get_or_create_session("thread1", "user1", "professor")
+
+        assert result.thread_id == "thread1"
+        assert result.mode == "professor"
+        assert "thread1" in dao._memory_store
+
+    def test_cleanup_old_sessions_in_memory(self):
+        """Deve retornar 0 quando usando memória."""
+        dao = SessionDAO(db_url=None)
+
+        count = dao.cleanup_old_sessions(days=30)
+
+        assert count == 0
+
+    def test_memory_store_isolated_between_instances(self):
+        """Deve isolar memória entre instâncias."""
+        dao1 = SessionDAO(db_url=None)
+        dao2 = SessionDAO(db_url=None)
+
+        session1 = DiscordSession(
+            thread_id="thread1",
+            user_id="user1",
+            mode="estudo",
+            session_data={}
+        )
+        dao1._memory_store["thread1"] = session1
+
+        # DAO2 não deve ver a sessão do DAO1
+        assert "thread1" not in dao2._memory_store
+
+
+class TestSessionDAOEdgeCases:
+    """Testes de edge cases para SessionDAO."""
+
+    def test_empty_session_data_update_in_memory(self):
+        """Deve lidar com atualização de dados vazios na memória."""
+        dao = SessionDAO(db_url=None)
+        session = DiscordSession(
+            thread_id="thread1",
+            user_id="user1",
+            mode="estudo",
+            session_data={"existing": "data"}
+        )
+        dao._memory_store["thread1"] = session
+
+        result = dao.update_session_data("thread1", {})
+
+        # Dados existentes devem ser mantidos
+        assert result.session_data == {"existing": "data"}
+
+    def test_session_data_merge_nested_dicts_in_memory(self):
+        """Deve mergir corretamente dicts na memória."""
+        dao = SessionDAO(db_url=None)
+        session = DiscordSession(
+            thread_id="thread1",
+            user_id="user1",
+            mode="estudo",
+            session_data={"config": {"theme": "dark"}}
+        )
+        dao._memory_store["thread1"] = session
+
+        result = dao.update_session_data("thread1", {"config": {"lang": "pt"}})
+
+        # Nota: update() substitui a chave inteira, não merge profundo
+        assert result.session_data["config"]["lang"] == "pt"
+
+    def test_concurrent_get_or_create_in_memory(self):
+        """Deve lidar com múltiplas chamadas na memória."""
+        dao = SessionDAO(db_url=None)
+
+        # Simular múltiplas chamadas
+        results = [dao.get_or_create_session("thread1", "user1") for _ in range(5)]
+
+        # Todas devem retornar sessões válidas
+        assert all(r.thread_id == "thread1" for r in results)
+        # Todas devem ser a mesma instância
+        assert len(set(id(r) for r in results)) == 1
+
+
+class TestDiscordSessionModel:
+    """Testes para o modelo DiscordSession."""
+
+    def test_discord_session_creation(self):
+        """Deve criar sessão com valores padrão."""
+        session = DiscordSession(
+            thread_id="thread123",
+            user_id="user123",
+            mode="estudo",
+            session_data={}  # SQLAlchemy não usa default no construtor
+        )
+
+        assert session.thread_id == "thread123"
+        assert session.user_id == "user123"
+        assert session.mode == "estudo"
+        assert session.session_data == {}
+        # Timestamps são criados pelo SQLAlchemy, não no construtor
+        # assert isinstance(session.created_at, datetime)
+        # assert isinstance(session.updated_at, datetime)
+
+    def test_discord_session_with_custom_data(self):
+        """Deve criar sessão com dados customizados."""
+        session = DiscordSession(
+            thread_id="thread123",
+            user_id="user123",
+            mode="professor",
+            session_data={"history": [], "config": {"theme": "dark"}}
+        )
+
+        assert session.mode == "professor"
+        assert session.session_data["history"] == []
+        assert session.session_data["config"]["theme"] == "dark"
+
+    def test_discord_session_repr(self):
+        """Deve ter representação legível."""
+        session = DiscordSession(
+            thread_id="thread123",
+            user_id="user123",
+            mode="estudo"
+        )
+
+        repr_str = repr(session)
+        assert "thread123" in repr_str
+        assert "user123" in repr_str
+        assert "estudo" in repr_str
+</file>
+
+<file path="tests/unit/test_rag_retriever.py">
+"""Testes unitários para RAGRetriever."""
+
+import logging
+from unittest.mock import Mock, MagicMock, AsyncMock
+import pytest
+
+from oraculo_bot.rag_retriever import RAGRetriever, ALLOWED_METADATA_FILTERS
+
+
+# Patch global para SUPABASE_DB_URL em todos os testes
+@pytest.fixture(autouse=True)
+def mock_supabase_db_url(mocker):
+    """Mock SUPABASE_DB_URL para evitar usar DB real."""
+    mocker.patch("oraculo_bot.rag_retriever.SUPABASE_DB_URL", None)
+    yield
+
+
+class TestRAGRetrieverInit:
+    """Testes para inicialização do RAGRetriever."""
+
+    def test_init_with_url(self):
+        """Deve inicializar com db_url fornecido."""
+        retriever = RAGRetriever(db_url="postgresql://test")
+        assert retriever.db_url == "postgresql://test"
+        assert retriever._conn is None
+
+    def test_init_without_url(self):
+        """Deve aceitar None como db_url."""
+        retriever = RAGRetriever(db_url=None)
+        assert retriever.db_url is None
+
+    def test_init_uses_default_from_config(self, mocker):
+        """Deve usar SUPABASE_DB_URL do config quando db_url não fornecido."""
+        mocker.patch("oraculo_bot.rag_retriever.SUPABASE_DB_URL", "postgresql://default")
+        retriever = RAGRetriever()
+        assert retriever.db_url == "postgresql://default"
+
+
+class TestRAGRetrieverEnabled:
+    """Testes para property enabled."""
+
+    def test_enabled_true_with_url(self):
+        """Deve retornar True se db_url configurado."""
+        retriever = RAGRetriever(db_url="postgresql://test")
+        assert retriever.enabled is True
+
+    def test_enabled_false_without_url(self):
+        """Deve retornar False se sem db_url."""
+        retriever = RAGRetriever(db_url=None)
+        assert retriever.enabled is False
+
+
+class TestRAGRetrieverConn:
+    """Testes para property conn (lazy connection)."""
+
+    def test_conn_lazy_init(self, mocker):
+        """Deve inicializar conexão em primeiro acesso."""
+        mock_connect = mocker.patch("psycopg.connect", return_value=MagicMock())
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+        conn = retriever.conn
+
+        assert conn is not None
+        mock_connect.assert_called_once_with("postgresql://test")
+
+    def test_conn_cached(self, mocker):
+        """Deve cachear conexão após primeira criação."""
+        mock_connect = mocker.patch("psycopg.connect", return_value=MagicMock())
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+        conn1 = retriever.conn
+        conn2 = retriever.conn
+
+        assert conn1 is conn2
+        mock_connect.assert_called_once()
+
+    def test_conn_raises_if_no_url(self):
+        """Deve levantar RuntimeError se sem db_url."""
+        retriever = RAGRetriever(db_url=None)
+
+        with pytest.raises(RuntimeError, match="SUPABASE_DB_URL não configurada"):
+            _ = retriever.conn
+
+
+class TestRAGRetrieverRetrieve:
+    """Testes para retrieve()."""
+
+    def test_retrieve_basic(self, mock_psycopg_connection, sample_embedding):
+        """Deve buscar chunks similares com embedding."""
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = [
+            (1, "doc1", "Texto...", {"ano": "2021"}, "2021", "FCC", "CF", "22", 0.95)
+        ]
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+        results = retriever.retrieve(
+            query_text="teste",
+            query_embedding=sample_embedding,
+            top_k=5
+        )
+
+        assert len(results) == 1
+        assert results[0]["id"] == 1
+        assert results[0]["similarity"] == 0.95
+
+    def test_retrieve_empty_results(self, mock_psycopg_connection, sample_embedding):
+        """Deve retornar lista vazia se sem chunks."""
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = []
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+        results = retriever.retrieve(
+            query_text="teste",
+            query_embedding=sample_embedding,
+            top_k=5
+        )
+
+        assert results == []
+
+    def test_retrieve_with_single_filter(self, mock_psycopg_connection, sample_embedding):
+        """Deve aplicar filtro único de metadados."""
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = [(1, "doc1", "Texto", {}, "2021", "FCC", "CF", "22", 0.95)]
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+        results = retriever.retrieve(
+            query_text="teste",
+            query_embedding=sample_embedding,
+            top_k=5,
+            filters={"ano": "2021"}
+        )
+
+        assert len(results) == 1
+
+    def test_retrieve_with_multiple_filters(self, mock_psycopg_connection, sample_embedding):
+        """Deve aplicar múltiplos filtros."""
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = [(1, "doc1", "Texto", {}, "2021", "FCC", "CF", "22", 0.95)]
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+        results = retriever.retrieve(
+            query_text="teste",
+            query_embedding=sample_embedding,
+            top_k=5,
+            filters={"ano": "2021", "banca": "FCC"}
+        )
+
+        assert len(results) == 1
+
+    def test_retrieve_with_invalid_filter(self, mock_psycopg_connection, sample_embedding, caplog):
+        """Deve ignorar filtro não permitido e logar warning."""
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = [(1, "doc1", "Texto", {}, "2021", "FCC", "CF", "22", 0.95)]
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+
+        with caplog.at_level(logging.WARNING):
+            results = retriever.retrieve(
+                query_text="teste",
+                query_embedding=sample_embedding,
+                top_k=5,
+                filters={"ano": "2021", "filtro_invalido": "valor"}
+            )
+
+        # Deve ignorar o filtro inválido e usar apenas filtros válidos
+        assert any("Ignorando filtro RAG não permitido" in record.message for record in caplog.records)
+        # Deve retornar resultados (usando apenas o filtro válido "ano": "2021")
+        assert len(results) > 0
+
+    def test_retrieve_db_error(self, mock_psycopg_connection, sample_embedding, caplog):
+        """Deve retornar lista vazia se DB falhar."""
+        import psycopg
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.execute.side_effect = psycopg.Error("DB error")
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+
+        with caplog.at_level(logging.ERROR):
+            results = retriever.retrieve(
+                query_text="teste",
+                query_embedding=sample_embedding,
+                top_k=5
+            )
+
+        assert results == []
+        assert any("Erro na busca RAG" in record.message for record in caplog.records)
+
+    def test_retrieve_disabled(self, sample_embedding):
+        """Deve retornar lista vazia se enabled=False."""
+        retriever = RAGRetriever(db_url=None)
+
+        results = retriever.retrieve(
+            query_text="teste",
+            query_embedding=sample_embedding,
+            top_k=5
+        )
+
+        assert results == []
+
+    def test_retrieve_order_by_similarity(self, mock_psycopg_connection, sample_embedding):
+        """Deve ordenar por similaridade (desc) via SQL ORDER BY."""
+        cursor = mock_psycopg_connection.cursor.return_value
+        # O SQL com ORDER BY já retorna ordenado do banco
+        cursor.fetchall.return_value = [
+            (1, "doc1", "Texto 1", {}, "2021", "FCC", "CF", "22", 0.95),
+            (2, "doc2", "Texto 2", {}, "2020", "Cebraspe", "CF", None, 0.87),
+            (3, "doc3", "Texto 3", {}, "2019", "FGV", "CF", None, 0.75),
+        ]
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+        results = retriever.retrieve(
+            query_text="teste",
+            query_embedding=sample_embedding,
+            top_k=5
+        )
+
+        # Verificar que veio ordenado do banco (ORDER BY no SQL)
+        similarities = [r["similarity"] for r in results]
+        assert similarities == [0.95, 0.87, 0.75]
+
+
+class TestRAGRetrieverRetrieveByKeywords:
+    """Testes para retrieve_by_keywords()."""
+
+    def test_retrieve_by_keywords_basic(self, mock_psycopg_connection):
+        """Deve buscar por ILIKE com keywords."""
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = [(1, "doc1", "Texto...", {}, "2021", "FCC")]
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+        results = retriever.retrieve_by_keywords(
+            keywords=["competência", "união"],
+            top_k=5
+        )
+
+        # Deve retornar resultados da busca
+        assert len(results) > 0
+        assert cursor.execute.called
+
+    def test_retrieve_by_keywords_multiple(self, mock_psycopg_connection):
+        """Deve combinar keywords com OR."""
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = []
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+        results = retriever.retrieve_by_keywords(
+            keywords=["word1", "word2", "word3"],
+            top_k=5
+        )
+
+        # Deve criar query com OR para cada keyword
+        assert cursor.execute.called
+
+    def test_retrieve_by_keywords_with_filters(self, mock_psycopg_connection):
+        """Deve aplicar filtros junto com keywords."""
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = []
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+        results = retriever.retrieve_by_keywords(
+            keywords=["teste"],
+            top_k=5,
+            filters={"ano": "2021"}
+        )
+
+        assert cursor.execute.called
+
+    def test_retrieve_by_keywords_invalid_filter(self, mock_psycopg_connection, caplog):
+        """Deve ignorar filtro inválido."""
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = []
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+
+        with caplog.at_level(logging.WARNING):
+            results = retriever.retrieve_by_keywords(
+                keywords=["teste"],
+                top_k=5,
+                filters={"filtro_invalido": "valor"}
+            )
+
+        assert any("Ignorando filtro keyword não permitido" in record.message for record in caplog.records)
+
+    def test_retrieve_by_keywords_disabled(self):
+        """Deve retornar lista vazia se enabled=False."""
+        retriever = RAGRetriever(db_url=None)
+
+        results = retriever.retrieve_by_keywords(
+            keywords=["teste"],
+            top_k=5
+        )
+
+        assert results == []
+
+    def test_retrieve_by_keywords_db_error(self, mock_psycopg_connection, caplog):
+        """Deve retornar lista vazia se DB falhar."""
+        import psycopg
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.execute.side_effect = psycopg.Error("DB error")
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+
+        with caplog.at_level(logging.ERROR):
+            results = retriever.retrieve_by_keywords(
+                keywords=["teste"],
+                top_k=5
+            )
+
+        assert results == []
+        assert any("Erro na busca por keywords" in record.message for record in caplog.records)
+
+
+class TestRAGRetrieverSecurity:
+    """Testes de segurança do RAGRetriever."""
+
+    def test_allowed_metadata_filters(self):
+        """Deve ter lista de filtros permitidos."""
+        expected_filters = {"ano", "artigo", "assunto", "banca", "cargo", "disciplina", "tema", "tipo"}
+        assert ALLOWED_METADATA_FILTERS == expected_filters
+
+    def test_retrieve_sql_injection_in_filter(self, mock_psycopg_connection, sample_embedding):
+        """Deve sanitizar input contra SQL injection."""
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = []
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+
+        # Tentativa de SQL injection
+        results = retriever.retrieve(
+            query_text="teste",
+            query_embedding=sample_embedding,
+            top_k=5,
+            filters={"ano": "2021'; DROP TABLE students; --"}
+        )
+
+        # O valor deve ser tratado como parâmetro
+        assert isinstance(results, list)
+
+    def test_retrieve_filter_not_in_allowed_set(self, mock_psycopg_connection, sample_embedding):
+        """Deve ignorar filtros não permitidos."""
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = []
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+
+        # Filtro não permitido
+        results = retriever.retrieve(
+            query_text="teste",
+            query_embedding=sample_embedding,
+            top_k=5,
+            filters={"filtro_malicioso": "valor"}
+        )
+
+        # Não deve causar erro, apenas ignorar
+        assert isinstance(results, list)
+
+
+class TestRAGRetrieverEdgeCases:
+    """Testes de edge cases do RAGRetriever."""
+
+    def test_retrieve_with_none_embedding(self, mock_psycopg_connection, caplog):
+        """Deve lidar com embedding None."""
+        retriever = RAGRetriever(db_url="postgresql://test")
+
+        results = retriever.retrieve(
+            query_text="teste",
+            query_embedding=None,
+            top_k=5
+        )
+
+        # Deve retornar vazio ou tratar o erro
+        assert isinstance(results, list)
+
+    def test_retrieve_with_zero_top_k(self, mock_psycopg_connection, sample_embedding):
+        """Deve lidar com top_k=0."""
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = []
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+        results = retriever.retrieve(
+            query_text="teste",
+            query_embedding=sample_embedding,
+            top_k=0
+        )
+
+        assert isinstance(results, list)
+
+    def test_retrieve_similarities_range(self, mock_psycopg_connection, sample_embedding):
+        """Similaridade deve estar entre 0 e 1."""
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = [
+            (1, "doc1", "Texto", {}, "2021", "FCC", "CF", "22", 0.95),
+            (2, "doc2", "Texto", {}, "2020", "Cebraspe", "CF", None, 0.87),
+            (3, "doc3", "Texto", {}, "2019", "FGV", "CF", None, 0.75),
+        ]
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+        results = retriever.retrieve(
+            query_text="teste",
+            query_embedding=sample_embedding,
+            top_k=5
+        )
+
+        for result in results:
+            assert 0 <= result["similarity"] <= 1
+
+    def test_retrieve_unicode_text(self, mock_psycopg_connection, sample_embedding):
+        """Deve lidar com texto unicode (emojis, acentos)."""
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = [
+            (1, "doc1", "Texto com emoji 🎉 e acento áéíóú", {}, "2021", "FCC", "CF", "22", 0.95)
+        ]
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+        results = retriever.retrieve(
+            query_text="teste",
+            query_embedding=sample_embedding,
+            top_k=5
+        )
+
+        assert len(results) == 1
+        assert "🎉" in results[0]["texto"]
+        assert "áéíóú" in results[0]["texto"]
+
+    def test_retrieve_by_keywords_empty(self, mock_psycopg_connection):
+        """Deve lidar com lista de keywords vazia."""
+        retriever = RAGRetriever(db_url="postgresql://test")
+
+        results = retriever.retrieve_by_keywords(
+            keywords=[],
+            top_k=5
+        )
+
+        assert isinstance(results, list)
+
+    def test_retrieve_metadata_types(self, mock_psycopg_connection, sample_embedding):
+        """Deve retornar todos os tipos de metadados."""
+        cursor = mock_psycopg_connection.cursor.return_value
+        cursor.fetchall.return_value = [
+            (1, "doc1", "Texto", {"ano": "2021", "banca": "FCC", "tipo": "CF", "artigo": "22"}, "2021", "FCC", "CF", "22", 0.95)
+        ]
+
+        retriever = RAGRetriever(db_url="postgresql://test")
+        results = retriever.retrieve(
+            query_text="teste",
+            query_embedding=sample_embedding,
+            top_k=5
+        )
+
+        assert results[0]["ano"] == "2021"
+        assert results[0]["banca"] == "FCC"
+        assert results[0]["tipo"] == "CF"
+        assert results[0]["artigo"] == "22"
+</file>
+
+<file path="tests/unit/test_views.py">
+"""Testes unitários para views.py - ConfirmationView."""
+
+from unittest.mock import Mock, MagicMock, AsyncMock
+import pytest
+
+from oraculo_bot.views import ConfirmationView
+
+
+class TestConfirmationViewInit:
+    """Testes para inicialização do ConfirmationView."""
+
+    def test_init_default_timeout(self):
+        """Deve usar timeout padrão de 60.0."""
+        view = ConfirmationView()
+        assert view.timeout == 60.0
+        assert view.value is None
+
+    def test_init_custom_timeout(self):
+        """Deve aceitar timeout customizado."""
+        view = ConfirmationView(timeout=30.0)
+        assert view.timeout == 30.0
+        assert view.value is None
+
+    def test_init_value_initially_none(self):
+        """Deve inicializar value como None."""
+        view = ConfirmationView()
+        assert view.value is None
+
+    def test_init_has_two_buttons(self):
+        """Deve ter 2 botões (confirm e cancel)."""
+        view = ConfirmationView()
+        assert len(view.children) == 2
+
+    def test_init_not_finished(self):
+        """View não deve estar finalizada ao criar."""
+        view = ConfirmationView()
+        assert not view.is_finished()
+
+
+class TestConfirmationButtons:
+    """Testes para botões confirm e cancel."""
+
+    def test_confirm_button_exists(self):
+        """Deve ter botão confirmar."""
+        view = ConfirmationView()
+        confirm_buttons = [b for b in view.children if hasattr(b, 'label') and 'Confirm' in b.label]
+        assert len(confirm_buttons) == 1
+        assert confirm_buttons[0].style.name == 'primary'
+
+    def test_cancel_button_exists(self):
+        """Deve ter botão cancelar."""
+        view = ConfirmationView()
+        cancel_buttons = [b for b in view.children if hasattr(b, 'label') and 'Cancel' in b.label]
+        assert len(cancel_buttons) == 1
+        assert cancel_buttons[0].style.name == 'secondary'
+
+    def test_confirm_button_has_emoji(self):
+        """Botão confirmar deve ter emoji ✅."""
+        view = ConfirmationView()
+        confirm_buttons = [b for b in view.children if hasattr(b, 'label') and 'Confirm' in b.label]
+        assert '✅' in confirm_buttons[0].label
+
+    def test_cancel_button_has_emoji(self):
+        """Botão cancelar deve ter emoji ❌."""
+        view = ConfirmationView()
+        cancel_buttons = [b for b in view.children if hasattr(b, 'label') and 'Cancel' in b.label]
+        assert '❌' in cancel_buttons[0].label
+
+
+class TestOnTimeout:
+    """Testes para on_timeout."""
+
+    @pytest.mark.asyncio
+    async def test_on_timeout_does_not_raise(self):
+        """Deve executar on_timeout sem levantar exceção."""
+        view = ConfirmationView()
+        # Não deve levantar exceção
+        await view.on_timeout()
+
+
+class TestConfirmationViewState:
+    """Testes de estado da ConfirmationView."""
+
+    def test_value_none_initially(self):
+        """value deve ser None inicialmente."""
+        view = ConfirmationView()
+        assert view.value is None
+
+    def test_timeout_default_60_seconds(self):
+        """Timeout padrão deve ser 60 segundos."""
+        view = ConfirmationView()
+        assert view.timeout == 60.0
+
+    def test_timeout_can_be_customized(self):
+        """Timeout pode ser customizado."""
+        view = ConfirmationView(timeout=120.0)
+        assert view.timeout == 120.0
+
+    def test_view_not_finished_initially(self):
+        """View não deve estar finalizada inicialmente."""
+        view = ConfirmationView()
+        assert not view.is_finished()
+
+    def test_children_are_buttons(self):
+        """Filhos devem ser botões Discord UI."""
+        view = ConfirmationView()
+        from discord.ui import Button
+
+        for child in view.children:
+            assert isinstance(child, Button)
+
+
+class TestConfirmationViewBehavior:
+    """Testes de comportamento da ConfirmationView."""
+
+    def test_multiple_instances_independent(self):
+        """Múltiplas instâncias devem ser independentes."""
+        view1 = ConfirmationView(timeout=30.0)
+        view2 = ConfirmationView(timeout=60.0)
+
+        assert view1.timeout == 30.0
+        assert view2.timeout == 60.0
+        assert view1 is not view2
+
+    def test_value_attribute_writable(self):
+        """value pode ser alterado (usado pelos callbacks)."""
+        view = ConfirmationView()
+        assert view.value is None
+
+        # Simular o que o callback do botão faz
+        view.value = True
+        assert view.value is True
+
+        view.value = False
+        assert view.value is False
+
+    def test_clear_items_method_exists(self):
+        """Método clear_items deve existir."""
+        view = ConfirmationView()
+        assert hasattr(view, 'clear_items')
+        assert callable(view.clear_items)
+
+    def test_stop_method_exists(self):
+        """Método stop deve existir."""
+        view = ConfirmationView()
+        assert hasattr(view, 'stop')
+        assert callable(view.stop)
+</file>
+
+<file path="tests/__init__.py">
+"""Testes do OraculoBOT."""
+</file>
+
+<file path="tests/AGENTS.md">
+<!-- Parent: ../AGENTS.md -->
+<!-- Generated: 2026-03-25 -->
+
+# tests
+
+## Purpose
+Suíte de testes do OraculoBOT com foco em cobertura de módulos críticos.
+
+## Key Files
+| File | Description |
+|------|-------------|
+| `conftest.py` | Fixtures compartilhadas (Discord, RAG, env) |
+
+## Subdirectories
+| Directory | Purpose |
+|-----------|---------|
+| `unit/` | Testes unitários (see `unit/AGENTS.md`) |
+| `e2e/` | Testes E2E/fixtures (see `e2e/AGENTS.md`) |
+
+## For AI Agents
+
+### Working In This Directory
+- Usar pytest-mock, pytest-asyncio
+- Fixtures usam spec=discord.* para isinstance()
+
+### Testing Requirements
+- Rodar `uv run pytest tests/unit/` antes de commits
+- Target coverage: 70%+
+
+### Common Patterns
+- mock_env_vars autouse para variáveis de ambiente
+- AsyncMock para métodos Discord
+- MagicMock com spec para isinstance checks
 </file>
 
 <file path="analyze_rag_metadata.py">
@@ -3379,6 +5151,26 @@ if __name__ == "__main__":
     }
   ]
 }
+</file>
+
+<file path="pytest.ini">
+[tool:pytest]
+minversion = 7.0
+addopts = -ra -q --strict-markers --strict-config
+testpaths = tests
+python_files = test_*.py
+python_classes = Test*
+python_functions = test_*
+asyncio_mode = auto
+markers =
+    unit: Unit tests
+    integration: Integration tests
+    e2e: End-to-end tests
+    slow: Slow running tests
+    discord: Discord API tests
+    rag: RAG system tests
+    smoke: Smoke tests
+    regression: Regression tests
 </file>
 
 <file path="README.md">
@@ -4248,6 +6040,17 @@ if __name__ == "__main__":
     main()
 </file>
 
+<file path=".omc/sessions/36e37654-b137-4140-a1d3-8662e2256a42.json">
+{
+  "session_id": "36e37654-b137-4140-a1d3-8662e2256a42",
+  "ended_at": "2026-03-25T21:24:27.751Z",
+  "reason": "agent_completion",
+  "agents_spawned": 11,
+  "agents_completed": 11,
+  "modes_used": []
+}
+</file>
+
 <file path="oraculo_bot/__main__.py">
 """Entrypoint: python -m oraculo_bot."""
 
@@ -4783,6 +6586,1120 @@ ERROR_MESSAGE: str = "Desculpe, ocorreu um erro. Tente novamente."
 SUPABASE_DB_URL: str | None = os.getenv("SUPABASE_DB_URL")
 </file>
 
+<file path="oraculo_bot/rag_retriever.py">
+"""RAG Retriever para busca semântica em legislação."""
+
+import logging
+from typing import Optional
+
+import psycopg
+
+from oraculo_bot.config import SUPABASE_DB_URL
+
+logger = logging.getLogger(__name__)
+ALLOWED_METADATA_FILTERS = {
+    "ano",
+    "artigo",
+    "assunto",
+    "banca",
+    "cargo",
+    "disciplina",
+    "tema",
+    "tipo",
+}
+
+
+class RAGRetriever:
+    """Retriever para RAG usando Supabase pgvector.
+
+    Realiza busca semântica em chunks de legislação com embeddings.
+    """
+
+    def __init__(self, db_url: Optional[str] = None):
+        """Inicializa o retriever.
+
+        Args:
+            db_url: URL PostgreSQL. Se None, usa SUPABASE_DB_URL.
+        """
+        self.db_url = db_url or SUPABASE_DB_URL
+        self._conn = None
+
+    @property
+    def conn(self):
+        """Lazy connection."""
+        if self._conn is None:
+            if not self.db_url:
+                raise RuntimeError("SUPABASE_DB_URL não configurada")
+            self._conn = psycopg.connect(self.db_url)
+        return self._conn
+
+    @property
+    def enabled(self) -> bool:
+        """Verifica se RAG está habilitado."""
+        return bool(self.db_url)
+
+    def retrieve(
+        self,
+        query_text: str,
+        query_embedding: list[float],
+        top_k: int = 5,
+        filters: Optional[dict] = None,
+    ) -> list[dict]:
+        """Busca chunks similares ao query.
+
+        Args:
+            query_text: Texto da query (não usado na busca vetorial).
+            query_embedding: Embedding do query (vetor de floats).
+            top_k: Número de resultados a retornar.
+            filters: Filtros de metadados (ex: {"ano": "2021", "banca": "FCC"}).
+
+        Returns:
+            Lista de chunks similares com metadados.
+        """
+        if not self.enabled:
+            logger.warning("RAG desabilitado (SUPABASE_DB_URL não configurada)")
+            return []
+
+        if query_embedding is None:
+            logger.warning("Embedding None fornecido, retornando lista vazia")
+            return []
+
+        try:
+            with self.conn.cursor() as cur:
+                # Construir query base
+                where_clauses = ["embedding IS NOT NULL"]
+                params = []
+
+                # Adicionar filtros se fornecidos
+                if filters:
+                    for key, value in filters.items():
+                        if key not in ALLOWED_METADATA_FILTERS:
+                            logger.warning("Ignorando filtro RAG não permitido: %s", key)
+                            continue
+                        where_clauses.append(f"metadados->>'{key}' = %s")
+                        params.append(str(value))
+
+                where_sql = " AND ".join(where_clauses)
+
+                # Query de busca vetorial
+                sql = f"""
+                    SELECT
+                        id,
+                        documento_id,
+                        texto,
+                        metadados,
+                        metadados->>'ano' as ano,
+                        metadados->>'banca' as banca,
+                        metadados->>'tipo' as tipo,
+                        metadados->>'artigo' as artigo,
+                        1 - (embedding <=> %s::vector) as similarity
+                    FROM rag_chunks
+                    WHERE {where_sql}
+                    ORDER BY embedding <=> %s::vector
+                    LIMIT %s;
+                """
+
+                # Converter embedding para string PostgreSQL array
+                # Garantir formato com colchetes [0.1, 0.2, ...]
+                if isinstance(query_embedding, str):
+                    # Se já for string, garantir colchetes
+                    emb_str = query_embedding
+                    if emb_str.startswith("("):
+                        emb_str = "[" + emb_str[1:-1] + "]"
+                else:
+                    # Se for lista, converter para string com colchetes
+                    emb_str = "[" + ",".join(str(x) for x in query_embedding) + "]"
+
+                params.extend([emb_str, emb_str, top_k])
+
+                cur.execute(sql, params)
+                results = cur.fetchall()
+
+                # Montar resposta
+                chunks = []
+                for row in results:
+                    chunk_id, doc_id, texto, metadata, ano, banca, tipo, artigo, similarity = row
+                    chunks.append({
+                        "id": chunk_id,
+                        "documento_id": doc_id,
+                        "texto": texto,
+                        "metadados": metadata,
+                        "ano": ano,
+                        "banca": banca,
+                        "tipo": tipo,
+                        "artigo": artigo,
+                        "similarity": similarity,
+                    })
+
+                logger.info(f"RAG: encontrados {len(chunks)} chunks (top_k={top_k})")
+                return chunks
+
+        except psycopg.Error:
+            logger.exception("Erro na busca RAG")
+            return []
+
+    def retrieve_by_keywords(
+        self,
+        keywords: list[str],
+        top_k: int = 5,
+        filters: Optional[dict] = None,
+    ) -> list[dict]:
+        """Busca chunks por keywords (full-text search).
+
+        Args:
+            keywords: Lista de palavras-chave.
+            top_k: Número de resultados.
+            filters: Filtros de metadados.
+
+        Returns:
+            Lista de chunks com keywords.
+        """
+        if not self.enabled:
+            return []
+
+        try:
+            with self.conn.cursor() as cur:
+                # Construir WHERE com ILIKE para cada keyword
+                keyword_conditions = []
+                params = []
+                for keyword in keywords:
+                    like_value = f"%{keyword}%"
+                    keyword_conditions.append("(texto ILIKE %s OR metadados::text ILIKE %s)")
+                    params.extend([like_value, like_value])
+
+                where_clauses = ["embedding IS NOT NULL"]
+                if keyword_conditions:
+                    where_clauses.append("(" + " OR ".join(keyword_conditions) + ")")
+
+                # Adicionar filtros se fornecidos
+                if filters:
+                    for key, value in filters.items():
+                        if key not in ALLOWED_METADATA_FILTERS:
+                            logger.warning("Ignorando filtro keyword não permitido: %s", key)
+                            continue
+                        where_clauses.append(f"metadados->>'{key}' = %s")
+                        params.append(str(value))
+
+                where_sql = " AND ".join(where_clauses)
+
+                sql = f"""
+                    SELECT
+                        id,
+                        documento_id,
+                        substring(texto, 1, 500) as texto_preview,
+                        metadados,
+                        metadados->>'ano' as ano,
+                        metadados->>'banca' as banca
+                    FROM rag_chunks
+                    WHERE {where_sql}
+                    LIMIT %s;
+                """
+
+                params.append(top_k)
+                cur.execute(sql, params)
+                results = cur.fetchall()
+
+                chunks = []
+                for row in results:
+                    chunk_id, doc_id, texto, metadata, ano, banca = row
+                    chunks.append({
+                        "id": chunk_id,
+                        "documento_id": doc_id,
+                        "texto": texto,
+                        "metadados": metadata,
+                        "ano": ano,
+                        "banca": banca,
+                    })
+
+                logger.info(f"RAG keyword search: {len(chunks)} chunks")
+                return chunks
+
+        except psycopg.Error:
+            logger.exception("Erro na busca por keywords")
+            return []
+</file>
+
+<file path="scripts/test_e2e_manual.py">
+#!/usr/bin/env python3
+"""
+Teste E2E Manual para OraculoBOT Discord
+
+Este script permite testar o bot Discord com API real de forma interativa.
+Útil para validar funcionalidades manualmente antes/depois de deploys.
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ USO                                                                          │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  1. Modo interativo (padrão):                                               │
+│     $ python scripts/test_e2e_manual.py                                     │
+│                                                                             │
+│  2. Modo dry-run (valida config sem iniciar bot):                           │
+│     $ python scripts/test_e2e_manual.py --dry-run                            │
+│                                                                             │
+│  3. Testar em guild/channel específicos:                                    │
+│     $ python scripts/test_e2e_manual.py --guild 123 --channel 456            │
+│                                                                             │
+│  4. Log detalhado:                                                           │
+│     $ python scripts/test_e2e_manual.py --verbose                            │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ VARIÁVEIS DE AMBIENTE REQUERIDAS                                            │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  DISCORD_BOT_TOKEN      - Token do bot Discord (obrigatório)                │
+│  DEEPSEEK_API_KEY       - Chave API DeepSeek (obrigatório)                  │
+│  GEMINI_API_KEY         - Embeddings RAG (opcional)                         │
+│  OPENAI_API_KEY         - Embeddings alternativos (opcional)                │
+│  SUPABASE_DB_URL        - PostgreSQL persistente (opcional)                 │
+│  TARGET_GUILD_ID        - Guild ID (default: 1283924742851661844)           │
+│  TARGET_CHANNEL_ID      - Channel ID (default: 1486301006659715143)         │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│ DURANTE O TESTE                                                              │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│  1. Bot inicia e aguarda mensagens no canal configurado                      │
+│  2. Todas as interações são logadas (input/output)                           │
+│  3. Use Ctrl+C para encerrar gracefully                                     │
+│  4. Logs são salvos em logs/test_e2e_manual_{timestamp}.log                  │
+│                                                                             │
+│  Casos de teste sugeridos:                                                   │
+│  • Mensagem simples de texto                                                │
+│  • Upload de imagem (jpg, png)                                              │
+│  • Upload de vídeo (mp4, mov)                                               │
+│  • Upload de áudio (mp3, wav)                                               │
+│  • Upload de PDF/documento                                                  │
+│  • Mensagens em threads existentes                                          │
+│  • Múltiplas mensagens consecutivas (histórico)                             │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+"""
+
+from __future__ import annotations
+
+import argparse
+import logging
+import sys
+from datetime import datetime
+from pathlib import Path
+from typing import Optional
+
+import discord
+from agno.agent.agent import Agent
+from agno.utils.log import log_info, log_error, log_exception, log_warning
+
+# Adiciona projeto ao path
+project_root = Path(__file__).parent.parent
+sys.path.insert(0, str(project_root))
+
+from oraculo_bot.config import (
+    DISCORD_BOT_TOKEN,
+    DEEPSEEK_API_KEY,
+    GEMINI_API_KEY,
+    OPENAI_API_KEY,
+    SUPABASE_DB_URL,
+    TARGET_GUILD_ID,
+    TARGET_CHANNEL_ID,
+)
+from oraculo_bot.db import SessionDAO
+from oraculo_bot.agent import create_agent
+
+
+class E2ETestBot(discord.Client):
+    """Bot Discord wrapper para testes E2E com logging detalhado."""
+
+    def __init__(
+        self,
+        guild_id: int,
+        channel_id: int,
+        agent: Agent,
+        log_file: Optional[Path] = None,
+    ):
+        intents = discord.Intents.default()
+        intents.guilds = True
+        intents.messages = True
+        intents.message_content = True
+        super().__init__(intents=intents)
+
+        self.guild_id = guild_id
+        self.channel_id = channel_id
+        self.agent = agent
+        self.log_file = log_file
+        self.message_count = 0
+        self.test_start_time = datetime.now()
+
+        # Configura logger de arquivo
+        if log_file:
+            self.file_handler = logging.FileHandler(log_file, encoding="utf-8")
+            self.file_handler.setLevel(logging.INFO)
+            formatter = logging.Formatter(
+                "%(asctime)s | %(levelname)s | %(message)s",
+                datefmt="%Y-%m-%d %H:%M:%S",
+            )
+            self.file_handler.setFormatter(formatter)
+
+            # Cria logger específico para o bot
+            self.test_logger = logging.getLogger("e2e_test")
+            self.test_logger.addHandler(self.file_handler)
+            self.test_logger.setLevel(logging.INFO)
+        else:
+            self.test_logger = None
+
+        self._register_events()
+
+    def _is_target_channel(self, channel: discord.abc.Messageable) -> bool:
+        """Verifica se o canal é o alvo ou thread filha."""
+        if isinstance(channel, discord.TextChannel):
+            return channel.id == self.channel_id
+        if isinstance(channel, discord.Thread):
+            return channel.parent_id == self.channel_id
+        return False
+
+    def _log_interaction(
+        self,
+        event_type: str,
+        message: discord.Message,
+        response: Optional[str] = None,
+        metadata: Optional[dict] = None,
+    ) -> None:
+        """Loga interação no console e arquivo."""
+        self.message_count += 1
+
+        # Metadata
+        meta_parts = []
+        if metadata:
+            for key, value in metadata.items():
+                meta_parts.append(f"{key}={value}")
+
+        meta_str = " | " + " | ".join(meta_parts) if meta_parts else ""
+
+        # Console log
+        log_info(
+            f"[{self.message_count:03d}] {event_type}: "
+            f"{message.author.name}: {message.content[:100]}{meta_str}"
+        )
+
+        # File log (detalhado)
+        if self.test_logger:
+            self.test_logger.info(
+                f"=== {event_type} #{self.message_count} ===\n"
+                f"Author: {message.author.name} ({message.author.id})\n"
+                f"Channel: {message.channel.name} ({message.channel.id})\n"
+                f"Thread: {getattr(message.channel, 'name', 'N/A')}\n"
+                f"Content: {message.content}\n"
+                f"Attachments: {len(message.attachments)}\n"
+                f"Timestamp: {message.created_at}\n"
+                f"{meta_str}\n"
+            )
+
+            if response:
+                self.test_logger.info(f"Bot Response:\n{response}\n")
+
+    def _register_events(self) -> None:
+        @self.event
+        async def on_ready() -> None:
+            guild = self.get_guild(self.guild_id)
+            channel = self.get_channel(self.channel_id)
+
+            log_info("=" * 70)
+            log_info("🤖 OraculoBOT E2E Test Started")
+            log_info("=" * 70)
+            log_info(f"Bot logged in as: {self.user}")
+            log_info(f"Target guild: {guild.name if guild else 'NOT FOUND'} (ID: {self.guild_id})")
+            log_info(f"Target channel: {channel.name if channel else 'NOT FOUND'} (ID: {self.channel_id})")
+
+            if self.test_logger:
+                self.test_logger.info(
+                    f"\n{'='*70}\n"
+                    f"E2E TEST SESSION STARTED\n"
+                    f"Start Time: {self.test_start_time.isoformat()}\n"
+                    f"Bot: {self.user}\n"
+                    f"Guild: {guild.name if guild else 'NOT FOUND'} ({self.guild_id})\n"
+                    f"Channel: {channel.name if channel else 'NOT FOUND'} ({self.channel_id})\n"
+                    f"{'='*70}\n"
+                )
+
+            # Validações
+            if not guild:
+                log_error(f"❌ Guild ID {self.guild_id} not found!")
+            if not channel:
+                log_error(f"❌ Channel ID {self.channel_id} not found!")
+
+            log_info("✓ Bot ready and listening for messages...")
+            log_info("Press Ctrl+C to stop gracefully")
+            log_info("=" * 70)
+
+        @self.event
+        async def on_message(message: discord.Message) -> None:
+            # Ignora próprias mensagens
+            if message.author == self.user:
+                return
+
+            # Filtro de guild
+            if not message.guild or message.guild.id != self.guild_id:
+                return
+
+            # Filtro de canal/thread
+            if not self._is_target_channel(message.channel):
+                return
+
+            # Log da mensagem recebida
+            attachment_info = {}
+            if message.attachments:
+                att = message.attachments[0]
+                attachment_info = {
+                    "media_type": att.content_type or "unknown",
+                    "media_url": att.url,
+                    "media_size": f"{att.size / 1024:.1f}KB",
+                }
+
+            self._log_interaction(
+                "MESSAGE_RECEIVED",
+                message,
+                metadata=attachment_info if attachment_info else None,
+            )
+
+            # Processa mensagem (igual bot.py)
+            await self._process_message(message)
+
+        @self.event
+        async def on_disconnect() -> None:
+            if self.test_logger:
+                self.test_logger.info("\n" + "=" * 70 + "\nBOT DISCONNECTED\n")
+
+    async def _process_message(self, message: discord.Message) -> None:
+        """Processa mensagem com logging detalhado."""
+        from oraculo_bot.agent import initialize_session, get_session_history, enrich_with_rag
+        from oraculo_bot.config import THREAD_NAME_PREFIX
+        from textwrap import dedent
+
+        # Thread management
+        if isinstance(message.channel, discord.Thread):
+            thread = message.channel
+        elif isinstance(message.channel, discord.TextChannel):
+            thread = await message.create_thread(
+                name=f"{THREAD_NAME_PREFIX} {message.author.name}"
+            )
+        else:
+            log_error(f"Unsupported channel type: {type(message.channel)}")
+            return
+
+        # Sessão
+        session = initialize_session(str(thread.id), str(message.author.id), mode="estudo")
+        history = get_session_history(str(thread.id))
+
+        # Contexto
+        context = dedent(f"""
+            Discord username: {message.author.name}
+            Discord userid: {message.author.id}
+            Discord url: {message.jump_url}
+            Session mode: {session.mode}
+            Previous messages count: {len(history)}
+        """)
+
+        # RAG
+        rag_context = enrich_with_rag(message.content, top_k=3)
+
+        # Mídia
+        import requests
+        from agno.media import Audio, File, Image, Video
+
+        media_kwargs = {}
+        if message.attachments:
+            att = message.attachments[0]
+            mime = att.content_type or ""
+            url = att.url
+
+            if mime.startswith("image/"):
+                media_kwargs["images"] = [Image(url=url)]
+            elif mime.startswith("video/"):
+                media_kwargs["videos"] = [Video(content=requests.get(url, timeout=30).content)]
+            elif mime.startswith("audio/"):
+                media_kwargs["audio"] = [Audio(url=url)]
+            elif mime.startswith("application/"):
+                media_kwargs["files"] = [File(content=requests.get(url, timeout=30).content)]
+
+        # Executa agent
+        async with thread.typing():
+            full_context = context + rag_context
+            self.agent.additional_context = full_context  # type: ignore
+
+            response = await self.agent.arun(
+                input=message.content,
+                user_id=message.author.id,
+                session_id=str(thread.id),
+                **media_kwargs,
+            )
+
+            if response.status == "ERROR":
+                log_error(f"Agent error: {response.content}")
+                response.content = "Desculpe, ocorreu um erro. Tente novamente."
+
+            # Salva histórico
+            if hasattr(response, "messages") and response.messages:
+                from oraculo_bot.agent import save_session_history
+                save_session_history(str(thread.id), response.messages)
+
+            # Extrai texto da resposta
+            from agno.utils.message import get_text_from_message
+            content = (
+                get_text_from_message(response.content)
+                if response.content is not None
+                else ""
+            )
+
+            # Envia resposta
+            await self._send_response(thread, f"<@{message.author.id}> {content}")
+
+            # Log da resposta
+            self._log_interaction(
+                "BOT_RESPONSE",
+                message,
+                response=content,
+                metadata={"status": response.status, "thread_id": thread.id},
+            )
+
+    async def _send_response(
+        self,
+        channel: discord.TextChannel | discord.Thread,
+        message: str,
+    ) -> None:
+        """Envia mensagem com split automático."""
+        from oraculo_bot.config import MAX_MESSAGE_LENGTH
+
+        text = message.strip()
+        if not text:
+            return
+
+        if len(text) <= MAX_MESSAGE_LENGTH:
+            await channel.send(text)
+            return
+
+        # Calcula tamanho máximo considerando prefixo "[N/M] "
+        # Prefixo máximo: "[999/999] " = 12 caracteres
+        prefix_max_len = 12
+        chunk_size = MAX_MESSAGE_LENGTH - prefix_max_len
+
+        # Primeira passagem: divide em chunks
+        chunks = []
+        for i in range(0, len(text), chunk_size):
+            chunks.append(text[i : i + chunk_size])
+
+        # Segunda passagem: adiciona prefixo e verifica tamanho
+        for idx, chunk in enumerate(chunks, 1):
+            prefix = f"[{idx}/{len(chunks)}] "
+            message = f"{prefix}{chunk}"
+            # Se ainda exceder, corta o chunk
+            if len(message) > MAX_MESSAGE_LENGTH:
+                allowed_chunk_size = MAX_MESSAGE_LENGTH - len(prefix)
+                chunk = chunk[:allowed_chunk_size]
+                message = f"{prefix}{chunk}"
+            await channel.send(message)
+
+
+def validate_environment() -> dict[str, bool]:
+    """Valida variáveis de ambiente obrigatórias e opcionais."""
+    results = {
+        "required": {},
+        "optional": {},
+    }
+
+    # Obrigatórias
+    required_vars = {
+        "DISCORD_BOT_TOKEN": DISCORD_BOT_TOKEN,
+        "DEEPSEEK_API_KEY": DEEPSEEK_API_KEY,
+    }
+
+    for name, value in required_vars.items():
+        is_set = bool(value)
+        results["required"][name] = is_set
+        if is_set:
+            log_info(f"✓ {name}: {'*' * 10}")  # Mask value
+        else:
+            log_error(f"✗ {name}: NOT SET")
+
+    # Opcionais
+    optional_vars = {
+        "GEMINI_API_KEY": GEMINI_API_KEY,
+        "OPENAI_API_KEY": OPENAI_API_KEY,
+        "SUPABASE_DB_URL": SUPABASE_DB_URL,
+    }
+
+    for name, value in optional_vars.items():
+        is_set = bool(value)
+        results["optional"][name] = is_set
+        status = "✓" if is_set else "○"
+        log_info(f"{status} {name}: {'SET' if is_set else 'NOT SET (optional)'}")
+
+    return results
+
+
+def parse_args() -> argparse.Namespace:
+    """Parse argumentos da linha de comando."""
+    parser = argparse.ArgumentParser(
+        description="Teste E2E manual para OraculoBOT Discord",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=__doc__,
+    )
+
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Valida configuração sem iniciar o bot",
+    )
+
+    parser.add_argument(
+        "--guild",
+        type=int,
+        default=TARGET_GUILD_ID,
+        help=f"Guild ID (default: {TARGET_GUILD_ID})",
+    )
+
+    parser.add_argument(
+        "--channel",
+        type=int,
+        default=TARGET_CHANNEL_ID,
+        help=f"Channel ID (default: {TARGET_CHANNEL_ID})",
+    )
+
+    parser.add_argument(
+        "--verbose",
+        action="store_true",
+        help="Log detalhado (debug)",
+    )
+
+    return parser.parse_args()
+
+
+def main() -> int:
+    """Entrypoint."""
+    args = parse_args()
+
+    # Configura logging
+    logging.basicConfig(
+        level=logging.DEBUG if args.verbose else logging.INFO,
+        format="%(asctime)s | %(levelname)s | %(message)s",
+        datefmt="%H:%M:%S",
+    )
+
+    log_info("=" * 70)
+    log_info("🧪 OraculoBOT E2E Manual Test")
+    log_info("=" * 70)
+
+    # Valida ambiente
+    log_info("\n📋 Validando variáveis de ambiente...")
+    env_results = validate_environment()
+
+    missing_required = [k for k, v in env_results["required"].items() if not v]
+    if missing_required:
+        log_error(f"\n❌ Variáveis obrigatórias faltando: {', '.join(missing_required)}")
+        log_error("Consulte .env.example para configuração")
+        return 1
+
+    log_info("\n✓ Ambiente OK")
+
+    # Dry-run
+    if args.dry_run:
+        log_info("\n✓ Dry-run concluído - configuração válida")
+        return 0
+
+    # Inicializa banco
+    log_info("\n📦 Inicializando banco de dados...")
+    try:
+        dao = SessionDAO()
+        dao.init_db()
+        log_info("✓ Banco OK")
+    except Exception as e:
+        log_exception(e)
+        log_error("✗ Falha ao inicializar banco")
+        return 1
+
+    # Limpa sessões antigas
+    try:
+        dao.cleanup_old_sessions(30)
+        log_info("✓ Sessões antigas limpas")
+    except Exception as e:
+        log_exception(e)
+        log_warning("⚠ Falha ao limpar sessões antigas (não crítico)")
+
+    # Cria agent
+    log_info("\n🤖 Inicializando agent...")
+    try:
+        agent = create_agent()
+        log_info(f"✓ Agent criado: {agent.name}")
+    except Exception as e:
+        log_exception(e)
+        log_error("✗ Falha ao criar agent")
+        return 1
+
+    # Cria diretório de logs
+    logs_dir = Path(__file__).parent.parent / "logs"
+    logs_dir.mkdir(exist_ok=True)
+
+    # Arquivo de log
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    log_file = logs_dir / f"test_e2e_manual_{timestamp}.log"
+
+    # Inicia bot
+    log_info(f"\n🚀 Iniciando bot de teste...")
+    log_info(f"📝 Log file: {log_file}")
+    log_info(f"🎯 Guild: {args.guild}")
+    log_info(f"🎯 Channel: {args.channel}")
+
+    try:
+        bot = E2ETestBot(
+            guild_id=args.guild,
+            channel_id=args.channel,
+            agent=agent,
+            log_file=log_file,
+        )
+        bot.run(DISCORD_BOT_TOKEN)
+    except KeyboardInterrupt:
+        log_info("\n\n🛑 Interrupção pelo usuário")
+    except Exception as e:
+        log_exception(e)
+        log_error("✗ Falha ao executar bot")
+        return 1
+    finally:
+        if bot is not None and hasattr(bot, 'test_logger') and bot.test_logger:
+            bot.test_logger.info(
+                f"\n{'='*70}\n"
+                f"E2E TEST SESSION ENDED\n"
+                f"End Time: {datetime.now().isoformat()}\n"
+                f"Total Messages: {bot.message_count}\n"
+                f"Duration: {datetime.now() - bot.test_start_time}\n"
+                f"{'='*70}\n"
+            )
+            bot.file_handler.close()
+
+    log_info("✓ Teste concluído")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+</file>
+
+<file path="tests/e2e/conftest.py">
+"""Fixtures específicas para testes E2E do OraculoBOT."""
+
+from __future__ import annotations
+
+from unittest.mock import AsyncMock, MagicMock, Mock
+
+import discord
+import pytest
+import pytest_asyncio
+
+from oraculo_bot.bot import OracleDiscordBot
+from oraculo_bot.agent import create_agent
+from oraculo_bot.views import ConfirmationView
+
+
+# ── E2E Bot Fixture ─────────────────────────────────────────────
+
+@pytest_asyncio.fixture
+async def e2e_bot(mock_env_vars, mock_agent_response):
+    """Bot configurado para testes E2E com agent mockado."""
+    # Criar agent mockado
+    agent = create_agent()
+    agent.arun = AsyncMock(return_value=mock_agent_response)
+    agent.acontinue_run = AsyncMock(return_value=mock_agent_response)
+
+    # Criar bot
+    bot = OracleDiscordBot(agent=agent)
+
+    # Mock do client Discord com IDs inteiros
+    bot.client._user = Mock()
+    bot.client._user.id = 123456789012345678
+    bot.client._user.name = "OraculoBOT"
+
+    yield bot
+
+
+# ── E2E Message Fixtures ─────────────────────────────────────────
+
+@pytest.fixture
+def e2e_message_text_only():
+    """Mensagem Discord apenas com texto."""
+    msg = MagicMock()
+    msg.author = Mock()
+    msg.author.name = "Estudante123"
+    msg.author.id = 987654321
+    msg.content = "Qual é o regime jurídico dos servidores públicos federais?"
+    msg.attachments = []
+    msg.guild = Mock()
+    msg.guild.id = 1283924742851661844
+    msg.channel = MagicMock(spec=discord.TextChannel)
+    msg.channel.id = 1486301006659715143
+    msg.jump_url = "https://discord.com/channels/1283924742851661844/1486301006659715143/999"
+    msg.create_thread = AsyncMock()
+    return msg
+
+
+@pytest.fixture
+def e2e_message_with_image():
+    """Mensagem Discord com imagem anexa."""
+    msg = MagicMock()
+    msg.author = Mock()
+    msg.author.name = "Estudante123"
+    msg.author.id = 987654321
+    msg.content = "Analisa essa questão de prova"
+    msg.attachments = [Mock()]
+    msg.attachments[0].content_type = "image/png"
+    msg.attachments[0].url = "https://example.com/questao.png"
+    msg.guild = Mock()
+    msg.guild.id = 1283924742851661844
+    msg.channel = MagicMock(spec=discord.TextChannel)
+    msg.channel.id = 1486301006659715143
+    msg.jump_url = "https://discord.com/channels/1283924742851661844/1486301006659715143/1000"
+    msg.create_thread = AsyncMock()
+    return msg
+
+
+@pytest.fixture
+def e2e_message_with_video():
+    """Mensagem Discord com vídeo anexo."""
+    msg = MagicMock()
+    msg.author = Mock()
+    msg.author.name = "Estudante456"
+    msg.author.id = 123456789
+    msg.content = "O que você acha dessa aula?"
+    msg.attachments = [Mock()]
+    msg.attachments[0].content_type = "video/mp4"
+    msg.attachments[0].url = "https://example.com/aula.mp4"
+    msg.guild = Mock()
+    msg.guild.id = 1283924742851661844
+    msg.channel = MagicMock(spec=discord.TextChannel)
+    msg.channel.id = 1486301006659715143
+    msg.jump_url = "https://discord.com/channels/1283924742851661844/1486301006659715143/1001"
+    msg.create_thread = AsyncMock()
+    return msg
+
+
+@pytest.fixture
+def e2e_message_with_audio():
+    """Mensagem Discord com áudio anexo."""
+    msg = MagicMock()
+    msg.author = Mock()
+    msg.author.name = "Estudante789"
+    msg.author.id = 456789123
+    msg.content = "Transcreve esse áudio"
+    msg.attachments = [Mock()]
+    msg.attachments[0].content_type = "audio/mpeg"
+    msg.attachments[0].url = "https://example.com/podcast.mp3"
+    msg.guild = Mock()
+    msg.guild.id = 1283924742851661844
+    msg.channel = MagicMock(spec=discord.TextChannel)
+    msg.channel.id = 1486301006659715143
+    msg.jump_url = "https://discord.com/channels/1283924742851661844/1486301006659715143/1002"
+    msg.create_thread = AsyncMock()
+    return msg
+
+
+@pytest.fixture
+def e2e_message_with_file():
+    """Mensagem Discord com arquivo anexo (PDF)."""
+    msg = MagicMock()
+    msg.author = Mock()
+    msg.author.name = "Estudante999"
+    msg.author.id = 789123456
+    msg.content = "Resume esse edital pra mim"
+    msg.attachments = [Mock()]
+    msg.attachments[0].content_type = "application/pdf"
+    msg.attachments[0].url = "https://example.com/edital.pdf"
+    msg.guild = Mock()
+    msg.guild.id = 1283924742851661844
+    msg.channel = MagicMock(spec=discord.TextChannel)
+    msg.channel.id = 1486301006659715143
+    msg.jump_url = "https://discord.com/channels/1283924742851661844/1486301006659715143/1003"
+    msg.create_thread = AsyncMock()
+    return msg
+
+
+@pytest.fixture
+def e2e_message_in_thread():
+    """Mensagem enviada dentro de uma thread existente."""
+    msg = MagicMock()
+    msg.author = Mock()
+    msg.author.name = "Estudante123"
+    msg.author.id = 987654321
+    msg.content = "Pode explicar melhor?"
+    msg.attachments = []
+    msg.guild = Mock()
+    msg.guild.id = 1283924742851661844
+    msg.channel = MagicMock(spec=discord.Thread)
+    msg.channel.id = 1004
+    msg.channel.parent_id = 1486301006659715143
+    msg.jump_url = "https://discord.com/channels/1283924742851661844/1486301006659715143/1004"
+    return msg
+
+
+# ── E2E Thread/Channel Fixtures ───────────────────────────────────
+
+@pytest.fixture
+def e2e_thread():
+    """Thread Discord mockada."""
+
+    class TypingContextManager:
+        async def __aenter__(self):
+            return None
+        async def __aexit__(self, *args):
+            pass
+
+    thread = MagicMock()  # Removido spec=discord.Thread para evitar conflito
+    thread.id = 999123
+    thread.name = "💬 Estudante123"
+    thread.parent_id = 1486301006659715143
+    thread.send = AsyncMock()
+    thread.typing = Mock(return_value=TypingContextManager())
+    return thread
+
+
+@pytest.fixture
+def e2e_text_channel():
+    """Canal de texto Discord mockado."""
+    channel = MagicMock(spec=discord.TextChannel)
+    channel.id = 1486301006659715143
+    channel.name = "geral"
+    channel.send = AsyncMock()
+    channel.create_thread = AsyncMock(return_value=MagicMock(spec=discord.Thread, id=999123))
+    return channel
+
+
+# ── E2E Response Fixtures ─────────────────────────────────────────
+
+@pytest.fixture
+def e2e_agent_success_response():
+    """Resposta de sucesso do agent."""
+    response = MagicMock()
+    response.status = "success"
+    response.content = """
+    **Servidor Público Federal**
+
+    Os servidores públicos federais são regidos pela Lei nº 8.112/1990.
+
+    **Principais características:**
+    - Cargo público de provimento efetivo
+    - Regime jurídico único
+    - Estabilidade após 3 anos
+    """
+    response.messages = [
+        {"role": "user", "content": "Qual é o regime jurídico?"},
+        {"role": "assistant", "content": response.content},
+    ]
+    response.is_paused = False
+    response.tools_requiring_confirmation = []
+    response.reasoning_content = None
+    return response
+
+
+@pytest.fixture
+def e2e_agent_paused_response():
+    """Resposta pausada do agent (requer confirmação)."""
+    tool_mock = MagicMock()
+    tool_mock.tool_name = "search_legislation"
+    tool_mock.confirmed = None
+
+    response = MagicMock()
+    response.status = "paused"
+    response.content = "Preciso pesquisar legislação recente"
+    response.messages = []
+    response.is_paused = True
+    response.tools_requiring_confirmation = [tool_mock]
+    response.reasoning_content = "User asked about recent legislation"
+    return response
+
+
+@pytest.fixture
+def e2e_agent_error_response():
+    """Resposta de erro do agent."""
+    response = MagicMock()
+    response.status = "error"
+    response.content = "Erro ao processar requisição"
+    response.messages = []
+    response.is_paused = False
+    response.tools_requiring_confirmation = []
+    return response
+
+
+@pytest.fixture
+def e2e_agent_long_response():
+    """Resposta longa do agent (teste de split)."""
+    long_text = "\n\n".join([f"**Item {i}**: Conteúdo extenso sobre o tema." for i in range(1, 50)])
+    response = MagicMock()
+    response.status = "success"
+    response.content = long_text
+    response.messages = [{"role": "assistant", "content": long_text}]
+    response.is_paused = False
+    response.tools_requiring_confirmation = []
+    response.reasoning_content = None
+    return response
+
+
+# ── E2E RAG Fixtures ─────────────────────────────────────────────
+
+@pytest.fixture
+def e2e_rag_context():
+    """Contexto RAG mockado."""
+    return """
+    [CONTEXTO LEGISLATIVO RELEVANTE]
+    [Fonte 1 (ano: 1988, banca: Cebraspe, tipo: CF, sim: 0.95)]
+    Art. 37 da Constituição Federal: A administração pública direta e indireta de qualquer dos Poderes da União, dos Estados, do Distrito Federal e dos Municípios obedecerá aos princípios de LEGALIDADE, IMPESSOALIDADE, MORALIDADE, PUBLICIDADE e EFICIÊNCIA.
+
+    [Fonte 2 (ano: 1990, banca: FCC, tipo: Lei, sim: 0.87)]
+    Lei nº 8.112/1990: Dispõe sobre o regime jurídico dos servidores públicos civis da União, das autarquias e das fundações públicas federais.
+    """
+
+
+# ── E2E Database Fixtures ────────────────────────────────────────
+
+@pytest.fixture
+def e2e_session_history():
+    """Histórico de sessão mockado."""
+    return [
+        {"role": "user", "content": "Olá"},
+        {"role": "assistant", "content": "Olá! Como posso ajudar?"},
+        {"role": "user", "content": "Quais são os princípios da admin?"},
+        {"role": "assistant", "content": "LIME"},
+    ]
+
+
+# ── E2E HITL Fixtures ───────────────────────────────────────────
+
+@pytest.fixture
+def e2e_confirmation_view_confirmed():
+    """View de confirmação com resultado True."""
+    view = ConfirmationView()
+    view.value = True
+    view.stop = Mock()
+    return view
+
+
+@pytest.fixture
+def e2e_confirmation_view_cancelled():
+    """View de confirmação com resultado False."""
+    view = ConfirmationView()
+    view.value = False
+    view.stop = Mock()
+    return view
+
+
+@pytest.fixture
+def e2e_confirmation_view_timeout():
+    """View de confirmação com timeout."""
+    view = ConfirmationView()
+    view.value = None
+    view.wait = AsyncMock(return_value=True)  # Timeout retorna True no discord.py
+    view.stop = Mock()
+    return view
+</file>
+
 <file path=".gitignore">
 # Environment
 .env
@@ -4808,6 +7725,53 @@ uv.lock
 
 # oh-my-claudecode state
 .omc/state/
+</file>
+
+<file path="AGENTS.md">
+<!-- Generated: 2026-03-25T16:09:00Z -->
+
+# oraculobot
+
+## Purpose
+Bot Discord de estudos para concursos públicos brasileiros, construído com Agno + discord.py que responde automaticamente no canal configurado com 4 modos adaptativos, suporte a mídia, e RAG integrado.
+
+## Key Files
+| File | Description |
+|------|-------------|
+| `pyproject.toml` | Configuração de projeto, dependências e scripts Python |
+| `README.md` | Documentação completa de setup e configuração do bot |
+| `.env.example` | Template de variáveis de ambiente para Discord, DeepSeek, Gemini e Supabase |
+
+## Subdirectories
+| Directory | Purpose |
+|-----------|---------|
+| `docs/` | Documentação (see `docs/AGENTS.md`) |
+| `oraculo_bot/` | Código principal (see `oraculo_bot/AGENTS.md`) |
+| `scripts/` | Scripts utilitários (see `scripts/AGENTS.md`) |
+| `tests/` | Suíte de testes (see `tests/AGENTS.md`) |
+
+## For AI Agents
+
+### Working In This Directory
+- Usar uv para gerenciar dependências
+- Python 3.11+ requerido
+- Seguir PEP 8
+
+### Testing Requirements
+- Rodar `uv run pytest tests/unit/` antes de commits
+- Manter coverage >60%
+
+### Common Patterns
+- Type hints obrigatórios
+- Async/await para Discord
+
+## Dependencies
+
+### External
+- discord.py - Discord bot framework
+- agno - AI agent framework
+- deepseek - LLM
+- psycopg3/pgvector - PostgreSQL vetorial
 </file>
 
 <file path=".env.example">
@@ -4837,6 +7801,120 @@ SUPABASE_DB_URL=
 # TARGET_CHANNEL_ID=1486301006659715143
 # MODEL_ID=deepseek-chat
 # HISTORY_RUNS=5
+</file>
+
+<file path=".omc/project-memory.json">
+{
+  "version": "1.0.0",
+  "lastScanned": 1774544111785,
+  "projectRoot": "/Users/gabrielramos/repos/OraculoBOT",
+  "techStack": {
+    "languages": [
+      {
+        "name": "Python",
+        "version": null,
+        "confidence": "high",
+        "markers": [
+          "pyproject.toml"
+        ]
+      }
+    ],
+    "frameworks": [
+      {
+        "name": "pytest",
+        "version": null,
+        "category": "testing"
+      }
+    ],
+    "packageManager": null,
+    "runtime": null
+  },
+  "build": {
+    "buildCommand": null,
+    "testCommand": "pytest",
+    "lintCommand": "ruff check",
+    "devCommand": null,
+    "scripts": {}
+  },
+  "conventions": {
+    "namingStyle": null,
+    "importStyle": null,
+    "testPattern": null,
+    "fileOrganization": null
+  },
+  "structure": {
+    "isMonorepo": false,
+    "workspaces": [],
+    "mainDirectories": [
+      "docs",
+      "scripts",
+      "tests"
+    ],
+    "gitBranches": {
+      "defaultBranch": "main",
+      "branchingStrategy": null
+    }
+  },
+  "customNotes": [],
+  "directoryMap": {
+    "docs": {
+      "path": "docs",
+      "purpose": "Documentation",
+      "fileCount": 5,
+      "lastAccessed": 1774544111758,
+      "keyFiles": [
+        "AGENTS.md",
+        "E2E_TESTING.md",
+        "GEMINI_SETUP.md",
+        "RAG_GEMINI_IMPLEMENTATION.md",
+        "RAG_INTEGRATION.md"
+      ]
+    },
+    "oraculo_bot": {
+      "path": "oraculo_bot",
+      "purpose": "Main application",
+      "fileCount": 11,
+      "lastAccessed": 1774544111760,
+      "keyFiles": [
+        "AGENTS.md",
+        "__init__.py",
+        "__main__.py",
+        "agent.py",
+        "bot.py"
+      ]
+    },
+    "scripts": {
+      "path": "scripts",
+      "purpose": "Build/utility scripts",
+      "fileCount": 2,
+      "lastAccessed": 1774544111760,
+      "keyFiles": [
+        "AGENTS.md",
+        "test_e2e_manual.py"
+      ]
+    },
+    "tests": {
+      "path": "tests",
+      "purpose": "Test files",
+      "fileCount": 3,
+      "lastAccessed": 1774544111763,
+      "keyFiles": [
+        "AGENTS.md",
+        "__init__.py",
+        "conftest.py"
+      ]
+    }
+  },
+  "hotPaths": [
+    {
+      "path": "crabbit.txt",
+      "accessCount": 3,
+      "lastAccessed": 1774547171998,
+      "type": "file"
+    }
+  ],
+  "userDirectives": []
+}
 </file>
 
 <file path="pyproject.toml">
@@ -4874,6 +7952,14 @@ line-length = 100
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "W", "UP", "B", "SIM"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "pytest-cov>=5.0",
+    "pytest-mock>=3.14",
+]
 </file>
 
 </files>

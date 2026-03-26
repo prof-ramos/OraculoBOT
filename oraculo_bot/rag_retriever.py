@@ -1,5 +1,7 @@
 """RAG Retriever para busca semântica em legislação."""
 
+from __future__ import annotations
+
 import logging
 from typing import Optional
 
@@ -36,7 +38,7 @@ class RAGRetriever:
         self._conn = None
 
     @property
-    def conn(self):
+    def conn(self) -> psycopg.Connection:
         """Lazy connection."""
         if self._conn is None:
             if not self.db_url:

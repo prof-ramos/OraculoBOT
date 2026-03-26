@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import Any
+
 from agno.agent import Agent
 from agno.models.deepseek import DeepSeek
 
@@ -104,7 +106,7 @@ def initialize_session(thread_id: str, user_id: str, mode: str = "estudo") -> Di
     return _session_dao.get_or_create_session(thread_id, user_id, mode)
 
 
-def save_session_history(thread_id: str, messages: list) -> None:
+def save_session_history(thread_id: str, messages: list[dict[str, Any]]) -> None:
     """Salva o histórico de mensagens de uma sessão.
 
     Args:
@@ -114,7 +116,7 @@ def save_session_history(thread_id: str, messages: list) -> None:
     _session_dao.update_session_data(thread_id, {"history": messages})
 
 
-def get_session_history(thread_id: str) -> list:
+def get_session_history(thread_id: str) -> list[dict[str, Any]]:
     """Recupera o histórico de mensagens de uma sessão.
 
     Args:

@@ -101,9 +101,135 @@
   },
   "hotPaths": [
     {
+      "path": "oraculo_bot/rag.py",
+      "accessCount": 9,
+      "lastAccessed": 1774552381073,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/db.py",
+      "accessCount": 8,
+      "lastAccessed": 1774552381361,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/rag_retriever.py",
+      "accessCount": 6,
+      "lastAccessed": 1774551782439,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/agent.py",
+      "accessCount": 6,
+      "lastAccessed": 1774551808438,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/views.py",
+      "accessCount": 6,
+      "lastAccessed": 1774551821331,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot",
+      "accessCount": 4,
+      "lastAccessed": 1774551384634,
+      "type": "directory"
+    },
+    {
       "path": "crabbit.txt",
       "accessCount": 3,
       "lastAccessed": 1774547171998,
+      "type": "file"
+    },
+    {
+      "path": "discover_tables.py",
+      "accessCount": 3,
+      "lastAccessed": 1774550916319,
+      "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 3,
+      "lastAccessed": 1774550916379,
+      "type": "directory"
+    },
+    {
+      "path": "oraculo_bot/models.py",
+      "accessCount": 3,
+      "lastAccessed": 1774551727257,
+      "type": "file"
+    },
+    {
+      "path": "repomix-output.xml",
+      "accessCount": 2,
+      "lastAccessed": 1774550383975,
+      "type": "file"
+    },
+    {
+      "path": "check_embedding_format.py",
+      "accessCount": 2,
+      "lastAccessed": 1774550901191,
+      "type": "file"
+    },
+    {
+      "path": "test_vector_search.py",
+      "accessCount": 2,
+      "lastAccessed": 1774550901453,
+      "type": "file"
+    },
+    {
+      "path": "setup_rag.sh",
+      "accessCount": 2,
+      "lastAccessed": 1774550901711,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/bot.py",
+      "accessCount": 2,
+      "lastAccessed": 1774551115388,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/config.py",
+      "accessCount": 2,
+      "lastAccessed": 1774551115473,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/__init__.py",
+      "accessCount": 2,
+      "lastAccessed": 1774551726366,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/__main__.py",
+      "accessCount": 2,
+      "lastAccessed": 1774551726643,
+      "type": "file"
+    },
+    {
+      "path": "pyproject.toml",
+      "accessCount": 1,
+      "lastAccessed": 1774550383917,
+      "type": "file"
+    },
+    {
+      "path": "tests/conftest.py",
+      "accessCount": 1,
+      "lastAccessed": 1774550409466,
+      "type": "file"
+    },
+    {
+      "path": "tests/unit/test_agent.py",
+      "accessCount": 1,
+      "lastAccessed": 1774550409520,
+      "type": "file"
+    },
+    {
+      "path": ".env.example",
+      "accessCount": 1,
+      "lastAccessed": 1774550851615,
       "type": "file"
     }
   ],

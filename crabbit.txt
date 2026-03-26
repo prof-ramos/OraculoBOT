@@ -1,0 +1,62 @@
+╔═════════════════════════════════════════════╗
+║                                             ║
+║           New update available!             ║
+║          Run: coderabbit update             ║
+║                                             ║
+╚═════════════════════════════════════════════╝
+
+Starting CodeRabbit review in plain text mode...
+Connecting to review service
+Setting up
+Analyzing
+Reviewing
+
+============================================================================
+File: .omc/sessions/36e37654-b137-4140-a1d3-8662e2256a42.json
+Line: 3 to 6
+Type: nitpick
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @.omc/sessions/36e37654-b137-4140-a1d3-8662e2256a42.json around lines 3 - 6, O campo de metadata "reason" está genérico ("other"); atualize o valor para algo descritivo (por exemplo "session_timeout", "user_requested_end", "agent_completion" ou "manual_termination") ou, se realmente precisar manter "other", acrescente um campo complementar "reason_details" com contexto; localize o objeto JSON que contém "ended_at", "agents_spawned" e "agents_completed" e substitua "reason": "other" por um valor mais específico ou adicione "reason_details" com uma breve explicação (p.ex. previous value "prompt_input_exit" como referência de formato).
+
+
+
+============================================================================
+File: crabbit.txt
+Line: 8 to 10
+Type: nitpick
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @crabbit.txt around lines 8 - 10, A mensagem "Starting CodeRabbit review in plain text mode..." está correta, mas existem duas linhas em branco logo após (linhas vazias seguintes) que devem ser removidas; abra o arquivo crabbit.txt, localize a string "Starting CodeRabbit review in plain text mode..." e delete as linhas vazias subsequentes para deixar o arquivo sem linhas em branco supérfluas.
+
+
+
+============================================================================
+File: .omc/project-memory.json
+Line: 93 to 126
+Type: nitpick
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @.omc/project-memory.json around lines 93 - 126, Atualize o objeto "oraculo_bot" no JSON para preencher o campo purpose (atualmente null) com uma descrição consistente, por exemplo "Main application" ou "Código principal"; localize o nó "oraculo_bot" e substituir purpose: null por purpose: "Main application" (ou a string em português desejada) para manter padrão com os outros diretórios como "scripts" e "docs".
+
+
+
+============================================================================
+File: .omc/project-memory.json
+Line: 54 to 92
+Type: nitpick
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @.omc/project-memory.json around lines 54 - 92, Remove the generated artifact directories from the project memory map: delete the "__pycache__" and "htmlcov" entries (keys "__pycache__" and "htmlcov") from the directoryMap in .omc/project-memory.json and update the project scanning/generation logic (the routine that builds directoryMap) to ignore common ephemeral patterns like "__pycache__", "htmlcov" and other coverage/bytecode folders (e.g., via an ignore list or .gitignore-backed filter) so these directories are not re-added on subsequent scans.
+
+
+
+Review completed: 4 findings ✔

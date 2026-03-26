@@ -19,6 +19,12 @@ class ConfirmationView(discord.ui.View):
     async def confirm(
         self, interaction: discord.Interaction, button: discord.ui.Button
     ) -> None:
+        """Confirma a execução da tool e desabilita o botão.
+
+        Args:
+            interaction: Interação Discord do usuário.
+            button: Botão que foi clicado.
+        """
         self.value = True
         button.disabled = True
         await interaction.response.edit_message(view=self)
@@ -29,6 +35,12 @@ class ConfirmationView(discord.ui.View):
     async def cancel(
         self, interaction: discord.Interaction, button: discord.ui.Button
     ) -> None:
+        """Cancela a execução da tool e desabilita o botão.
+
+        Args:
+            interaction: Interação Discord do usuário.
+            button: Botão que foi clicado.
+        """
         self.value = False
         button.disabled = True
         await interaction.response.edit_message(view=self)
@@ -36,4 +48,5 @@ class ConfirmationView(discord.ui.View):
         self.stop()
 
     async def on_timeout(self) -> None:
+        """Trata timeout da view sem resposta do usuário."""
         log_warning("ConfirmationView: timeout atingido")

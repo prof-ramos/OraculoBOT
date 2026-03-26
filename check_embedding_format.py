@@ -1,8 +1,21 @@
 """Verifica formato de armazenamento do embedding."""
 
+import os
 import psycopg
 
-POSTGRES_URL = "postgres://postgres.edckgpfzoditeiphilhy:Alcione2025**@aws-1-sa-east-1.pooler.supabase.com:5432/postgres?sslmode=require"
+# Carrega variáveis de ambiente
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
+POSTGRES_URL = os.getenv("SUPABASE_DB_URL")
+if not POSTGRES_URL:
+    raise ValueError(
+        "SUPABASE_DB_URL não configurada. "
+        "Configure a variável de ambiente ou crie um arquivo .env"
+    )
 
 def main():
     print("🔍 Verificando formato do embedding...")

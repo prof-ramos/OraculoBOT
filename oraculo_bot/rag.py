@@ -1,5 +1,7 @@
 """Funções RAG para uso com Agno Agent."""
 
+from __future__ import annotations
+
 import logging
 from typing import Optional
 
@@ -72,9 +74,8 @@ def retrieve_relevant_legislation(
         else:
             # Fallback: pegar embedding de um chunk aleatório para teste
             import psycopg
-            POSTGRES_URL = "postgres://postgres.edckgpfzoditeiphilhy:Alcione2025**@aws-1-sa-east-1.pooler.supabase.com:5432/postgres?sslmode=require"
 
-            with psycopg.connect(POSTGRES_URL) as conn:
+            with psycopg.connect(_rag_retriever.db_url) as conn:
                 with conn.cursor() as cur:
                     cur.execute("""
                         SELECT embedding
