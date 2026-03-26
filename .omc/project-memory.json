@@ -102,80 +102,92 @@
   "hotPaths": [
     {
       "path": "oraculo_bot/rag_retriever.py",
-      "accessCount": 16,
-      "lastAccessed": 1774553398399,
+      "accessCount": 21,
+      "lastAccessed": 1774555214743,
       "type": "file"
     },
     {
       "path": "oraculo_bot/rag.py",
-      "accessCount": 12,
-      "lastAccessed": 1774553390700,
+      "accessCount": 19,
+      "lastAccessed": 1774555214759,
       "type": "file"
     },
     {
       "path": "",
-      "accessCount": 12,
-      "lastAccessed": 1774553448151,
+      "accessCount": 17,
+      "lastAccessed": 1774553611781,
       "type": "directory"
     },
     {
       "path": "oraculo_bot/db.py",
-      "accessCount": 11,
-      "lastAccessed": 1774553390663,
+      "accessCount": 15,
+      "lastAccessed": 1774555205147,
       "type": "file"
     },
     {
       "path": "oraculo_bot/agent.py",
-      "accessCount": 9,
-      "lastAccessed": 1774553390746,
+      "accessCount": 13,
+      "lastAccessed": 1774555214701,
       "type": "file"
     },
     {
       "path": "oraculo_bot/views.py",
-      "accessCount": 9,
-      "lastAccessed": 1774553404730,
-      "type": "file"
-    },
-    {
-      "path": "oraculo_bot/models.py",
-      "accessCount": 6,
-      "lastAccessed": 1774553398420,
+      "accessCount": 10,
+      "lastAccessed": 1774555214685,
       "type": "file"
     },
     {
       "path": "oraculo_bot",
-      "accessCount": 5,
-      "lastAccessed": 1774553316038,
+      "accessCount": 8,
+      "lastAccessed": 1774553501569,
       "type": "directory"
     },
     {
-      "path": "oraculo_bot/__main__.py",
-      "accessCount": 5,
-      "lastAccessed": 1774553390636,
+      "path": "oraculo_bot/bot.py",
+      "accessCount": 8,
+      "lastAccessed": 1774553697174,
       "type": "file"
     },
     {
       "path": "oraculo_bot/config.py",
-      "accessCount": 5,
-      "lastAccessed": 1774553390647,
+      "accessCount": 8,
+      "lastAccessed": 1774553700693,
       "type": "file"
     },
     {
-      "path": "oraculo_bot/bot.py",
-      "accessCount": 5,
-      "lastAccessed": 1774553390690,
+      "path": "oraculo_bot/models.py",
+      "accessCount": 8,
+      "lastAccessed": 1774555205185,
+      "type": "file"
+    },
+    {
+      "path": "tests/unit/test_rag_retriever.py",
+      "accessCount": 6,
+      "lastAccessed": 1774554077765,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/__main__.py",
+      "accessCount": 6,
+      "lastAccessed": 1774555205134,
       "type": "file"
     },
     {
       "path": "tests/unit/test_agent.py",
+      "accessCount": 5,
+      "lastAccessed": 1774553580787,
+      "type": "file"
+    },
+    {
+      "path": "tests/conftest.py",
       "accessCount": 4,
-      "lastAccessed": 1774553398348,
+      "lastAccessed": 1774553857482,
       "type": "file"
     },
     {
       "path": "crabbit.txt",
-      "accessCount": 3,
-      "lastAccessed": 1774547171998,
+      "accessCount": 4,
+      "lastAccessed": 1774555142445,
       "type": "file"
     },
     {
@@ -191,12 +203,6 @@
       "type": "file"
     },
     {
-      "path": "tests/conftest.py",
-      "accessCount": 3,
-      "lastAccessed": 1774553310064,
-      "type": "file"
-    },
-    {
       "path": "tests/unit/test_bot.py",
       "accessCount": 3,
       "lastAccessed": 1774553398456,
@@ -206,6 +212,18 @@
       "path": "tests/unit/test_db.py",
       "accessCount": 3,
       "lastAccessed": 1774553404679,
+      "type": "file"
+    },
+    {
+      "path": "tests",
+      "accessCount": 3,
+      "lastAccessed": 1774553577938,
+      "type": "directory"
+    },
+    {
+      "path": "oraculo_bot/__init__.py",
+      "accessCount": 3,
+      "lastAccessed": 1774555205108,
       "type": "file"
     },
     {
@@ -231,18 +249,6 @@
       "accessCount": 2,
       "lastAccessed": 1774550901711,
       "type": "file"
-    },
-    {
-      "path": "oraculo_bot/__init__.py",
-      "accessCount": 2,
-      "lastAccessed": 1774551726366,
-      "type": "file"
-    },
-    {
-      "path": "tests",
-      "accessCount": 2,
-      "lastAccessed": 1774553398509,
-      "type": "directory"
     },
     {
       "path": "tests/e2e/conftest.py",
@@ -281,15 +287,15 @@
       "type": "file"
     },
     {
-      "path": "tests/unit/test_rag_retriever.py",
-      "accessCount": 1,
-      "lastAccessed": 1774552705680,
-      "type": "file"
-    },
-    {
       "path": "tests/e2e",
       "accessCount": 1,
       "lastAccessed": 1774553404740,
+      "type": "directory"
+    },
+    {
+      "path": "tests/unit",
+      "accessCount": 1,
+      "lastAccessed": 1774553849261,
       "type": "directory"
     }
   ],

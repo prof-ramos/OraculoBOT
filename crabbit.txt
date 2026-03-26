@@ -8,3 +8,68 @@
 Starting CodeRabbit review in plain text mode...
 
 Connecting to review service
+Setting up
+Analyzing
+Reviewing
+
+============================================================================
+File: repomix-output.xml
+Line: 5790 to 5795
+Type: potential_issue
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @repomix-output.xml around lines 5790 - 5795, The current branches that call requests.get(...) inside the async bot flow (the mime.startswith("video/"), "application/" and similar branches) block the event loop; replace these synchronous fetches by performing the HTTP downloads off the main loop (either use an async HTTP client like aiohttp.ClientSession and await session.get(...).read(), or dispatch requests.get to a thread via loop.run_in_executor) and propagate the bytes back to the existing return values so the handlers (the mime.startswith("video/") and mime.startswith("application/") branches) no longer perform blocking I/O directly.
+
+
+
+============================================================================
+File: repomix-output.xml
+Line: 152 to 158
+Type: potential_issue
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @repomix-output.xml around lines 152 - 158, O pack está incluindo caminhos e permissões locais (por exemplo the diff entry "Read(//Users/gabrielramos/repos/OraculoBOT/)" e comandos contendo /Users/gabrielramos/...), e o arquivo de configuração local .claude/settings.local.json não está ignorado; remova/neutralize todas as referências a caminhos absolutos da saída (ex.: strings "Read(//Users/...)" e any "Bash(.../Users/...)") e re-generate the repomix output without local metadata, and add ".claude/settings.local.json" to .gitignore (or move secrets into a template like .claude/settings.example.json) so local config cannot be committed; ensure the pack is re-created/republished after scrubbing to avoid leaking local paths.
+
+
+
+============================================================================
+File: repomix-output.xml
+Line: 6362 to 6365
+Type: potential_issue
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @repomix-output.xml around lines 6362 - 6365, The code initializes OpenAIEmbedder using OPENAI_API_KEY and falls back to selecting a random DB embedding as if it were the user query embedding; change this so that when no valid embedder is configured (e.g., OPENAI_API_KEY missing or Gemini not set up) the RAG enrichment is disabled instead of fabricating an embedding: update the initialization logic that references OpenAIEmbedder, OPENAI_API_KEY and the RAGRetriever constructor to (1) detect absence of a real embedder and set a flag like enable_rag=False (or pass embedder=None) and (2) ensure RAGRetriever treats embedder=None by skipping similarity search/enrichment and returning only source-less or un-enriched results; also remove any code path that picks a random DB embedding to stand in for the user query.
+
+
+
+============================================================================
+File: repomix-output.xml
+Line: 4423 to 4485
+Type: potential_issue
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @repomix-output.xml around lines 4423 - 4485, The repomix-output.xml contains stale embedded artifacts (crabbit.txt and .omc JSONs) that no longer reflect the repo; update the embedded outputs and/or regenerate repomix-output.xml so it matches the current repository state: in the embedded .omc/sessions/36e37654-b137-4140-a1d3-8662e2256a42.json locate the session object containing "ended_at", "agents_spawned" and "agents_completed" and replace "reason": "other" with a specific value (e.g., "session_timeout", "user_requested_end", "agent_completion" or "manual_termination") or add a "reason_details" string with context; in the embedded crabbit.txt remove the two blank lines immediately following the line "Starting CodeRabbit review in plain text mode..."; in the embedded .omc/project-memory.json set the "oraculo_bot" node's purpose from null to a descriptive string (e.g., "Main application") and remove the "__pycache__" and "htmlcov" keys from directoryMap, and then adjust the project-memory generation code to ignore ephemeral directories (e.g., via an ignore list or .gitignore-backed filter) so they are not reintroduced; finally regenerate repomix-output.xml so the file contains the corrected/crabbi t and .omc contents.
+
+
+
+============================================================================
+File: repomix-output.xml
+Line: 6167 to 6183
+Type: potential_issue
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @repomix-output.xml around lines 6167 - 6183, The update_session_data function currently swallows DB errors and returns None, losing state when PostgreSQL fails; modify update_session_data so that on Exception it falls back to the same in-memory path used by create_session() and get_session() (i.e., update the _memory_store for the given thread_id with the merged session_data), keep the existing logger.error call but ensure the merged data is persisted into the in-memory store before returning, and keep returning the in-memory session object instead of None so save_session_history() can continue using the fallback.
+
+
+
+Review completed: 5 findings ✔
