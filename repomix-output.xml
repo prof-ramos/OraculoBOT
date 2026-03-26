@@ -149,97 +149,22 @@ This section contains the contents of the repository's files.
       "Bash(python3:*)",
       "Bash(grep -v \"^$\")",
       "Bash(pytest tests/unit --collect-only)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(echo \"Exit code: $?\")",
+      "Bash(find /Users/gabrielramos/repos/OraculoBOT -name \"*.py\" -not -path \"*/.venv/*\" -exec head -5 {})",
+      "Bash(-print)",
+      "Bash(for file:*)",
+      "Bash(do echo:*)",
+      "Read(//Users/gabrielramos/repos/OraculoBOT/**)",
+      "Bash(done)",
+      "Bash(pytest tests/unit/test_agent.py -v --tb=short)",
+      "Bash(echo \"   - db.py: engine property -> Engine\")",
+      "Bash(echo \"   - rag_retriever.py: conn property -> psycopg.Connection\")",
+      "Bash(echo \"   - save_session_history: list -> list[dict[str, Any]]\")",
+      "Bash(echo \"   - get_session_history: list -> list[dict[str, Any]]\")"
     ]
   }
 }
-</file>
-
-<file path=".omc/sessions/2e50bef7-31ac-4df8-984b-82b5d3233b1d.json">
-{
-  "session_id": "2e50bef7-31ac-4df8-984b-82b5d3233b1d",
-  "ended_at": "2026-03-26T17:43:58.591Z",
-  "reason": "prompt_input_exit",
-  "agents_spawned": 0,
-  "agents_completed": 0,
-  "modes_used": []
-}
-</file>
-
-<file path=".omc/sessions/7e0ae01a-8442-4d98-8b8d-f3a5683afd6e.json">
-{
-  "session_id": "7e0ae01a-8442-4d98-8b8d-f3a5683afd6e",
-  "ended_at": "2026-03-26T18:39:03.082Z",
-  "reason": "prompt_input_exit",
-  "agents_spawned": 0,
-  "agents_completed": 0,
-  "modes_used": []
-}
-</file>
-
-<file path="crabbit.txt">
-╔═════════════════════════════════════════════╗
-║                                             ║
-║           New update available!             ║
-║          Run: coderabbit update             ║
-║                                             ║
-╚═════════════════════════════════════════════╝
-
-Starting CodeRabbit review in plain text mode...
-Connecting to review service
-Setting up
-Analyzing
-Reviewing
-
-============================================================================
-File: .omc/sessions/36e37654-b137-4140-a1d3-8662e2256a42.json
-Line: 3 to 6
-Type: nitpick
-
-Prompt for AI Agent:
-Verify each finding against the current code and only fix it if needed.
-
-In @.omc/sessions/36e37654-b137-4140-a1d3-8662e2256a42.json around lines 3 - 6, O campo de metadata "reason" está genérico ("other"); atualize o valor para algo descritivo (por exemplo "session_timeout", "user_requested_end", "agent_completion" ou "manual_termination") ou, se realmente precisar manter "other", acrescente um campo complementar "reason_details" com contexto; localize o objeto JSON que contém "ended_at", "agents_spawned" e "agents_completed" e substitua "reason": "other" por um valor mais específico ou adicione "reason_details" com uma breve explicação (p.ex. previous value "prompt_input_exit" como referência de formato).
-
-
-
-============================================================================
-File: crabbit.txt
-Line: 8 to 10
-Type: nitpick
-
-Prompt for AI Agent:
-Verify each finding against the current code and only fix it if needed.
-
-In @crabbit.txt around lines 8 - 10, A mensagem "Starting CodeRabbit review in plain text mode..." está correta, mas existem duas linhas em branco logo após (linhas vazias seguintes) que devem ser removidas; abra o arquivo crabbit.txt, localize a string "Starting CodeRabbit review in plain text mode..." e delete as linhas vazias subsequentes para deixar o arquivo sem linhas em branco supérfluas.
-
-
-
-============================================================================
-File: .omc/project-memory.json
-Line: 93 to 126
-Type: nitpick
-
-Prompt for AI Agent:
-Verify each finding against the current code and only fix it if needed.
-
-In @.omc/project-memory.json around lines 93 - 126, Atualize o objeto "oraculo_bot" no JSON para preencher o campo purpose (atualmente null) com uma descrição consistente, por exemplo "Main application" ou "Código principal"; localize o nó "oraculo_bot" e substituir purpose: null por purpose: "Main application" (ou a string em português desejada) para manter padrão com os outros diretórios como "scripts" e "docs".
-
-
-
-============================================================================
-File: .omc/project-memory.json
-Line: 54 to 92
-Type: nitpick
-
-Prompt for AI Agent:
-Verify each finding against the current code and only fix it if needed.
-
-In @.omc/project-memory.json around lines 54 - 92, Remove the generated artifact directories from the project memory map: delete the "__pycache__" and "htmlcov" entries (keys "__pycache__" and "htmlcov") from the directoryMap in .omc/project-memory.json and update the project scanning/generation logic (the routine that builds directoryMap) to ignore common ephemeral patterns like "__pycache__", "htmlcov" and other coverage/bytecode folders (e.g., via an ignore list or .gitignore-backed filter) so these directories are not re-added on subsequent scans.
-
-
-
-Review completed: 4 findings ✔
 </file>
 
 <file path=".omc/plans/open-questions.md">
@@ -1528,6 +1453,28 @@ CREATE INDEX ix_discord_sessions_user_id ON discord_sessions(user_id);
 }
 </file>
 
+<file path=".omc/sessions/2e50bef7-31ac-4df8-984b-82b5d3233b1d.json">
+{
+  "session_id": "2e50bef7-31ac-4df8-984b-82b5d3233b1d",
+  "ended_at": "2026-03-26T17:43:58.591Z",
+  "reason": "prompt_input_exit",
+  "agents_spawned": 0,
+  "agents_completed": 0,
+  "modes_used": []
+}
+</file>
+
+<file path=".omc/sessions/7e0ae01a-8442-4d98-8b8d-f3a5683afd6e.json">
+{
+  "session_id": "7e0ae01a-8442-4d98-8b8d-f3a5683afd6e",
+  "ended_at": "2026-03-26T18:39:03.082Z",
+  "reason": "prompt_input_exit",
+  "agents_spawned": 0,
+  "agents_completed": 0,
+  "modes_used": []
+}
+</file>
+
 <file path=".omc/progress.txt">
 # RALPH Progress - OraculoBOT Supabase Integration
 
@@ -2081,12 +2028,6 @@ O bot **continua funcionando** com fallback:
 O bot está **pronto para produção** com configuração da GEMINI_API_KEY! 🚀
 </file>
 
-<file path="oraculo_bot/__init__.py">
-"""Oráculo Bot — Assistente Discord para concursos públicos brasileiros."""
-
-__version__ = "0.1.0"
-</file>
-
 <file path="oraculo_bot/AGENTS.md">
 <!-- Parent: ../AGENTS.md -->
 <!-- Generated: 2026-03-25 -->
@@ -2134,370 +2075,6 @@ Módulo principal do bot Discord com IA especializada em concursos públicos.
 - discord.py - Discord API
 - agno - Agent framework
 - sqlalchemy - Database ORM
-</file>
-
-<file path="oraculo_bot/db.py">
-"""Camada de acesso a dados do OraculoBOT."""
-
-import logging
-from datetime import datetime, timedelta, timezone
-from typing import Optional
-
-from sqlalchemy import create_engine, delete, select, text
-from sqlalchemy.orm import Session
-
-from oraculo_bot.config import SUPABASE_DB_URL
-from oraculo_bot.models import Base, DiscordSession, create_tables
-
-logger = logging.getLogger(__name__)
-
-
-class SessionDAO:
-    """DAO para gerenciar sessoes Discord no PostgreSQL.
-
-    UNICA camada de persistencia do sistema.
-    Fallback para memoria quando DB nao disponivel.
-    """
-
-    def __init__(self, db_url: Optional[str] = None):
-        """Inicializa o DAO com a URL do banco.
-
-        Args:
-            db_url: URL de conexao PostgreSQL. Se None, usa SUPABASE_DB_URL.
-        """
-        self.db_url = db_url or SUPABASE_DB_URL
-        self._engine = None
-        # Fallback de memoria quando DB nao disponivel
-        self._memory_store: dict[str, DiscordSession] = {}
-
-    @property
-    def engine(self):
-        """Lazy initialization da engine."""
-        if self._engine is None:
-            if not self.db_url:
-                raise RuntimeError("SUPABASE_DB_URL nao configurada")
-            self._engine = create_engine(self.db_url)
-        return self._engine
-
-    @property
-    def enabled(self) -> bool:
-        """Verifica se a persistencia esta habilitada."""
-        return bool(self.db_url)
-
-    def init_db(self) -> None:
-        """Inicializa o banco de dados (cria tabelas).
-
-        Trata erros de conexao e fallback para memoria.
-        """
-        if self.enabled:
-            try:
-                create_tables(self.db_url)
-                logger.info("Tabelas criadas com sucesso no PostgreSQL")
-            except Exception as e:
-                logger.warning(f"Falha ao conectar PostgreSQL: {e}. Usando memoria.")
-                self.db_url = None
-
-    def get_session(self, thread_id: str) -> Optional[DiscordSession]:
-        """Retorna uma sessao pelo thread_id.
-
-        Args:
-            thread_id: ID do thread Discord.
-
-        Returns:
-            A sessao encontrada ou None.
-        """
-        if not self.enabled:
-            return self._memory_store.get(thread_id)
-
-        try:
-            with Session(self.engine) as session:
-                stmt = select(DiscordSession).where(DiscordSession.thread_id == thread_id)
-                return session.scalar(stmt)
-        except Exception as e:
-            logger.error(f"Erro ao buscar sessao: {e}. Usando memoria.")
-            return self._memory_store.get(thread_id)
-
-    def create_session(
-        self,
-        thread_id: str,
-        user_id: str,
-        mode: str = "estudo",
-        session_data: Optional[dict] = None,
-    ) -> DiscordSession:
-        """Cria uma nova sessao.
-
-        Args:
-            thread_id: ID do thread Discord.
-            user_id: ID do usuario Discord.
-            mode: Modo de operacao.
-            session_data: Dados iniciais da sessao.
-
-        Returns:
-            A sessao criada.
-        """
-        discord_session = DiscordSession(
-            thread_id=thread_id,
-            user_id=user_id,
-            mode=mode,
-            session_data=session_data or {},
-        )
-
-        if not self.enabled:
-            self._memory_store[thread_id] = discord_session
-            return discord_session
-
-        try:
-            with Session(self.engine) as session:
-                session.add(discord_session)
-                session.commit()
-                session.refresh(discord_session)
-                return discord_session
-        except Exception as e:
-            logger.error(f"Erro ao criar sessao: {e}. Usando memoria.")
-            self._memory_store[thread_id] = discord_session
-            return discord_session
-
-    def update_session_data(self, thread_id: str, session_data: dict) -> Optional[DiscordSession]:
-        """Atualiza os dados de uma sessao.
-
-        Args:
-            thread_id: ID do thread Discord.
-            session_data: Novos dados da sessao (sera mergido com existente).
-
-        Returns:
-            A sessao atualizada ou None se nao encontrada.
-        """
-        if not self.enabled:
-            if thread_id in self._memory_store:
-                self._memory_store[thread_id].session_data.update(session_data)
-                return self._memory_store[thread_id]
-            return None
-
-        try:
-            with Session(self.engine) as session:
-                stmt = select(DiscordSession).where(DiscordSession.thread_id == thread_id)
-                discord_session = session.scalar(stmt)
-
-                if discord_session:
-                    # Merge dos dados existentes com novos
-                    discord_session.session_data.update(session_data)
-                    from sqlalchemy.orm.attributes import flag_modified
-                    flag_modified(discord_session, "session_data")
-                    session.commit()
-                    session.refresh(discord_session)
-
-                return discord_session
-        except Exception as e:
-            logger.error(f"Erro ao atualizar sessao: {e}.")
-            return None
-
-    def get_or_create_session(
-        self,
-        thread_id: str,
-        user_id: str,
-        mode: str = "estudo",
-    ) -> DiscordSession:
-        """Retorna uma sessao existente ou cria uma nova.
-
-        THREAD-SAFE: Usa INSERT ... ON CONFLICT para evitar race conditions.
-
-        Args:
-            thread_id: ID do thread Discord.
-            user_id: ID do usuario Discord.
-            mode: Modo de operacao (usado apenas na criacao).
-
-        Returns:
-            A sessao encontrada ou criada.
-        """
-        # Tenta buscar primeiro (em memoria ou DB)
-        existing = self.get_session(thread_id)
-        if existing:
-            return existing
-
-        # Thread-safe insert usando ON CONFLICT (apenas se DB habilitado)
-        if self.enabled:
-            try:
-                with Session(self.engine) as session:
-                    stmt = text("""
-                        INSERT INTO discord_sessions (thread_id, user_id, mode, session_data)
-                        VALUES (:thread_id, :user_id, :mode, :session_data)
-                        ON CONFLICT (thread_id) DO NOTHING
-                        RETURNING thread_id, user_id, mode, session_data, created_at, updated_at
-                    """)
-                    result = session.execute(stmt, {
-                        "thread_id": thread_id,
-                        "user_id": user_id,
-                        "mode": mode,
-                        "session_data": {},
-                    })
-
-                    if result.rowcount > 0:
-                        row = result.fetchone()
-                        session.commit()
-                        return DiscordSession(
-                            thread_id=row[0],
-                            user_id=row[1],
-                            mode=row[2],
-                            session_data=row[3],
-                            created_at=row[4],
-                            updated_at=row[5],
-                        )
-                    else:
-                        # Ja existia (race condition), busca novamente
-                        session.rollback()
-                        return self.get_session(thread_id) or self.create_session(
-                            thread_id, user_id, mode
-                        )
-            except Exception as e:
-                logger.error(f"Erro em get_or_create: {e}. Criando em memoria.")
-                return self.create_session(thread_id, user_id, mode)
-        else:
-            return self.create_session(thread_id, user_id, mode)
-
-    def cleanup_old_sessions(self, days: int = 30) -> int:
-        """Remove sessoes antigas do banco.
-
-        Args:
-            days: Numero de dias para considerar uma sessao como antiga.
-
-        Returns:
-            Numero de sessoes removidas.
-        """
-        if not self.enabled:
-            return 0
-
-        try:
-            cutoff_date = datetime.now(timezone.utc) - timedelta(days=days)
-
-            with Session(self.engine) as session:
-                stmt = delete(DiscordSession).where(
-                    DiscordSession.updated_at < cutoff_date
-                )
-                result = session.execute(stmt)
-                count = result.rowcount
-                session.commit()
-                logger.info(f"Removidas {count} sessoes antigas (> {days} dias)")
-                return count
-        except Exception as e:
-            logger.error(f"Erro ao limpar sessoes antigas: {e}")
-            return 0
-</file>
-
-<file path="oraculo_bot/models.py">
-"""Modelos de dados do OraculoBOT."""
-
-from datetime import datetime, timezone
-from typing import Optional
-
-from sqlalchemy import DateTime, String, create_engine, text
-from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
-
-
-class Base(DeclarativeBase):
-    """Base declarativa para modelos ORM."""
-
-
-class DiscordSession(Base):
-    """Sessao de conversa do bot no Discord.
-
-    Mapeia para a tabela 'discord_sessions' no PostgreSQL.
-    """
-
-    __tablename__ = "discord_sessions"
-
-    # Identificadores
-    thread_id: Mapped[str] = mapped_column(String(64), primary_key=True)
-    user_id: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
-
-    # Metadados da sessao
-    mode: Mapped[str] = mapped_column(
-        String(32),
-        nullable=False,
-        default="estudo",
-        comment="Modo de operacao: estudo, professor, simulado, casual"
-    )
-
-    # Dados da sessao (JSONB para flexibilidade)
-    session_data: Mapped[dict] = mapped_column(
-        JSONB,
-        nullable=False,
-        default=dict,
-        comment="Dados da sessao: historico, estado, etc."
-    )
-
-    # Timestamps
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True),
-        nullable=False,
-        default=lambda: datetime.now(timezone.utc),
-        server_default=text("CURRENT_TIMESTAMP")
-    )
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True),
-        nullable=False,
-        default=lambda: datetime.now(timezone.utc),
-        onupdate=lambda: datetime.now(timezone.utc),
-        server_default=text("CURRENT_TIMESTAMP")
-    )
-
-    def __repr__(self) -> str:
-        return f"<DiscordSession(thread_id={self.thread_id}, user_id={self.user_id}, mode={self.mode})>"
-
-
-def create_tables(db_url: str) -> None:
-    """Cria as tabelas no banco de dados.
-
-    Args:
-        db_url: URL de conexao PostgreSQL.
-    """
-    engine = create_engine(db_url)
-    try:
-        Base.metadata.create_all(engine)
-    finally:
-        engine.dispose()
-</file>
-
-<file path="oraculo_bot/views.py">
-"""Componentes de UI do Discord (Human-in-the-Loop)."""
-
-from __future__ import annotations
-
-from typing import Optional
-
-import discord
-from agno.utils.log import log_warning
-
-
-class ConfirmationView(discord.ui.View):
-    """Botões de confirmação/cancelamento para execução de tools."""
-
-    def __init__(self, timeout: float = 60.0) -> None:
-        super().__init__(timeout=timeout)
-        self.value: Optional[bool] = None
-
-    @discord.ui.button(label="✅ Confirmar", style=discord.ButtonStyle.primary)
-    async def confirm(
-        self, interaction: discord.Interaction, button: discord.ui.Button
-    ) -> None:
-        self.value = True
-        button.disabled = True
-        await interaction.response.edit_message(view=self)
-        self.clear_items()
-        self.stop()
-
-    @discord.ui.button(label="❌ Cancelar", style=discord.ButtonStyle.secondary)
-    async def cancel(
-        self, interaction: discord.Interaction, button: discord.ui.Button
-    ) -> None:
-        self.value = False
-        button.disabled = True
-        await interaction.response.edit_message(view=self)
-        self.clear_items()
-        self.stop()
-
-    async def on_timeout(self) -> None:
-        log_warning("ConfirmationView: timeout atingido")
 </file>
 
 <file path="scripts/AGENTS.md">
@@ -4843,6 +4420,71 @@ if __name__ == "__main__":
     main()
 </file>
 
+<file path="crabbit.txt">
+╔═════════════════════════════════════════════╗
+║                                             ║
+║           New update available!             ║
+║          Run: coderabbit update             ║
+║                                             ║
+╚═════════════════════════════════════════════╝
+
+Starting CodeRabbit review in plain text mode...
+Connecting to review service
+Setting up
+Analyzing
+Reviewing
+
+============================================================================
+File: .omc/sessions/36e37654-b137-4140-a1d3-8662e2256a42.json
+Line: 3 to 6
+Type: nitpick
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @.omc/sessions/36e37654-b137-4140-a1d3-8662e2256a42.json around lines 3 - 6, O campo de metadata "reason" está genérico ("other"); atualize o valor para algo descritivo (por exemplo "session_timeout", "user_requested_end", "agent_completion" ou "manual_termination") ou, se realmente precisar manter "other", acrescente um campo complementar "reason_details" com contexto; localize o objeto JSON que contém "ended_at", "agents_spawned" e "agents_completed" e substitua "reason": "other" por um valor mais específico ou adicione "reason_details" com uma breve explicação (p.ex. previous value "prompt_input_exit" como referência de formato).
+
+
+
+============================================================================
+File: crabbit.txt
+Line: 8 to 10
+Type: nitpick
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @crabbit.txt around lines 8 - 10, A mensagem "Starting CodeRabbit review in plain text mode..." está correta, mas existem duas linhas em branco logo após (linhas vazias seguintes) que devem ser removidas; abra o arquivo crabbit.txt, localize a string "Starting CodeRabbit review in plain text mode..." e delete as linhas vazias subsequentes para deixar o arquivo sem linhas em branco supérfluas.
+
+
+
+============================================================================
+File: .omc/project-memory.json
+Line: 93 to 126
+Type: nitpick
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @.omc/project-memory.json around lines 93 - 126, Atualize o objeto "oraculo_bot" no JSON para preencher o campo purpose (atualmente null) com uma descrição consistente, por exemplo "Main application" ou "Código principal"; localize o nó "oraculo_bot" e substituir purpose: null por purpose: "Main application" (ou a string em português desejada) para manter padrão com os outros diretórios como "scripts" e "docs".
+
+
+
+============================================================================
+File: .omc/project-memory.json
+Line: 54 to 92
+Type: nitpick
+
+Prompt for AI Agent:
+Verify each finding against the current code and only fix it if needed.
+
+In @.omc/project-memory.json around lines 54 - 92, Remove the generated artifact directories from the project memory map: delete the "__pycache__" and "htmlcov" entries (keys "__pycache__" and "htmlcov") from the directoryMap in .omc/project-memory.json and update the project scanning/generation logic (the routine that builds directoryMap) to ignore common ephemeral patterns like "__pycache__", "htmlcov" and other coverage/bytecode folders (e.g., via an ignore list or .gitignore-backed filter) so these directories are not re-added on subsequent scans.
+
+
+
+Review completed: 4 findings ✔
+</file>
+
 <file path="explore_supabase.py">
 """Explora estrutura do Supabase para entender legislações com embeddings."""
 
@@ -6051,216 +5693,12 @@ if __name__ == "__main__":
 }
 </file>
 
-<file path="oraculo_bot/__main__.py">
-"""Entrypoint: python -m oraculo_bot."""
-
-import logging
-
-from oraculo_bot.agent import create_agent
-from oraculo_bot.bot import OracleDiscordBot
-from oraculo_bot.db import SessionDAO
-
-logger = logging.getLogger(__name__)
-
-
-def main() -> None:
-    # Inicializa banco de dados
-    try:
-        dao = SessionDAO()
-        dao.init_db()
-    except Exception:
-        logger.exception("Erro ao inicializar DB")
-        raise
-
-    # Limpa sessões antigas
-    try:
-        dao.cleanup_old_sessions(30)
-    except Exception:
-        logger.exception("Erro ao limpar sessões antigas")
-
-    # Inicia bot
-    agent = create_agent()
-    bot = OracleDiscordBot(agent=agent)
-    bot.serve()
-
-
-if __name__ == "__main__":
-    main()
-</file>
-
-<file path="oraculo_bot/agent.py">
-"""Definição do Agent Oráculo."""
+<file path="oraculo_bot/__init__.py">
+"""Oráculo Bot — Assistente Discord para concursos públicos brasileiros."""
 
 from __future__ import annotations
 
-from agno.agent import Agent
-from agno.models.deepseek import DeepSeek
-
-from oraculo_bot.config import HISTORY_RUNS, MODEL_ID
-from oraculo_bot.db import SessionDAO
-from oraculo_bot.models import DiscordSession
-
-# Instância global do DAO
-_session_dao = SessionDAO()
-
-SYSTEM_INSTRUCTIONS: list[str] = [
-    # ── Identidade ────────────────────────────────────────────
-    (
-        "Você é o Oráculo, um assistente especializado em concursos públicos brasileiros. "
-        "Você domina as principais bancas (Cebraspe/CESPE, FGV, FCC, VUNESP, IBFC, Quadrix), "
-        "seus estilos de cobrança, pegadinhas recorrentes e critérios de correção discursiva."
-    ),
-    # ── Idioma e tom ──────────────────────────────────────────
-    (
-        "Responda sempre em português-BR. Seu tom padrão é direto, didático e acessível — "
-        "como um professor particular que explica bem sem ser prolixo."
-    ),
-    # ── Modos de operação ─────────────────────────────────────
-    "Adapte-se automaticamente ao contexto da mensagem:",
-    (
-        "MODO ESTUDO — Quando o usuário perguntar sobre editais, matérias, legislação, "
-        "jurisprudência, estratégias de estudo ou qualquer tema cobrado em provas: "
-        "responda com profundidade e precisão técnica. Cite dispositivos legais com "
-        "artigo/inciso/alínea, súmulas (vinculantes e do STJ/STF), doutrina majoritária e, "
-        "quando relevante, a posição específica da banca. Diferencie letra da lei vs. "
-        "entendimento jurisprudencial. Se houver divergência doutrinária, indique a corrente "
-        "adotada pela banca quando possível."
-    ),
-    (
-        "MODO PROFESSOR — Quando o usuário tirar dúvida acadêmica ou técnica "
-        "(direito, português, raciocínio lógico, informática, contabilidade, economia, etc.): "
-        "explique o conceito de forma clara e progressiva — do básico ao avançado. "
-        "Use exemplos práticos, analogias e, quando útil, esquematize com listas ou tabelas. "
-        "Ao final, se a dúvida envolver tema recorrente em provas, mencione como costuma ser cobrado."
-    ),
-    (
-        "MODO SIMULADO — Quando o usuário enviar uma questão de prova ou pedir para resolver "
-        "exercícios: primeiro resolva a questão com justificativa item a item (para CERTO/ERRADO) "
-        "ou alternativa a alternativa (para múltipla escolha). Indique a resposta correta com "
-        "destaque. Aponte armadilhas e erros comuns que candidatos cometem naquele tipo de questão."
-    ),
-    (
-        "MODO CASUAL — Quando o usuário apenas quiser conversar, desabafar sobre a rotina de "
-        "estudos, ou falar de qualquer outro assunto: seja natural, descontraído e empático. "
-        "Não force o tema de concursos. Acompanhe o tom da conversa como um colega acessível."
-    ),
-    # ── Restrições ────────────────────────────────────────────
-    (
-        "Nunca invente legislação, súmulas, jurisprudência ou dados. "
-        "Se não souber ou não tiver certeza, diga explicitamente e sugira que o usuário "
-        "verifique a fonte."
-    ),
-    (
-        "Não reproduza questões de provas integralmente protegidas por direito autoral — "
-        "parafraseie o enunciado quando necessário."
-    ),
-    # ── Formatação Discord ────────────────────────────────────
-    (
-        "Use formatação Markdown compatível com Discord: **negrito**, *itálico*, `código`, "
-        "```blocos de código```, > citações, listas com - ou 1. "
-        "Para respostas longas, use seções com **títulos em negrito** para facilitar a leitura."
-    ),
-    # ── Contexto de thread ────────────────────────────────────
-    (
-        "Considere todo o histórico da thread ao responder. Referencie mensagens anteriores "
-        "quando relevante para manter coerência e evitar repetição."
-    ),
-]
-
-
-def create_agent() -> Agent:
-    """Cria e retorna a instância do Agent Oráculo."""
-    return Agent(
-        name="Oráculo",
-        model=DeepSeek(id=MODEL_ID),
-        instructions=SYSTEM_INSTRUCTIONS,
-        add_history_to_context=True,
-        num_history_runs=HISTORY_RUNS,
-        add_datetime_to_context=True,
-        markdown=True,
-    )
-
-
-def initialize_session(thread_id: str, user_id: str, mode: str = "estudo") -> DiscordSession:
-    """Inicializa ou recupera uma sessão do Discord.
-
-    Args:
-        thread_id: ID do thread Discord.
-        user_id: ID do usuário Discord.
-        mode: Modo de operação (estudo, professor, simulado, casual).
-
-    Returns:
-        A sessão criada ou recuperada.
-    """
-    return _session_dao.get_or_create_session(thread_id, user_id, mode)
-
-
-def save_session_history(thread_id: str, messages: list) -> None:
-    """Salva o histórico de mensagens de uma sessão.
-
-    Args:
-        thread_id: ID do thread Discord.
-        messages: Lista de mensagens do RunOutput.
-    """
-    _session_dao.update_session_data(thread_id, {"history": messages})
-
-
-def get_session_history(thread_id: str) -> list:
-    """Recupera o histórico de mensagens de uma sessão.
-
-    Args:
-        thread_id: ID do thread Discord.
-
-    Returns:
-        Lista de mensagens anteriores ou lista vazia.
-    """
-    session = _session_dao.get_session(thread_id)
-    if session:
-        return session.session_data.get("history", [])
-    return []
-
-
-def cleanup_old_sessions(days: int = 30) -> int:
-    """Remove sessões antigas do banco.
-
-    Args:
-        days: Número de dias para considerar uma sessão como antiga.
-
-    Returns:
-        Número de sessões removidas.
-    """
-    return _session_dao.cleanup_old_sessions(days)
-
-
-def enrich_with_rag(query: str, top_k: int = 3) -> str:
-    """Enriquece query com legislação relevante via RAG.
-
-    Args:
-        query: Texto da query do usuário.
-        top_k: Número de chunks a recuperar.
-
-    Returns:
-        Contexto RAG formatado para adicionar ao agent.
-    """
-    try:
-        from oraculo_bot.rag import retrieve_relevant_legislation
-
-        rag_context = retrieve_relevant_legislation(
-            query_text=query,
-            top_k=top_k,
-        )
-
-        if rag_context:
-            return f"\n\n[CONTEXTO LEGISLATIVO RELEVANTE]\n{rag_context}\n"
-
-    except Exception as e:
-        # Se RAG falhar, retorna string vazia (não quebra o bot)
-        import logging
-        logger = logging.getLogger(__name__)
-        logger.warning(f"RAG fallback: {e}")
-        return ""
-
-    return ""
+__version__ = "0.1.0"
 </file>
 
 <file path="oraculo_bot/bot.py">
@@ -6586,237 +6024,517 @@ ERROR_MESSAGE: str = "Desculpe, ocorreu um erro. Tente novamente."
 SUPABASE_DB_URL: str | None = os.getenv("SUPABASE_DB_URL")
 </file>
 
-<file path="oraculo_bot/rag_retriever.py">
-"""RAG Retriever para busca semântica em legislação."""
+<file path="oraculo_bot/db.py">
+"""Camada de acesso a dados do OraculoBOT."""
+
+from __future__ import annotations
+
+import logging
+from datetime import datetime, timedelta, timezone
+from typing import Optional
+
+from sqlalchemy import create_engine, delete, select, text
+from sqlalchemy.engine import Engine
+from sqlalchemy.orm import Session
+
+from oraculo_bot.config import SUPABASE_DB_URL
+from oraculo_bot.models import Base, DiscordSession, create_tables
+
+logger = logging.getLogger(__name__)
+
+
+class SessionDAO:
+    """DAO para gerenciar sessoes Discord no PostgreSQL.
+
+    UNICA camada de persistencia do sistema.
+    Fallback para memoria quando DB nao disponivel.
+    """
+
+    def __init__(self, db_url: Optional[str] = None):
+        """Inicializa o DAO com a URL do banco.
+
+        Args:
+            db_url: URL de conexao PostgreSQL. Se None, usa SUPABASE_DB_URL.
+        """
+        self.db_url = db_url or SUPABASE_DB_URL
+        self._engine = None
+        # Fallback de memoria quando DB nao disponivel
+        self._memory_store: dict[str, DiscordSession] = {}
+
+    @property
+    def engine(self) -> Engine:
+        """Lazy initialization da engine."""
+        if self._engine is None:
+            if not self.db_url:
+                raise RuntimeError("SUPABASE_DB_URL nao configurada")
+            self._engine = create_engine(self.db_url)
+        return self._engine
+
+    @property
+    def enabled(self) -> bool:
+        """Verifica se a persistencia esta habilitada."""
+        return bool(self.db_url)
+
+    def init_db(self) -> None:
+        """Inicializa o banco de dados (cria tabelas).
+
+        Trata erros de conexao e fallback para memoria.
+        """
+        if self.enabled:
+            try:
+                create_tables(self.db_url)
+                logger.info("Tabelas criadas com sucesso no PostgreSQL")
+            except Exception as e:
+                logger.warning(f"Falha ao conectar PostgreSQL: {e}. Usando memoria.")
+                self.db_url = None
+
+    def get_session(self, thread_id: str) -> Optional[DiscordSession]:
+        """Retorna uma sessao pelo thread_id.
+
+        Args:
+            thread_id: ID do thread Discord.
+
+        Returns:
+            A sessao encontrada ou None.
+        """
+        if not self.enabled:
+            return self._memory_store.get(thread_id)
+
+        try:
+            with Session(self.engine) as session:
+                stmt = select(DiscordSession).where(DiscordSession.thread_id == thread_id)
+                return session.scalar(stmt)
+        except Exception as e:
+            logger.error(f"Erro ao buscar sessao: {e}. Usando memoria.")
+            return self._memory_store.get(thread_id)
+
+    def create_session(
+        self,
+        thread_id: str,
+        user_id: str,
+        mode: str = "estudo",
+        session_data: Optional[dict] = None,
+    ) -> DiscordSession:
+        """Cria uma nova sessao.
+
+        Args:
+            thread_id: ID do thread Discord.
+            user_id: ID do usuario Discord.
+            mode: Modo de operacao.
+            session_data: Dados iniciais da sessao.
+
+        Returns:
+            A sessao criada.
+        """
+        discord_session = DiscordSession(
+            thread_id=thread_id,
+            user_id=user_id,
+            mode=mode,
+            session_data=session_data or {},
+        )
+
+        if not self.enabled:
+            self._memory_store[thread_id] = discord_session
+            return discord_session
+
+        try:
+            with Session(self.engine) as session:
+                session.add(discord_session)
+                session.commit()
+                session.refresh(discord_session)
+                return discord_session
+        except Exception as e:
+            logger.error(f"Erro ao criar sessao: {e}. Usando memoria.")
+            self._memory_store[thread_id] = discord_session
+            return discord_session
+
+    def update_session_data(self, thread_id: str, session_data: dict) -> Optional[DiscordSession]:
+        """Atualiza os dados de uma sessao.
+
+        Args:
+            thread_id: ID do thread Discord.
+            session_data: Novos dados da sessao (sera mergido com existente).
+
+        Returns:
+            A sessao atualizada ou None se nao encontrada.
+        """
+        if not self.enabled:
+            if thread_id in self._memory_store:
+                self._memory_store[thread_id].session_data.update(session_data)
+                return self._memory_store[thread_id]
+            return None
+
+        try:
+            with Session(self.engine) as session:
+                stmt = select(DiscordSession).where(DiscordSession.thread_id == thread_id)
+                discord_session = session.scalar(stmt)
+
+                if discord_session:
+                    # Merge dos dados existentes com novos
+                    discord_session.session_data.update(session_data)
+                    from sqlalchemy.orm.attributes import flag_modified
+                    flag_modified(discord_session, "session_data")
+                    session.commit()
+                    session.refresh(discord_session)
+
+                return discord_session
+        except Exception as e:
+            logger.error(f"Erro ao atualizar sessao: {e}.")
+            return None
+
+    def get_or_create_session(
+        self,
+        thread_id: str,
+        user_id: str,
+        mode: str = "estudo",
+    ) -> DiscordSession:
+        """Retorna uma sessao existente ou cria uma nova.
+
+        THREAD-SAFE: Usa INSERT ... ON CONFLICT para evitar race conditions.
+
+        Args:
+            thread_id: ID do thread Discord.
+            user_id: ID do usuario Discord.
+            mode: Modo de operacao (usado apenas na criacao).
+
+        Returns:
+            A sessao encontrada ou criada.
+        """
+        # Tenta buscar primeiro (em memoria ou DB)
+        existing = self.get_session(thread_id)
+        if existing:
+            return existing
+
+        # Thread-safe insert usando ON CONFLICT (apenas se DB habilitado)
+        if self.enabled:
+            try:
+                with Session(self.engine) as session:
+                    stmt = text("""
+                        INSERT INTO discord_sessions (thread_id, user_id, mode, session_data)
+                        VALUES (:thread_id, :user_id, :mode, :session_data)
+                        ON CONFLICT (thread_id) DO NOTHING
+                        RETURNING thread_id, user_id, mode, session_data, created_at, updated_at
+                    """)
+                    result = session.execute(stmt, {
+                        "thread_id": thread_id,
+                        "user_id": user_id,
+                        "mode": mode,
+                        "session_data": {},
+                    })
+
+                    if result.rowcount > 0:
+                        row = result.fetchone()
+                        session.commit()
+                        return DiscordSession(
+                            thread_id=row[0],
+                            user_id=row[1],
+                            mode=row[2],
+                            session_data=row[3],
+                            created_at=row[4],
+                            updated_at=row[5],
+                        )
+                    else:
+                        # Ja existia (race condition), busca novamente
+                        session.rollback()
+                        return self.get_session(thread_id) or self.create_session(
+                            thread_id, user_id, mode
+                        )
+            except Exception as e:
+                logger.error(f"Erro em get_or_create: {e}. Criando em memoria.")
+                return self.create_session(thread_id, user_id, mode)
+        else:
+            return self.create_session(thread_id, user_id, mode)
+
+    def cleanup_old_sessions(self, days: int = 30) -> int:
+        """Remove sessoes antigas do banco.
+
+        Args:
+            days: Numero de dias para considerar uma sessao como antiga.
+
+        Returns:
+            Numero de sessoes removidas.
+        """
+        if not self.enabled:
+            return 0
+
+        try:
+            cutoff_date = datetime.now(timezone.utc) - timedelta(days=days)
+
+            with Session(self.engine) as session:
+                stmt = delete(DiscordSession).where(
+                    DiscordSession.updated_at < cutoff_date
+                )
+                result = session.execute(stmt)
+                count = result.rowcount
+                session.commit()
+                logger.info(f"Removidas {count} sessoes antigas (> {days} dias)")
+                return count
+        except Exception as e:
+            logger.error(f"Erro ao limpar sessoes antigas: {e}")
+            return 0
+</file>
+
+<file path="oraculo_bot/models.py">
+"""Modelos de dados do OraculoBOT."""
+
+from __future__ import annotations
+
+from datetime import datetime, timezone
+from typing import Optional
+
+from sqlalchemy import DateTime, String, create_engine, text
+from sqlalchemy.dialects.postgresql import JSONB
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+
+
+class Base(DeclarativeBase):
+    """Base declarativa para modelos ORM."""
+
+
+class DiscordSession(Base):
+    """Sessao de conversa do bot no Discord.
+
+    Mapeia para a tabela 'discord_sessions' no PostgreSQL.
+    """
+
+    __tablename__ = "discord_sessions"
+
+    # Identificadores
+    thread_id: Mapped[str] = mapped_column(String(64), primary_key=True)
+    user_id: Mapped[str] = mapped_column(String(64), nullable=False, index=True)
+
+    # Metadados da sessao
+    mode: Mapped[str] = mapped_column(
+        String(32),
+        nullable=False,
+        default="estudo",
+        comment="Modo de operacao: estudo, professor, simulado, casual"
+    )
+
+    # Dados da sessao (JSONB para flexibilidade)
+    session_data: Mapped[dict] = mapped_column(
+        JSONB,
+        nullable=False,
+        default=dict,
+        comment="Dados da sessao: historico, estado, etc."
+    )
+
+    # Timestamps
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(timezone.utc),
+        server_default=text("CURRENT_TIMESTAMP")
+    )
+    updated_at: Mapped[datetime] = mapped_column(
+        DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+        server_default=text("CURRENT_TIMESTAMP")
+    )
+
+    def __repr__(self) -> str:
+        return f"<DiscordSession(thread_id={self.thread_id}, user_id={self.user_id}, mode={self.mode})>"
+
+
+def create_tables(db_url: str) -> None:
+    """Cria as tabelas no banco de dados.
+
+    Args:
+        db_url: URL de conexao PostgreSQL.
+    """
+    engine = create_engine(db_url)
+    try:
+        Base.metadata.create_all(engine)
+    finally:
+        engine.dispose()
+</file>
+
+<file path="oraculo_bot/rag.py">
+"""Funções RAG para uso com Agno Agent."""
+
+from __future__ import annotations
 
 import logging
 from typing import Optional
 
-import psycopg
+from agno.knowledge.embedder.openai import OpenAIEmbedder
 
-from oraculo_bot.config import SUPABASE_DB_URL
+from oraculo_bot.rag_retriever import RAGRetriever
+from oraculo_bot.config import OPENAI_API_KEY
 
 logger = logging.getLogger(__name__)
-ALLOWED_METADATA_FILTERS = {
-    "ano",
-    "artigo",
-    "assunto",
-    "banca",
-    "cargo",
-    "disciplina",
-    "tema",
-    "tipo",
-}
+
+# Instância global do retriever
+_rag_retriever = RAGRetriever()
+
+# Instância global de embeddings (para gerar embeddings de queries)
+_embedding_model: Optional[OpenAIEmbedder] = None
 
 
-class RAGRetriever:
-    """Retriever para RAG usando Supabase pgvector.
+def init_rag(api_key: Optional[str] = None) -> None:
+    """Inicializa o RAG com modelo de embeddings OpenAI.
 
-    Realiza busca semântica em chunks de legislação com embeddings.
+    Args:
+        api_key: Chave API OpenAI para embeddings.
     """
+    global _embedding_model
 
-    def __init__(self, db_url: Optional[str] = None):
-        """Inicializa o retriever.
-
-        Args:
-            db_url: URL PostgreSQL. Se None, usa SUPABASE_DB_URL.
-        """
-        self.db_url = db_url or SUPABASE_DB_URL
-        self._conn = None
-
-    @property
-    def conn(self):
-        """Lazy connection."""
-        if self._conn is None:
-            if not self.db_url:
-                raise RuntimeError("SUPABASE_DB_URL não configurada")
-            self._conn = psycopg.connect(self.db_url)
-        return self._conn
-
-    @property
-    def enabled(self) -> bool:
-        """Verifica se RAG está habilitado."""
-        return bool(self.db_url)
-
-    def retrieve(
-        self,
-        query_text: str,
-        query_embedding: list[float],
-        top_k: int = 5,
-        filters: Optional[dict] = None,
-    ) -> list[dict]:
-        """Busca chunks similares ao query.
-
-        Args:
-            query_text: Texto da query (não usado na busca vetorial).
-            query_embedding: Embedding do query (vetor de floats).
-            top_k: Número de resultados a retornar.
-            filters: Filtros de metadados (ex: {"ano": "2021", "banca": "FCC"}).
-
-        Returns:
-            Lista de chunks similares com metadados.
-        """
-        if not self.enabled:
-            logger.warning("RAG desabilitado (SUPABASE_DB_URL não configurada)")
-            return []
-
-        if query_embedding is None:
-            logger.warning("Embedding None fornecido, retornando lista vazia")
-            return []
-
+    if api_key:
         try:
-            with self.conn.cursor() as cur:
-                # Construir query base
-                where_clauses = ["embedding IS NOT NULL"]
-                params = []
+            _embedding_model = OpenAIEmbedder(
+                id="text-embedding-3-small",  # Modelo compatível com banco
+                api_key=api_key
+            )
+            logger.info("RAG: modelo de embeddings OpenAI inicializado (1536 dims)")
+        except Exception as e:
+            logger.warning(f"RAG: erro ao inicializar embeddings OpenAI: {e}")
+            _embedding_model = None
+    else:
+        logger.info("RAG: sem API key OpenAI, usando fallback (embeddings aleatórios)")
 
-                # Adicionar filtros se fornecidos
-                if filters:
-                    for key, value in filters.items():
-                        if key not in ALLOWED_METADATA_FILTERS:
-                            logger.warning("Ignorando filtro RAG não permitido: %s", key)
-                            continue
-                        where_clauses.append(f"metadados->>'{key}' = %s")
-                        params.append(str(value))
 
-                where_sql = " AND ".join(where_clauses)
+def retrieve_relevant_legislation(
+    query_text: str,
+    top_k: int = 5,
+    filters: Optional[dict] = None,
+) -> str:
+    """Busca legislação relevante e retorna como contexto.
 
-                # Query de busca vetorial
-                sql = f"""
-                    SELECT
-                        id,
-                        documento_id,
-                        texto,
-                        metadados,
-                        metadados->>'ano' as ano,
-                        metadados->>'banca' as banca,
-                        metadados->>'tipo' as tipo,
-                        metadados->>'artigo' as artigo,
-                        1 - (embedding <=> %s::vector) as similarity
-                    FROM rag_chunks
-                    WHERE {where_sql}
-                    ORDER BY embedding <=> %s::vector
-                    LIMIT %s;
-                """
+    Args:
+        query_text: Texto da query do usuário.
+        top_k: Número de chunks a recuperar.
+        filters: Filtros de metadados (ex: {"ano": "2021", "banca": "FCC"}).
 
-                # Converter embedding para string PostgreSQL array
-                # Garantir formato com colchetes [0.1, 0.2, ...]
-                if isinstance(query_embedding, str):
-                    # Se já for string, garantir colchetes
-                    emb_str = query_embedding
-                    if emb_str.startswith("("):
-                        emb_str = "[" + emb_str[1:-1] + "]"
-                else:
-                    # Se for lista, converter para string com colchetes
-                    emb_str = "[" + ",".join(str(x) for x in query_embedding) + "]"
+    Returns:
+        String formatado com os chunks encontrados.
+    """
+    global _embedding_model
 
-                params.extend([emb_str, emb_str, top_k])
+    # Auto-inicializar com OpenAI se disponível (prioridade sobre Gemini)
+    if _embedding_model is None and OPENAI_API_KEY:
+        init_rag(OPENAI_API_KEY)
 
-                cur.execute(sql, params)
-                results = cur.fetchall()
+    if not _rag_retriever.enabled:
+        return ""
 
-                # Montar resposta
-                chunks = []
-                for row in results:
-                    chunk_id, doc_id, texto, metadata, ano, banca, tipo, artigo, similarity = row
-                    chunks.append({
-                        "id": chunk_id,
-                        "documento_id": doc_id,
-                        "texto": texto,
-                        "metadados": metadata,
-                        "ano": ano,
-                        "banca": banca,
-                        "tipo": tipo,
-                        "artigo": artigo,
-                        "similarity": similarity,
-                    })
+    try:
+        # Gerar embedding da query se modelo disponível
+        query_embedding = None
+        if _embedding_model:
+            query_embedding = _embedding_model.get_embedding(query_text)
+            logger.info(f"RAG: embedding gerado (dim={len(query_embedding)})")
+        else:
+            # Fallback: pegar embedding de um chunk aleatório para teste
+            import psycopg
 
-                logger.info(f"RAG: encontrados {len(chunks)} chunks (top_k={top_k})")
-                return chunks
+            with psycopg.connect(_rag_retriever.db_url) as conn:
+                with conn.cursor() as cur:
+                    cur.execute("""
+                        SELECT embedding
+                        FROM rag_chunks
+                        WHERE embedding IS NOT NULL
+                        ORDER BY random()
+                        LIMIT 1;
+                    """)
+                    result = cur.fetchone()
+                    if result:
+                        # Converter string para lista de floats
+                        emb_str = result[0].strip("[]")
+                        query_embedding = [float(x) for x in emb_str.split(",")]
+                        logger.warning("RAG: usando embedding aleatório (fallback)")
 
-        except psycopg.Error:
-            logger.exception("Erro na busca RAG")
-            return []
+        if not query_embedding:
+            logger.error("RAG: impossível gerar embedding")
+            return ""
 
-    def retrieve_by_keywords(
-        self,
-        keywords: list[str],
-        top_k: int = 5,
-        filters: Optional[dict] = None,
-    ) -> list[dict]:
-        """Busca chunks por keywords (full-text search).
+        # Buscar chunks similares
+        chunks = _rag_retriever.retrieve(
+            query_text=query_text,
+            query_embedding=query_embedding,
+            top_k=top_k,
+            filters=filters,
+        )
+
+        if not chunks:
+            return ""
+
+        # Format chunks como contexto
+        context_parts = []
+        for i, chunk in enumerate(chunks, 1):
+            similarity = chunk.get("similarity", 0)
+            texto = chunk.get("texto", "")
+            ano = chunk.get("ano", "N/A")
+            banca = chunk.get("banca", "N/A")
+            tipo = chunk.get("tipo", "N/A")
+
+            meta_str = f" (ano: {ano}, banca: {banca}, tipo: {tipo}, sim: {similarity:.2f})"
+
+            context_parts.append(f"[Fonte {i}{meta_str}]")
+            context_parts.append(texto)
+            context_parts.append("")
+
+        return "\n".join(context_parts)
+
+    except Exception as e:
+        logger.error(f"Erro na busca RAG: {e}")
+        return ""
+</file>
+
+<file path="oraculo_bot/views.py">
+"""Componentes de UI do Discord (Human-in-the-Loop)."""
+
+from __future__ import annotations
+
+from typing import Optional
+
+import discord
+from agno.utils.log import log_warning
+
+
+class ConfirmationView(discord.ui.View):
+    """Botões de confirmação/cancelamento para execução de tools."""
+
+    def __init__(self, timeout: float = 60.0) -> None:
+        super().__init__(timeout=timeout)
+        self.value: Optional[bool] = None
+
+    @discord.ui.button(label="✅ Confirmar", style=discord.ButtonStyle.primary)
+    async def confirm(
+        self, interaction: discord.Interaction, button: discord.ui.Button
+    ) -> None:
+        """Confirma a execução da tool e desabilita o botão.
 
         Args:
-            keywords: Lista de palavras-chave.
-            top_k: Número de resultados.
-            filters: Filtros de metadados.
-
-        Returns:
-            Lista de chunks com keywords.
+            interaction: Interação Discord do usuário.
+            button: Botão que foi clicado.
         """
-        if not self.enabled:
-            return []
+        self.value = True
+        button.disabled = True
+        await interaction.response.edit_message(view=self)
+        self.clear_items()
+        self.stop()
 
-        try:
-            with self.conn.cursor() as cur:
-                # Construir WHERE com ILIKE para cada keyword
-                keyword_conditions = []
-                params = []
-                for keyword in keywords:
-                    like_value = f"%{keyword}%"
-                    keyword_conditions.append("(texto ILIKE %s OR metadados::text ILIKE %s)")
-                    params.extend([like_value, like_value])
+    @discord.ui.button(label="❌ Cancelar", style=discord.ButtonStyle.secondary)
+    async def cancel(
+        self, interaction: discord.Interaction, button: discord.ui.Button
+    ) -> None:
+        """Cancela a execução da tool e desabilita o botão.
 
-                where_clauses = ["embedding IS NOT NULL"]
-                if keyword_conditions:
-                    where_clauses.append("(" + " OR ".join(keyword_conditions) + ")")
+        Args:
+            interaction: Interação Discord do usuário.
+            button: Botão que foi clicado.
+        """
+        self.value = False
+        button.disabled = True
+        await interaction.response.edit_message(view=self)
+        self.clear_items()
+        self.stop()
 
-                # Adicionar filtros se fornecidos
-                if filters:
-                    for key, value in filters.items():
-                        if key not in ALLOWED_METADATA_FILTERS:
-                            logger.warning("Ignorando filtro keyword não permitido: %s", key)
-                            continue
-                        where_clauses.append(f"metadados->>'{key}' = %s")
-                        params.append(str(value))
-
-                where_sql = " AND ".join(where_clauses)
-
-                sql = f"""
-                    SELECT
-                        id,
-                        documento_id,
-                        substring(texto, 1, 500) as texto_preview,
-                        metadados,
-                        metadados->>'ano' as ano,
-                        metadados->>'banca' as banca
-                    FROM rag_chunks
-                    WHERE {where_sql}
-                    LIMIT %s;
-                """
-
-                params.append(top_k)
-                cur.execute(sql, params)
-                results = cur.fetchall()
-
-                chunks = []
-                for row in results:
-                    chunk_id, doc_id, texto, metadata, ano, banca = row
-                    chunks.append({
-                        "id": chunk_id,
-                        "documento_id": doc_id,
-                        "texto": texto,
-                        "metadados": metadata,
-                        "ano": ano,
-                        "banca": banca,
-                    })
-
-                logger.info(f"RAG keyword search: {len(chunks)} chunks")
-                return chunks
-
-        except psycopg.Error:
-            logger.exception("Erro na busca por keywords")
-            return []
+    async def on_timeout(self) -> None:
+        """Trata timeout da view sem resposta do usuário."""
+        log_warning("ConfirmationView: timeout atingido")
 </file>
 
 <file path="scripts/test_e2e_manual.py">
@@ -7774,6 +7492,747 @@ Bot Discord de estudos para concursos públicos brasileiros, construído com Agn
 - psycopg3/pgvector - PostgreSQL vetorial
 </file>
 
+<file path="check_embedding_format.py">
+"""Verifica formato de armazenamento do embedding."""
+
+import os
+import psycopg
+
+# Carrega variáveis de ambiente
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
+POSTGRES_URL = os.getenv("SUPABASE_DB_URL")
+if not POSTGRES_URL:
+    raise ValueError(
+        "SUPABASE_DB_URL não configurada. "
+        "Configure a variável de ambiente ou crie um arquivo .env"
+    )
+
+def main():
+    print("🔍 Verificando formato do embedding...")
+
+    with psycopg.connect(POSTGRES_URL) as conn:
+        with conn.cursor() as cur:
+            # Pegar um exemplo de embedding
+            cur.execute("""
+                SELECT
+                    id,
+                    embedding,
+                    pg_typeof(embedding) as type
+                FROM rag_chunks
+                WHERE embedding IS NOT NULL
+                LIMIT 1;
+            """)
+
+            result = cur.fetchone()
+
+            if result:
+                chunk_id, embedding, emb_type = result
+
+                print(f"Chunk ID: {chunk_id}")
+                print(f"Tipo PostgreSQL: {emb_type}")
+                print(f"Tipo Python: {type(embedding)}")
+
+                # Tentar converter
+                print(f"\nConteúdo (primeiros 200 chars):")
+                print(f"  {str(embedding)[:200]}")
+
+                # Se for string, tentar parsear como array
+                if isinstance(embedding, str):
+                    print(f"\n✅ Embedding está armazenado como STRING")
+                    print(f"   Precisa converter: embedding::vector[]")
+
+                    # Tentar converter
+                    try:
+                        cur.execute("""
+                            SELECT
+                                id,
+                                string_to_array(substring(embedding, 2, length(embedding)-2), ',')::float[] as vec_array,
+                                array_length(string_to_array(substring(embedding, 2, length(embedding)-2), ','), 1) as dim
+                            FROM rag_chunks
+                            WHERE id = %s;
+                        """, (chunk_id,))
+
+                        result = cur.fetchone()
+                        if result:
+                            id, vec_array, dim = result
+                            print(f"\n✅ Conversão funcionou!")
+                            print(f"   Dimensão: {dim}")
+                            print(f"   Array type: {type(vec_array)}")
+                            print(f"   Primeiros valores: {vec_array[:5] if vec_array else 'N/A'}")
+                    except Exception as e:
+                        print(f"\n❌ Erro na conversão: {e}")
+
+if __name__ == "__main__":
+    main()
+</file>
+
+<file path="discover_tables.py">
+"""Descobre todas as tabelas no Supabase PostgreSQL."""
+
+import os
+import psycopg
+
+# Carrega variáveis de ambiente
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
+POSTGRES_URL = os.getenv("SUPABASE_DB_URL")
+if not POSTGRES_URL:
+    raise ValueError(
+        "SUPABASE_DB_URL não configurada. "
+        "Configure a variável de ambiente ou crie um arquivo .env"
+    )
+
+def main():
+    print("🔍 Conectando ao PostgreSQL...")
+
+    with psycopg.connect(POSTGRES_URL) as conn:
+        with conn.cursor() as cur:
+            # Listar todas as tabelas
+            cur.execute("""
+                SELECT
+                    schemaname,
+                    tablename,
+                    pg_size_pretty(pg_total_relation_size(schemaname||'.'||tablename)) as size
+                FROM pg_tables
+                WHERE schemaname NOT IN ('pg_catalog', 'information_schema')
+                ORDER BY pg_total_relation_size(schemaname||'.'||tablename) DESC;
+            """)
+
+            tables = cur.fetchall()
+
+            print(f"\n📊 Encontradas {len(tables)} tabelas:\n")
+
+            for schema, table, size in tables:
+                print(f"  • {schema}.{table} ({size})")
+
+                # Contar registros
+                cur.execute(f"SELECT COUNT(*) FROM {schema}.{table}")
+                count = cur.fetchone()[0]
+                print(f"    Registros: {count:,}")
+
+                # Mostrar estrutura das tabelas promissoras
+                if count > 0 and count < 1000:
+                    cur.execute(f"""
+                        SELECT column_name, data_type
+                        FROM information_schema.columns
+                        WHERE table_schema = '{schema}'
+                        AND table_name = '{table}'
+                        LIMIT 10;
+                    """)
+                    cols = cur.fetchall()
+                    print(f"    Colunas: {', '.join([f'{c[0]}:{c[1]}' for c in cols])}")
+
+                print()
+
+            # Buscar tabelas com embeddings ou legislações
+            print("\n🔍 Buscando tabelas com 'embedding' ou 'legisla' no nome...")
+            cur.execute("""
+                SELECT schemaname, tablename
+                FROM pg_tables
+                WHERE schemaname NOT IN ('pg_catalog', 'information_schema')
+                AND (tablename ILIKE '%embedding%'
+                     OR tablename ILIKE '%legisla%'
+                     OR tablename ILIKE '%document%'
+                     OR tablename ILIKE '%chunk%'
+                     OR tablename ILIKE '%law%');
+            """)
+
+            relevant = cur.fetchall()
+
+            if relevant:
+                print(f"\n✅ Tabelas relevantes encontradas:\n")
+                for schema, table in relevant:
+                    print(f"  • {schema}.{table}")
+
+                    # Mostrar amostra de dados
+                    cur.execute(f"SELECT * FROM {schema}.{table} LIMIT 1")
+                    sample = cur.fetchone()
+                    if sample:
+                        print(f"    Existe dados! Amostra não disponível (cursor)")
+            else:
+                print("\n❌ Nenhuma tabela relevante encontrada")
+
+if __name__ == "__main__":
+    main()
+</file>
+
+<file path="test_vector_search.py">
+"""Testa busca vetorial similarity no Supabase."""
+
+import json
+import os
+import psycopg
+
+# Carrega variáveis de ambiente
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
+POSTGRES_URL = os.getenv("SUPABASE_DB_URL")
+if not POSTGRES_URL:
+    raise ValueError(
+        "SUPABASE_DB_URL não configurada. "
+        "Configure a variável de ambiente ou crie um arquivo .env"
+    )
+
+def main():
+    print("🔍 Testando Vector Search...")
+
+    with psycopg.connect(POSTGRES_URL) as conn:
+        with conn.cursor() as cur:
+            # Primeiro, pegar dimensão do embedding
+            cur.execute("""
+                SELECT
+                    dim(embedding) as dim,
+                    embedding
+                FROM rag_chunks
+                LIMIT 1;
+            """)
+
+            result = cur.fetchone()
+
+            if result:
+                dim, example_emb = result
+                print(f"✅ Dimensão do embedding: {dim}")
+
+                # Query de exemplo: buscar top 5 chunks similares
+                # Vou usar um vetor de exemplo para teste
+                query_embedding = example_emb
+
+                print(f"\n🔎 Buscando chunks similares...")
+
+                cur.execute("""
+                    SELECT
+                        id,
+                        documento_id,
+                        substring(texto, 1, 150) as texto_preview,
+                        metadados->>'ano' as ano,
+                        metadados->>'banca' as banca,
+                        metadados->>'artigo' as artigo,
+                        1 - (embedding <=> %s::vector) as similarity
+                    FROM rag_chunks
+                    WHERE embedding IS NOT NULL
+                    ORDER BY embedding <=> %s::vector
+                    LIMIT 5;
+                """, (json.dumps(query_embedding), json.dumps(query_embedding)))
+
+                results = cur.fetchall()
+
+                print(f"\n✅ Encontrados {len(results)} chunks similares:\n")
+
+                for i, (chunk_id, doc_id, texto, ano, banca, artigo, similarity) in enumerate(results, 1):
+                    print(f"{i}. Similaridade: {similarity:.4f}")
+                    print(f"   ID: {chunk_id}")
+                    print(f"   Doc: {doc_id}")
+                    print(f"   Ano/Banca: {ano}/{banca}")
+                    print(f"   Artigo: {artigo}")
+                    print(f"   Texto: {texto}")
+                    print()
+
+                # Exemplo com filtro de metadados
+                print("🔍 Busca com filtros (apenas banca='FCC'):")
+
+                cur.execute("""
+                    SELECT
+                        COUNT(*) as count
+                    FROM rag_chunks
+                    WHERE metadados->>'banca' = 'FCC'
+                    AND embedding IS NOT NULL;
+                """)
+
+                fcc_count = cur.fetchone()[0]
+                print(f"✅ Chunks da banca FCC: {fcc_count}")
+
+                if fcc_count > 0:
+                    cur.execute("""
+                        SELECT
+                            id,
+                            substring(texto, 1, 150) as texto_preview,
+                            metadados->>'ano' as ano,
+                            1 - (embedding <=> %s::vector) as similarity
+                        FROM rag_chunks
+                        WHERE metadados->>'banca' = 'FCC'
+                        AND embedding IS NOT NULL
+                        ORDER BY embedding <=> %s::vector
+                        LIMIT 3;
+                    """, (json.dumps(query_embedding), json.dumps(query_embedding)))
+
+                    fcc_results = cur.fetchall()
+
+                    print(f"\n✅ Top 3 FCC similares:\n")
+                    for i, (chunk_id, texto, ano, similarity) in enumerate(fcc_results, 1):
+                        print(f"{i}. Similaridade: {similarity:.4f}")
+                        print(f"   ID: {chunk_id}")
+                        print(f"   Ano: {ano}")
+                        print(f"   Texto: {texto}")
+                        print()
+
+if __name__ == "__main__":
+    main()
+</file>
+
+<file path="oraculo_bot/__main__.py">
+"""Entrypoint: python -m oraculo_bot."""
+
+from __future__ import annotations
+
+import logging
+
+from oraculo_bot.agent import create_agent
+from oraculo_bot.bot import OracleDiscordBot
+from oraculo_bot.db import SessionDAO
+
+logger = logging.getLogger(__name__)
+
+
+def main() -> None:
+    # Inicializa banco de dados
+    try:
+        dao = SessionDAO()
+        dao.init_db()
+    except Exception:
+        logger.exception("Erro ao inicializar DB")
+        raise
+
+    # Limpa sessões antigas
+    try:
+        dao.cleanup_old_sessions(30)
+    except Exception:
+        logger.exception("Erro ao limpar sessões antigas")
+
+    # Inicia bot
+    agent = create_agent()
+    bot = OracleDiscordBot(agent=agent)
+    bot.serve()
+
+
+if __name__ == "__main__":
+    main()
+</file>
+
+<file path="oraculo_bot/agent.py">
+"""Definição do Agent Oráculo."""
+
+from __future__ import annotations
+
+from typing import Any
+
+from agno.agent import Agent
+from agno.models.deepseek import DeepSeek
+
+from oraculo_bot.config import HISTORY_RUNS, MODEL_ID
+from oraculo_bot.db import SessionDAO
+from oraculo_bot.models import DiscordSession
+
+# Instância global do DAO
+_session_dao = SessionDAO()
+
+SYSTEM_INSTRUCTIONS: list[str] = [
+    # ── Identidade ────────────────────────────────────────────
+    (
+        "Você é o Oráculo, um assistente especializado em concursos públicos brasileiros. "
+        "Você domina as principais bancas (Cebraspe/CESPE, FGV, FCC, VUNESP, IBFC, Quadrix), "
+        "seus estilos de cobrança, pegadinhas recorrentes e critérios de correção discursiva."
+    ),
+    # ── Idioma e tom ──────────────────────────────────────────
+    (
+        "Responda sempre em português-BR. Seu tom padrão é direto, didático e acessível — "
+        "como um professor particular que explica bem sem ser prolixo."
+    ),
+    # ── Modos de operação ─────────────────────────────────────
+    "Adapte-se automaticamente ao contexto da mensagem:",
+    (
+        "MODO ESTUDO — Quando o usuário perguntar sobre editais, matérias, legislação, "
+        "jurisprudência, estratégias de estudo ou qualquer tema cobrado em provas: "
+        "responda com profundidade e precisão técnica. Cite dispositivos legais com "
+        "artigo/inciso/alínea, súmulas (vinculantes e do STJ/STF), doutrina majoritária e, "
+        "quando relevante, a posição específica da banca. Diferencie letra da lei vs. "
+        "entendimento jurisprudencial. Se houver divergência doutrinária, indique a corrente "
+        "adotada pela banca quando possível."
+    ),
+    (
+        "MODO PROFESSOR — Quando o usuário tirar dúvida acadêmica ou técnica "
+        "(direito, português, raciocínio lógico, informática, contabilidade, economia, etc.): "
+        "explique o conceito de forma clara e progressiva — do básico ao avançado. "
+        "Use exemplos práticos, analogias e, quando útil, esquematize com listas ou tabelas. "
+        "Ao final, se a dúvida envolver tema recorrente em provas, mencione como costuma ser cobrado."
+    ),
+    (
+        "MODO SIMULADO — Quando o usuário enviar uma questão de prova ou pedir para resolver "
+        "exercícios: primeiro resolva a questão com justificativa item a item (para CERTO/ERRADO) "
+        "ou alternativa a alternativa (para múltipla escolha). Indique a resposta correta com "
+        "destaque. Aponte armadilhas e erros comuns que candidatos cometem naquele tipo de questão."
+    ),
+    (
+        "MODO CASUAL — Quando o usuário apenas quiser conversar, desabafar sobre a rotina de "
+        "estudos, ou falar de qualquer outro assunto: seja natural, descontraído e empático. "
+        "Não force o tema de concursos. Acompanhe o tom da conversa como um colega acessível."
+    ),
+    # ── Restrições ────────────────────────────────────────────
+    (
+        "Nunca invente legislação, súmulas, jurisprudência ou dados. "
+        "Se não souber ou não tiver certeza, diga explicitamente e sugira que o usuário "
+        "verifique a fonte."
+    ),
+    (
+        "Não reproduza questões de provas integralmente protegidas por direito autoral — "
+        "parafraseie o enunciado quando necessário."
+    ),
+    # ── Formatação Discord ────────────────────────────────────
+    (
+        "Use formatação Markdown compatível com Discord: **negrito**, *itálico*, `código`, "
+        "```blocos de código```, > citações, listas com - ou 1. "
+        "Para respostas longas, use seções com **títulos em negrito** para facilitar a leitura."
+    ),
+    # ── Contexto de thread ────────────────────────────────────
+    (
+        "Considere todo o histórico da thread ao responder. Referencie mensagens anteriores "
+        "quando relevante para manter coerência e evitar repetição."
+    ),
+]
+
+
+def create_agent() -> Agent:
+    """Cria e retorna a instância do Agent Oráculo."""
+    return Agent(
+        name="Oráculo",
+        model=DeepSeek(id=MODEL_ID),
+        instructions=SYSTEM_INSTRUCTIONS,
+        add_history_to_context=True,
+        num_history_runs=HISTORY_RUNS,
+        add_datetime_to_context=True,
+        markdown=True,
+    )
+
+
+def initialize_session(thread_id: str, user_id: str, mode: str = "estudo") -> DiscordSession:
+    """Inicializa ou recupera uma sessão do Discord.
+
+    Args:
+        thread_id: ID do thread Discord.
+        user_id: ID do usuário Discord.
+        mode: Modo de operação (estudo, professor, simulado, casual).
+
+    Returns:
+        A sessão criada ou recuperada.
+    """
+    return _session_dao.get_or_create_session(thread_id, user_id, mode)
+
+
+def save_session_history(thread_id: str, messages: list[dict[str, Any]]) -> None:
+    """Salva o histórico de mensagens de uma sessão.
+
+    Args:
+        thread_id: ID do thread Discord.
+        messages: Lista de mensagens do RunOutput.
+    """
+    _session_dao.update_session_data(thread_id, {"history": messages})
+
+
+def get_session_history(thread_id: str) -> list[dict[str, Any]]:
+    """Recupera o histórico de mensagens de uma sessão.
+
+    Args:
+        thread_id: ID do thread Discord.
+
+    Returns:
+        Lista de mensagens anteriores ou lista vazia.
+    """
+    session = _session_dao.get_session(thread_id)
+    if session:
+        return session.session_data.get("history", [])
+    return []
+
+
+def cleanup_old_sessions(days: int = 30) -> int:
+    """Remove sessões antigas do banco.
+
+    Args:
+        days: Número de dias para considerar uma sessão como antiga.
+
+    Returns:
+        Número de sessões removidas.
+    """
+    return _session_dao.cleanup_old_sessions(days)
+
+
+def enrich_with_rag(query: str, top_k: int = 3) -> str:
+    """Enriquece query com legislação relevante via RAG.
+
+    Args:
+        query: Texto da query do usuário.
+        top_k: Número de chunks a recuperar.
+
+    Returns:
+        Contexto RAG formatado para adicionar ao agent.
+    """
+    try:
+        from oraculo_bot.rag import retrieve_relevant_legislation
+
+        rag_context = retrieve_relevant_legislation(
+            query_text=query,
+            top_k=top_k,
+        )
+
+        if rag_context:
+            return f"\n\n[CONTEXTO LEGISLATIVO RELEVANTE]\n{rag_context}\n"
+
+    except Exception as e:
+        # Se RAG falhar, retorna string vazia (não quebra o bot)
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.warning(f"RAG fallback: {e}")
+        return ""
+
+    return ""
+</file>
+
+<file path="oraculo_bot/rag_retriever.py">
+"""RAG Retriever para busca semântica em legislação."""
+
+from __future__ import annotations
+
+import logging
+from typing import Optional
+
+import psycopg
+
+from oraculo_bot.config import SUPABASE_DB_URL
+
+logger = logging.getLogger(__name__)
+ALLOWED_METADATA_FILTERS = {
+    "ano",
+    "artigo",
+    "assunto",
+    "banca",
+    "cargo",
+    "disciplina",
+    "tema",
+    "tipo",
+}
+
+
+class RAGRetriever:
+    """Retriever para RAG usando Supabase pgvector.
+
+    Realiza busca semântica em chunks de legislação com embeddings.
+    """
+
+    def __init__(self, db_url: Optional[str] = None):
+        """Inicializa o retriever.
+
+        Args:
+            db_url: URL PostgreSQL. Se None, usa SUPABASE_DB_URL.
+        """
+        self.db_url = db_url or SUPABASE_DB_URL
+        self._conn = None
+
+    @property
+    def conn(self) -> psycopg.Connection:
+        """Lazy connection."""
+        if self._conn is None:
+            if not self.db_url:
+                raise RuntimeError("SUPABASE_DB_URL não configurada")
+            self._conn = psycopg.connect(self.db_url)
+        return self._conn
+
+    @property
+    def enabled(self) -> bool:
+        """Verifica se RAG está habilitado."""
+        return bool(self.db_url)
+
+    def retrieve(
+        self,
+        query_text: str,
+        query_embedding: list[float],
+        top_k: int = 5,
+        filters: Optional[dict] = None,
+    ) -> list[dict]:
+        """Busca chunks similares ao query.
+
+        Args:
+            query_text: Texto da query (não usado na busca vetorial).
+            query_embedding: Embedding do query (vetor de floats).
+            top_k: Número de resultados a retornar.
+            filters: Filtros de metadados (ex: {"ano": "2021", "banca": "FCC"}).
+
+        Returns:
+            Lista de chunks similares com metadados.
+        """
+        if not self.enabled:
+            logger.warning("RAG desabilitado (SUPABASE_DB_URL não configurada)")
+            return []
+
+        if query_embedding is None:
+            logger.warning("Embedding None fornecido, retornando lista vazia")
+            return []
+
+        try:
+            with self.conn.cursor() as cur:
+                # Construir query base
+                where_clauses = ["embedding IS NOT NULL"]
+                params = []
+
+                # Adicionar filtros se fornecidos
+                if filters:
+                    for key, value in filters.items():
+                        if key not in ALLOWED_METADATA_FILTERS:
+                            logger.warning("Ignorando filtro RAG não permitido: %s", key)
+                            continue
+                        where_clauses.append(f"metadados->>'{key}' = %s")
+                        params.append(str(value))
+
+                where_sql = " AND ".join(where_clauses)
+
+                # Query de busca vetorial
+                sql = f"""
+                    SELECT
+                        id,
+                        documento_id,
+                        texto,
+                        metadados,
+                        metadados->>'ano' as ano,
+                        metadados->>'banca' as banca,
+                        metadados->>'tipo' as tipo,
+                        metadados->>'artigo' as artigo,
+                        1 - (embedding <=> %s::vector) as similarity
+                    FROM rag_chunks
+                    WHERE {where_sql}
+                    ORDER BY embedding <=> %s::vector
+                    LIMIT %s;
+                """
+
+                # Converter embedding para string PostgreSQL array
+                # Garantir formato com colchetes [0.1, 0.2, ...]
+                if isinstance(query_embedding, str):
+                    # Se já for string, garantir colchetes
+                    emb_str = query_embedding
+                    if emb_str.startswith("("):
+                        emb_str = "[" + emb_str[1:-1] + "]"
+                else:
+                    # Se for lista, converter para string com colchetes
+                    emb_str = "[" + ",".join(str(x) for x in query_embedding) + "]"
+
+                params.extend([emb_str, emb_str, top_k])
+
+                cur.execute(sql, params)
+                results = cur.fetchall()
+
+                # Montar resposta
+                chunks = []
+                for row in results:
+                    chunk_id, doc_id, texto, metadata, ano, banca, tipo, artigo, similarity = row
+                    chunks.append({
+                        "id": chunk_id,
+                        "documento_id": doc_id,
+                        "texto": texto,
+                        "metadados": metadata,
+                        "ano": ano,
+                        "banca": banca,
+                        "tipo": tipo,
+                        "artigo": artigo,
+                        "similarity": similarity,
+                    })
+
+                logger.info(f"RAG: encontrados {len(chunks)} chunks (top_k={top_k})")
+                return chunks
+
+        except psycopg.Error:
+            logger.exception("Erro na busca RAG")
+            return []
+
+    def retrieve_by_keywords(
+        self,
+        keywords: list[str],
+        top_k: int = 5,
+        filters: Optional[dict] = None,
+    ) -> list[dict]:
+        """Busca chunks por keywords (full-text search).
+
+        Args:
+            keywords: Lista de palavras-chave.
+            top_k: Número de resultados.
+            filters: Filtros de metadados.
+
+        Returns:
+            Lista de chunks com keywords.
+        """
+        if not self.enabled:
+            return []
+
+        try:
+            with self.conn.cursor() as cur:
+                # Construir WHERE com ILIKE para cada keyword
+                keyword_conditions = []
+                params = []
+                for keyword in keywords:
+                    like_value = f"%{keyword}%"
+                    keyword_conditions.append("(texto ILIKE %s OR metadados::text ILIKE %s)")
+                    params.extend([like_value, like_value])
+
+                where_clauses = ["embedding IS NOT NULL"]
+                if keyword_conditions:
+                    where_clauses.append("(" + " OR ".join(keyword_conditions) + ")")
+
+                # Adicionar filtros se fornecidos
+                if filters:
+                    for key, value in filters.items():
+                        if key not in ALLOWED_METADATA_FILTERS:
+                            logger.warning("Ignorando filtro keyword não permitido: %s", key)
+                            continue
+                        where_clauses.append(f"metadados->>'{key}' = %s")
+                        params.append(str(value))
+
+                where_sql = " AND ".join(where_clauses)
+
+                sql = f"""
+                    SELECT
+                        id,
+                        documento_id,
+                        substring(texto, 1, 500) as texto_preview,
+                        metadados,
+                        metadados->>'ano' as ano,
+                        metadados->>'banca' as banca
+                    FROM rag_chunks
+                    WHERE {where_sql}
+                    LIMIT %s;
+                """
+
+                params.append(top_k)
+                cur.execute(sql, params)
+                results = cur.fetchall()
+
+                chunks = []
+                for row in results:
+                    chunk_id, doc_id, texto, metadata, ano, banca = row
+                    chunks.append({
+                        "id": chunk_id,
+                        "documento_id": doc_id,
+                        "texto": texto,
+                        "metadados": metadata,
+                        "ano": ano,
+                        "banca": banca,
+                    })
+
+                logger.info(f"RAG keyword search: {len(chunks)} chunks")
+                return chunks
+
+        except psycopg.Error:
+            logger.exception("Erro na busca por keywords")
+            return []
+</file>
+
 <file path=".env.example">
 # Discord
 DISCORD_BOT_TOKEN=
@@ -7801,6 +8260,51 @@ SUPABASE_DB_URL=
 # TARGET_CHANNEL_ID=1486301006659715143
 # MODEL_ID=deepseek-chat
 # HISTORY_RUNS=5
+</file>
+
+<file path="pyproject.toml">
+[project]
+name = "oraculo-bot"
+version = "0.1.0"
+description = "Bot Discord de estudos para concursos públicos brasileiros"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+dependencies = [
+    "agno>=1.0.0",
+    "discord.py>=2.4.0",
+    "requests>=2.32.0",
+    "openai>=1.0.0",
+    "sqlalchemy>=2.0.0",
+    "psycopg[binary]>=3.2.0",
+    "supabase>=2.28.3",
+    "google-genai>=1.0.0",  # Para embeddings Gemini (free-tier) - pacote novo
+]
+
+[project.scripts]
+oraculo-bot = "oraculo_bot.__main__:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["oraculo_bot"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "SIM"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+    "pytest-cov>=5.0",
+    "pytest-mock>=3.14",
+]
 </file>
 
 <file path=".omc/project-memory.json">
@@ -7907,59 +8411,140 @@ SUPABASE_DB_URL=
   },
   "hotPaths": [
     {
+      "path": "oraculo_bot/rag.py",
+      "accessCount": 9,
+      "lastAccessed": 1774552381073,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/db.py",
+      "accessCount": 8,
+      "lastAccessed": 1774552381361,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/rag_retriever.py",
+      "accessCount": 6,
+      "lastAccessed": 1774551782439,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/agent.py",
+      "accessCount": 6,
+      "lastAccessed": 1774551808438,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/views.py",
+      "accessCount": 6,
+      "lastAccessed": 1774551821331,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot",
+      "accessCount": 4,
+      "lastAccessed": 1774551384634,
+      "type": "directory"
+    },
+    {
       "path": "crabbit.txt",
       "accessCount": 3,
       "lastAccessed": 1774547171998,
+      "type": "file"
+    },
+    {
+      "path": "discover_tables.py",
+      "accessCount": 3,
+      "lastAccessed": 1774550916319,
+      "type": "file"
+    },
+    {
+      "path": "",
+      "accessCount": 3,
+      "lastAccessed": 1774550916379,
+      "type": "directory"
+    },
+    {
+      "path": "oraculo_bot/models.py",
+      "accessCount": 3,
+      "lastAccessed": 1774551727257,
+      "type": "file"
+    },
+    {
+      "path": "repomix-output.xml",
+      "accessCount": 2,
+      "lastAccessed": 1774550383975,
+      "type": "file"
+    },
+    {
+      "path": "check_embedding_format.py",
+      "accessCount": 2,
+      "lastAccessed": 1774550901191,
+      "type": "file"
+    },
+    {
+      "path": "test_vector_search.py",
+      "accessCount": 2,
+      "lastAccessed": 1774550901453,
+      "type": "file"
+    },
+    {
+      "path": "setup_rag.sh",
+      "accessCount": 2,
+      "lastAccessed": 1774550901711,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/bot.py",
+      "accessCount": 2,
+      "lastAccessed": 1774551115388,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/config.py",
+      "accessCount": 2,
+      "lastAccessed": 1774551115473,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/__init__.py",
+      "accessCount": 2,
+      "lastAccessed": 1774551726366,
+      "type": "file"
+    },
+    {
+      "path": "oraculo_bot/__main__.py",
+      "accessCount": 2,
+      "lastAccessed": 1774551726643,
+      "type": "file"
+    },
+    {
+      "path": "pyproject.toml",
+      "accessCount": 1,
+      "lastAccessed": 1774550383917,
+      "type": "file"
+    },
+    {
+      "path": "tests/conftest.py",
+      "accessCount": 1,
+      "lastAccessed": 1774550409466,
+      "type": "file"
+    },
+    {
+      "path": "tests/unit/test_agent.py",
+      "accessCount": 1,
+      "lastAccessed": 1774550409520,
+      "type": "file"
+    },
+    {
+      "path": ".env.example",
+      "accessCount": 1,
+      "lastAccessed": 1774550851615,
       "type": "file"
     }
   ],
   "userDirectives": []
 }
-</file>
-
-<file path="pyproject.toml">
-[project]
-name = "oraculo-bot"
-version = "0.1.0"
-description = "Bot Discord de estudos para concursos públicos brasileiros"
-readme = "README.md"
-requires-python = ">=3.11"
-license = "MIT"
-dependencies = [
-    "agno>=1.0.0",
-    "discord.py>=2.4.0",
-    "requests>=2.32.0",
-    "openai>=1.0.0",
-    "sqlalchemy>=2.0.0",
-    "psycopg[binary]>=3.2.0",
-    "supabase>=2.28.3",
-    "google-genai>=1.0.0",  # Para embeddings Gemini (free-tier) - pacote novo
-]
-
-[project.scripts]
-oraculo-bot = "oraculo_bot.__main__:main"
-
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.hatch.build.targets.wheel]
-packages = ["oraculo_bot"]
-
-[tool.ruff]
-target-version = "py311"
-line-length = 100
-
-[tool.ruff.lint]
-select = ["E", "F", "I", "N", "W", "UP", "B", "SIM"]
-
-[dependency-groups]
-dev = [
-    "pytest>=8.0",
-    "pytest-asyncio>=0.23",
-    "pytest-cov>=5.0",
-    "pytest-mock>=3.14",
-]
 </file>
 
 </files>

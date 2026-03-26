@@ -19,6 +19,22 @@ _rag_retriever = RAGRetriever()
 _embedding_model: Optional[OpenAIEmbedder] = None
 
 
+def create_retriever(db_url: Optional[str] = None) -> RAGRetriever:
+    """Factory para RAGRetriever com injeção de dependência.
+
+    Args:
+        db_url: URL PostgreSQL. Se None, usa SUPABASE_DB_URL.
+
+    Returns:
+        Instância configurada de RAGRetriever.
+
+    Example:
+        retriever = create_retriever(db_url="postgres://test")
+        context = retrieve_relevant_legislation("query", retriever=retriever)
+    """
+    return RAGRetriever(db_url=db_url)
+
+
 def init_rag(api_key: Optional[str] = None) -> None:
     """Inicializa o RAG com modelo de embeddings OpenAI.
 

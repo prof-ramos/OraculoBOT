@@ -15,6 +15,34 @@ def mock_supabase_db_url(mocker):
     yield
 
 
+class TestCreateRetrieverFactory:
+    """Testes para factory function create_retriever()."""
+
+    def test_create_retriever_with_custom_db_url(self, mocker):
+        """Factory aceita parâmetro custom db_url."""
+        mocker.patch("oraculo_bot.rag_retriever.SUPABASE_DB_URL", "postgresql://default")
+        from oraculo_bot.rag import create_retriever
+
+        retriever = create_retriever(db_url="postgres://test")
+        assert retriever.db_url == "postgres://test"
+
+    def test_create_retriever_defaults_to_config(self, mocker):
+        """Factory usa SUPABASE_DB_URL quando db_url não fornecido."""
+        mocker.patch("oraculo_bot.rag_retriever.SUPABASE_DB_URL", "postgresql://default")
+        from oraculo_bot.rag import create_retriever
+
+        retriever = create_retriever()
+        assert retriever.db_url == "postgresql://default"
+
+    def test_create_retriever_none_disables_rag(self, mocker):
+        """Factory retorna retriever desabilitado quando db_url=None."""
+        mocker.patch("oraculo_bot.rag_retriever.SUPABASE_DB_URL", None)
+        from oraculo_bot.rag import create_retriever
+
+        retriever = create_retriever(db_url=None)
+        assert not retriever.enabled
+
+
 class TestRAGRetrieverInit:
     """Testes para inicialização do RAGRetriever."""
 
