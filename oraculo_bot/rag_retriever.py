@@ -27,6 +27,7 @@ RAG_SCHEMA = "juridico"
 CHUNKS_TABLE = f"{RAG_SCHEMA}.chunks"
 DOCUMENTS_TABLE = f"{RAG_SCHEMA}.documents"
 MATCH_FUNCTION = f"{RAG_SCHEMA}.match_chunks"
+HYBRID_MATCH_FUNCTION = f"{RAG_SCHEMA}.match_chunks_hybrid"
 
 
 class RAGRetriever:
@@ -95,7 +96,7 @@ class RAGRetriever:
                             continue
                         metadata_filter[key] = value
 
-                # Query de busca vetorial via função versionada no schema juridico
+                # Query híbrida pt-BR: vetorial + full-text search em português
                 sql = f"""
                     SELECT
                         id,
@@ -106,8 +107,11 @@ class RAGRetriever:
                         metadata->>'banca' as banca,
                         metadata->>'tipo' as tipo,
                         metadata->>'artigo' as artigo,
-                        similarity
-                    FROM {MATCH_FUNCTION}(
+                        similarity,
+                        lexical_rank,
+                        hybrid_score
+                    FROM {HYBRID_MATCH_FUNCTION}(
+                        %s,
                         %s::vector,
                         %s,
                         %s,
@@ -128,7 +132,7 @@ class RAGRetriever:
                     emb_str = "[" + ",".join(str(x) for x in query_embedding) + "]"
 
                 metadata_filter_json = __import__("json").dumps(metadata_filter, ensure_ascii=False)
-                params = [emb_str, top_k, 0.4, metadata_filter_json, None]
+                params = [query_text, emb_str, top_k, 0.4, metadata_filter_json, None]
 
                 cur.execute(sql, params)
                 results = cur.fetchall()
@@ -136,7 +140,7 @@ class RAGRetriever:
                 # Montar resposta
                 chunks = []
                 for row in results:
-                    chunk_id, doc_id, texto, metadata, ano, banca, tipo, artigo, similarity = row
+                    chunk_id, doc_id, texto, metadata, ano, banca, tipo, artigo, similarity, lexical_rank, hybrid_score = row
                     chunks.append({
                         "id": chunk_id,
                         "documento_id": doc_id,
@@ -150,6 +154,8 @@ class RAGRetriever:
                         "tipo": tipo,
                         "artigo": artigo,
                         "similarity": similarity,
+                        "lexical_rank": lexical_rank,
+                        "hybrid_score": hybrid_score,
                     })
 
                 logger.info(f"RAG: encontrados {len(chunks)} chunks (top_k={top_k})")
