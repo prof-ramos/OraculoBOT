@@ -55,14 +55,17 @@ def test_supabase_connection():
                     print("❌ Falha ao contar embeddings em rag_chunks")
                     return False
                 count = count_row[0]
+                if count == 0:
+                    print("❌ Nenhum chunk com embedding encontrado em juridico.chunks")
+                    return False
 
                 print(f"✅ {count:,} chunks com embeddings")
 
                 # Buscar um chunk de exemplo
                 cur.execute("""
-                    SELECT id, substring(texto, 1, 150) as texto_preview,
-                           metadados->>'ano' as ano,
-                           metadados->>'banca' as banca
+                    SELECT id, substring(content, 1, 150) as texto_preview,
+                           metadata->>'ano' as ano,
+                           metadata->>'banca' as banca
                     FROM juridico.chunks
                     WHERE embedding IS NOT NULL
                     LIMIT 1;

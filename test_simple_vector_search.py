@@ -43,10 +43,10 @@ def main():
                 cur.execute("""
                     SELECT
                         id,
-                        documento_id,
-                        substring(texto, 1, 200) as texto_preview,
-                        metadados->>'ano' as ano,
-                        metadados->>'banca' as banca,
+                        document_id,
+                        substring(content, 1, 200) as texto_preview,
+                        metadata->>'ano' as ano,
+                        metadata->>'banca' as banca,
                         1 - (embedding <=> %s::vector) as similarity
                     FROM juridico.chunks
                     WHERE id != %s

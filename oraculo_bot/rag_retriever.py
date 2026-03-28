@@ -143,7 +143,7 @@ class RAGRetriever:
                     chunk_id, doc_id, texto, metadata, ano, banca, tipo, artigo, similarity, lexical_rank, hybrid_score = row
                     chunks.append({
                         "id": chunk_id,
-                        "documento_id": doc_id,
+                        "document_id": doc_id,
                         "document_id": doc_id,
                         "texto": texto,
                         "content": texto,
@@ -191,7 +191,7 @@ class RAGRetriever:
                 params = []
                 for keyword in keywords:
                     like_value = f"%{keyword}%"
-                    keyword_conditions.append("(texto ILIKE %s OR metadados::text ILIKE %s)")
+                    keyword_conditions.append("(content ILIKE %s OR metadata::text ILIKE %s)")
                     params.extend([like_value, like_value])
 
                 where_clauses = ["embedding IS NOT NULL"]
@@ -231,7 +231,7 @@ class RAGRetriever:
                     chunk_id, doc_id, texto, metadata, ano, banca = row
                     chunks.append({
                         "id": chunk_id,
-                        "documento_id": doc_id,
+                        "document_id": doc_id,
                         "texto": texto,
                         "metadados": metadata,
                         "ano": ano,

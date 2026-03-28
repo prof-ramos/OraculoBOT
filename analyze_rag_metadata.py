@@ -22,9 +22,9 @@ def main():
             cur.execute("""
                 SELECT
                     id,
-                    documento_id,
-                    substring(texto, 1, 200) as texto_preview,
-                    metadados,
+                    document_id,
+                    substring(content, 1, 200) as texto_preview,
+                    metadata,
                     token_count,
                     created_at
                 FROM juridico.chunks
@@ -57,9 +57,9 @@ def main():
             # Estatísticas dos metadados
             cur.execute("""
                 SELECT
-                    metadados->>'ano' as ano,
-                    metadados->>'tipo' as tipo,
-                    metadados->>'banca' as banca,
+                    metadata->>'ano' as ano,
+                    metadata->>'tipo' as tipo,
+                    metadata->>'banca' as banca,
                     COUNT(*) as count
                 FROM juridico.chunks
                 GROUP BY ano, tipo, banca

@@ -47,11 +47,11 @@ def main():
                 cur.execute("""
                     SELECT
                         id,
-                        documento_id,
-                        substring(texto, 1, 150) as texto_preview,
-                        metadados->>'ano' as ano,
-                        metadados->>'banca' as banca,
-                        metadados->>'artigo' as artigo,
+                        document_id,
+                        substring(content, 1, 150) as texto_preview,
+                        metadata->>'ano' as ano,
+                        metadata->>'banca' as banca,
+                        metadata->>'artigo' as artigo,
                         1 - (embedding <=> %s::vector) as similarity
                     FROM juridico.chunks
                     WHERE embedding IS NOT NULL
@@ -79,7 +79,7 @@ def main():
                     SELECT
                         COUNT(*) as count
                     FROM juridico.chunks
-                    WHERE metadados->>'banca' = 'FCC'
+                    WHERE metadata->>'banca' = 'FCC'
                     AND embedding IS NOT NULL;
                 """)
 
@@ -90,11 +90,11 @@ def main():
                     cur.execute("""
                         SELECT
                             id,
-                            substring(texto, 1, 150) as texto_preview,
-                            metadados->>'ano' as ano,
+                            substring(content, 1, 150) as texto_preview,
+                            metadata->>'ano' as ano,
                             1 - (embedding <=> %s::vector) as similarity
                         FROM juridico.chunks
-                        WHERE metadados->>'banca' = 'FCC'
+                        WHERE metadata->>'banca' = 'FCC'
                         AND embedding IS NOT NULL
                         ORDER BY embedding <=> %s::vector
                         LIMIT 3;

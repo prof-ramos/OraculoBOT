@@ -37,8 +37,8 @@ def test_full_rag_flow():
                     SELECT embedding
                     FROM juridico.chunks
                     WHERE embedding IS NOT NULL
-                    AND texto ILIKE '%competência%'
-                    AND texto ILIKE '%união%'
+                    AND content ILIKE '%competência%'
+                    AND content ILIKE '%união%'
                     ORDER BY random()
                     LIMIT 1;
                 """)
