@@ -63,7 +63,10 @@ Pontos esperados no banco:
 - `juridico.content_links`
 - `juridico.match_chunks(...)`
 - `juridico.match_chunks_hybrid(...)`
-- índice full-text em português (`search_text`)
+- coluna `juridico.chunks.search_text` para busca full-text em português
+- índice GIN sobre `search_text`
+- trigger para manter `search_text` atualizado
+- extensão `unaccent` habilitada
 
 A conexão é feita via `SUPABASE_DB_URL`.
 O fluxo principal de recuperação agora pode combinar busca vetorial + full-text search em português.
