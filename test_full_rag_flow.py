@@ -35,10 +35,10 @@ def test_full_rag_flow():
             with conn.cursor() as cur:
                 cur.execute("""
                     SELECT embedding
-                    FROM rag_chunks
+                    FROM juridico.chunks
                     WHERE embedding IS NOT NULL
-                    AND texto ILIKE '%competência%'
-                    AND texto ILIKE '%união%'
+                    AND content ILIKE '%competência%'
+                    AND content ILIKE '%união%'
                     ORDER BY random()
                     LIMIT 1;
                 """)
@@ -48,7 +48,7 @@ def test_full_rag_flow():
                     # Fallback: pegar qualquer embedding
                     cur.execute("""
                         SELECT embedding
-                        FROM rag_chunks
+                        FROM juridico.chunks
                         WHERE embedding IS NOT NULL
                         ORDER BY random()
                         LIMIT 1;

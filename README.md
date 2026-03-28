@@ -12,6 +12,7 @@ Bot Discord de estudos para concursos públicos brasileiros, construído com [Ag
 - Split automático de mensagens longas (>1500 chars)
 - Human-in-the-loop com botões de confirmação para tools
 - Typing indicator durante processamento
+- Integração com RAG jurídico no schema `juridico` do Supabase self-hosted
 
 ## Requisitos
 
@@ -51,6 +52,24 @@ cp .env.example .env
 ```bash
 uv run python -m oraculo_bot
 ```
+
+## RAG Jurídico
+
+O bot está preparado para consultar o RAG jurídico no schema `juridico` do Supabase self-hosted.
+
+Pontos esperados no banco:
+- `juridico.documents`
+- `juridico.chunks`
+- `juridico.content_links`
+- `juridico.match_chunks(...)`
+- `juridico.match_chunks_hybrid(...)`
+- coluna `juridico.chunks.search_text` para busca full-text em português
+- índice GIN sobre `search_text`
+- trigger para manter `search_text` atualizado
+- extensão `unaccent` habilitada
+
+A conexão é feita via `SUPABASE_DB_URL`.
+O fluxo principal de recuperação agora pode combinar busca vetorial + full-text search em português.
 
 ## Configuração
 

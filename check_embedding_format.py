@@ -28,7 +28,7 @@ def main():
                     id,
                     embedding,
                     pg_typeof(embedding) as type
-                FROM rag_chunks
+                FROM juridico.chunks
                 WHERE embedding IS NOT NULL
                 LIMIT 1;
             """)
@@ -58,7 +58,7 @@ def main():
                                 id,
                                 string_to_array(substring(embedding, 2, length(embedding)-2), ',')::float[] as vec_array,
                                 array_length(string_to_array(substring(embedding, 2, length(embedding)-2), ','), 1) as dim
-                            FROM rag_chunks
+                            FROM juridico.chunks
                             WHERE id = %s;
                         """, (chunk_id,))
 

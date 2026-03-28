@@ -27,8 +27,8 @@ def test_vector_search():
                 # 1. Pegar um chunk aleatório com embedding
                 print("1️⃣  Buscando chunk de referência...")
                 cur.execute("""
-                    SELECT id, texto, embedding, metadados->>'ano' as ano, metadados->>'banca' as banca
-                    FROM rag_chunks
+                    SELECT id, content, embedding, metadata->>'ano' as ano, metadata->>'banca' as banca
+                    FROM juridico.chunks
                     WHERE embedding IS NOT NULL
                     ORDER BY random()
                     LIMIT 1;
@@ -52,11 +52,11 @@ def test_vector_search():
                 cur.execute("""
                     SELECT
                         id,
-                        substring(texto, 1, 200) as texto_preview,
-                        metadados->>'ano' as ano,
-                        metadados->>'banca' as banca,
+                        substring(content, 1, 200) as texto_preview,
+                        metadata->>'ano' as ano,
+                        metadata->>'banca' as banca,
                         1 - (embedding <=> %s::vector) as similarity
-                    FROM rag_chunks
+                    FROM juridico.chunks
                     WHERE id != %s AND embedding IS NOT NULL
                     ORDER BY embedding <=> %s::vector
                     LIMIT 5;

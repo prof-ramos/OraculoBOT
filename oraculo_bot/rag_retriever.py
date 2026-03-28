@@ -23,6 +23,13 @@ ALLOWED_METADATA_FILTERS = {
 }
 
 
+RAG_SCHEMA = "juridico"
+CHUNKS_TABLE = f"{RAG_SCHEMA}.chunks"
+DOCUMENTS_TABLE = f"{RAG_SCHEMA}.documents"
+MATCH_FUNCTION = f"{RAG_SCHEMA}.match_chunks"
+HYBRID_MATCH_FUNCTION = f"{RAG_SCHEMA}.match_chunks_hybrid"
+
+
 class RAGRetriever:
     """Retriever para RAG usando Supabase pgvector.
 
@@ -80,39 +87,37 @@ class RAGRetriever:
 
         try:
             with self.conn.cursor() as cur:
-                # Construir query base
-                where_clauses = ["embedding IS NOT NULL"]
-                params = []
-
-                # Adicionar filtros se fornecidos
+                # Construir filtro de metadados seguro para a função SQL
+                metadata_filter = {}
                 if filters:
                     for key, value in filters.items():
                         if key not in ALLOWED_METADATA_FILTERS:
                             logger.warning("Ignorando filtro RAG não permitido: %s", key)
                             continue
-                        # Usar psql_sql.Identifier() para prevenir SQL injection
-                        identifier = psql_sql.Identifier(key)
-                        where_clauses.append(f"metadados->>{identifier} = %s")
-                        params.append(str(value))
+                        metadata_filter[key] = value
 
-                where_sql = " AND ".join(where_clauses)
-
-                # Query de busca vetorial
+                # Query híbrida pt-BR: vetorial + full-text search em português
                 sql = f"""
                     SELECT
                         id,
-                        documento_id,
-                        texto,
-                        metadados,
-                        metadados->>'ano' as ano,
-                        metadados->>'banca' as banca,
-                        metadados->>'tipo' as tipo,
-                        metadados->>'artigo' as artigo,
-                        1 - (embedding <=> %s::vector) as similarity
-                    FROM rag_chunks
-                    WHERE {where_sql}
-                    ORDER BY embedding <=> %s::vector
-                    LIMIT %s;
+                        document_id,
+                        content,
+                        metadata,
+                        metadata->>'ano' as ano,
+                        metadata->>'banca' as banca,
+                        metadata->>'tipo' as tipo,
+                        metadata->>'artigo' as artigo,
+                        similarity,
+                        lexical_rank,
+                        hybrid_score
+                    FROM {HYBRID_MATCH_FUNCTION}(
+                        %s,
+                        %s::vector,
+                        %s,
+                        %s,
+                        %s::jsonb,
+                        %s
+                    );
                 """
 
                 # Converter embedding para string PostgreSQL array
@@ -126,7 +131,8 @@ class RAGRetriever:
                     # Se for lista, converter para string com colchetes
                     emb_str = "[" + ",".join(str(x) for x in query_embedding) + "]"
 
-                params.extend([emb_str, emb_str, top_k])
+                metadata_filter_json = __import__("json").dumps(metadata_filter, ensure_ascii=False)
+                params = [query_text, emb_str, top_k, 0.4, metadata_filter_json, None]
 
                 cur.execute(sql, params)
                 results = cur.fetchall()
@@ -134,17 +140,22 @@ class RAGRetriever:
                 # Montar resposta
                 chunks = []
                 for row in results:
-                    chunk_id, doc_id, texto, metadata, ano, banca, tipo, artigo, similarity = row
+                    chunk_id, doc_id, texto, metadata, ano, banca, tipo, artigo, similarity, lexical_rank, hybrid_score = row
                     chunks.append({
                         "id": chunk_id,
-                        "documento_id": doc_id,
+                        "document_id": doc_id,
+                        "document_id": doc_id,
                         "texto": texto,
+                        "content": texto,
                         "metadados": metadata,
+                        "metadata": metadata,
                         "ano": ano,
                         "banca": banca,
                         "tipo": tipo,
                         "artigo": artigo,
                         "similarity": similarity,
+                        "lexical_rank": lexical_rank,
+                        "hybrid_score": hybrid_score,
                     })
 
                 logger.info(f"RAG: encontrados {len(chunks)} chunks (top_k={top_k})")
@@ -180,7 +191,7 @@ class RAGRetriever:
                 params = []
                 for keyword in keywords:
                     like_value = f"%{keyword}%"
-                    keyword_conditions.append("(texto ILIKE %s OR metadados::text ILIKE %s)")
+                    keyword_conditions.append("(content ILIKE %s OR metadata::text ILIKE %s)")
                     params.extend([like_value, like_value])
 
                 where_clauses = ["embedding IS NOT NULL"]
@@ -193,7 +204,7 @@ class RAGRetriever:
                         if key not in ALLOWED_METADATA_FILTERS:
                             logger.warning("Ignorando filtro keyword não permitido: %s", key)
                             continue
-                        where_clauses.append(f"metadados->>'{key}' = %s")
+                        where_clauses.append(f"metadata->>'{key}' = %s")
                         params.append(str(value))
 
                 where_sql = " AND ".join(where_clauses)
@@ -201,12 +212,12 @@ class RAGRetriever:
                 sql = f"""
                     SELECT
                         id,
-                        documento_id,
-                        substring(texto, 1, 500) as texto_preview,
-                        metadados,
-                        metadados->>'ano' as ano,
-                        metadados->>'banca' as banca
-                    FROM rag_chunks
+                        document_id,
+                        substring(content, 1, 500) as texto_preview,
+                        metadata,
+                        metadata->>'ano' as ano,
+                        metadata->>'banca' as banca
+                    FROM {CHUNKS_TABLE}
                     WHERE {where_sql}
                     LIMIT %s;
                 """
@@ -220,7 +231,7 @@ class RAGRetriever:
                     chunk_id, doc_id, texto, metadata, ano, banca = row
                     chunks.append({
                         "id": chunk_id,
-                        "documento_id": doc_id,
+                        "document_id": doc_id,
                         "texto": texto,
                         "metadados": metadata,
                         "ano": ano,

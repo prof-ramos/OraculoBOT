@@ -32,7 +32,7 @@ def test_supabase_connection():
                 cur.execute("""
                     SELECT EXISTS (
                         SELECT FROM information_schema.tables
-                        WHERE table_name = 'rag_chunks'
+                        WHERE table_schema = 'juridico' AND table_name = 'chunks'
                     );
                 """)
                 row = cur.fetchone()
@@ -47,7 +47,7 @@ def test_supabase_connection():
                 # Contar chunks com embeddings
                 cur.execute("""
                     SELECT COUNT(*)
-                    FROM rag_chunks
+                    FROM juridico.chunks
                     WHERE embedding IS NOT NULL;
                 """)
                 count_row = cur.fetchone()
@@ -55,15 +55,18 @@ def test_supabase_connection():
                     print("❌ Falha ao contar embeddings em rag_chunks")
                     return False
                 count = count_row[0]
+                if count == 0:
+                    print("❌ Nenhum chunk com embedding encontrado em juridico.chunks")
+                    return False
 
                 print(f"✅ {count:,} chunks com embeddings")
 
                 # Buscar um chunk de exemplo
                 cur.execute("""
-                    SELECT id, substring(texto, 1, 150) as texto_preview,
-                           metadados->>'ano' as ano,
-                           metadados->>'banca' as banca
-                    FROM rag_chunks
+                    SELECT id, substring(content, 1, 150) as texto_preview,
+                           metadata->>'ano' as ano,
+                           metadata->>'banca' as banca
+                    FROM juridico.chunks
                     WHERE embedding IS NOT NULL
                     LIMIT 1;
                 """)

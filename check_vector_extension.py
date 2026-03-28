@@ -40,7 +40,7 @@ def main():
                     data_type,
                     udt_name
                 FROM information_schema.columns
-                WHERE table_name = 'rag_chunks'
+                WHERE table_schema = 'juridico' AND table_name = 'chunks'
                 AND column_name = 'embedding';
             """)
 
@@ -59,7 +59,7 @@ def main():
                         indexname,
                         indexdef
                     FROM pg_indexes
-                    WHERE tablename = 'rag_chunks'
+                    WHERE schemaname = 'juridico' AND tablename = 'chunks'
                     AND indexname LIKE '%embedding%';
                 """)
 
@@ -80,7 +80,7 @@ def main():
                         COUNT(*) as total,
                         COUNT(embedding) as with_embedding,
                         COUNT(*) - COUNT(embedding) as null_embedding
-                    FROM rag_chunks;
+                    FROM juridico.chunks;
                 """)
 
                 stats = cur.fetchone()
@@ -96,7 +96,7 @@ def main():
                     if with_emb > 0:
                         cur.execute("""
                             SELECT embedding
-                            FROM rag_chunks
+                            FROM juridico.chunks
                             WHERE embedding IS NOT NULL
                             LIMIT 1;
                         """)

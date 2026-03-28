@@ -22,12 +22,12 @@ def main():
             cur.execute("""
                 SELECT
                     id,
-                    documento_id,
-                    substring(texto, 1, 200) as texto_preview,
-                    metadados,
+                    document_id,
+                    substring(content, 1, 200) as texto_preview,
+                    metadata,
                     token_count,
                     created_at
-                FROM rag_chunks
+                FROM juridico.chunks
                 LIMIT 5;
             """)
 
@@ -57,11 +57,11 @@ def main():
             # Estatísticas dos metadados
             cur.execute("""
                 SELECT
-                    metadados->>'ano' as ano,
-                    metadados->>'tipo' as tipo,
-                    metadados->>'banca' as banca,
+                    metadata->>'ano' as ano,
+                    metadata->>'tipo' as tipo,
+                    metadata->>'banca' as banca,
                     COUNT(*) as count
-                FROM rag_chunks
+                FROM juridico.chunks
                 GROUP BY ano, tipo, banca
                 ORDER BY count DESC
                 LIMIT 20;
@@ -87,7 +87,7 @@ def main():
                     chunk_count,
                     token_count,
                     substring(arquivo_origem, 1, 100) as arquivo
-                FROM rag_documents
+                FROM juridico.documents
                 ORDER BY token_count DESC
                 LIMIT 5;
             """)
