@@ -28,7 +28,7 @@ def main():
                 SELECT
                     dim(embedding) as dim,
                     embedding
-                FROM rag_chunks
+                FROM juridico.chunks
                 LIMIT 1;
             """)
 
@@ -53,7 +53,7 @@ def main():
                         metadados->>'banca' as banca,
                         metadados->>'artigo' as artigo,
                         1 - (embedding <=> %s::vector) as similarity
-                    FROM rag_chunks
+                    FROM juridico.chunks
                     WHERE embedding IS NOT NULL
                     ORDER BY embedding <=> %s::vector
                     LIMIT 5;
@@ -78,7 +78,7 @@ def main():
                 cur.execute("""
                     SELECT
                         COUNT(*) as count
-                    FROM rag_chunks
+                    FROM juridico.chunks
                     WHERE metadados->>'banca' = 'FCC'
                     AND embedding IS NOT NULL;
                 """)
@@ -93,7 +93,7 @@ def main():
                             substring(texto, 1, 150) as texto_preview,
                             metadados->>'ano' as ano,
                             1 - (embedding <=> %s::vector) as similarity
-                        FROM rag_chunks
+                        FROM juridico.chunks
                         WHERE metadados->>'banca' = 'FCC'
                         AND embedding IS NOT NULL
                         ORDER BY embedding <=> %s::vector

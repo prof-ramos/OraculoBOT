@@ -27,7 +27,7 @@ def main():
                     metadados,
                     token_count,
                     created_at
-                FROM rag_chunks
+                FROM juridico.chunks
                 LIMIT 5;
             """)
 
@@ -61,7 +61,7 @@ def main():
                     metadados->>'tipo' as tipo,
                     metadados->>'banca' as banca,
                     COUNT(*) as count
-                FROM rag_chunks
+                FROM juridico.chunks
                 GROUP BY ano, tipo, banca
                 ORDER BY count DESC
                 LIMIT 20;
@@ -87,7 +87,7 @@ def main():
                     chunk_count,
                     token_count,
                     substring(arquivo_origem, 1, 100) as arquivo
-                FROM rag_documents
+                FROM juridico.documents
                 ORDER BY token_count DESC
                 LIMIT 5;
             """)

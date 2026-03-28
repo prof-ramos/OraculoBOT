@@ -51,8 +51,8 @@ def test_rag_retriever():
         with psycopg.connect(db_url) as conn:
             with conn.cursor() as cur:
                 cur.execute("""
-                    SELECT id, texto, embedding
-                    FROM rag_chunks
+                    SELECT id, content, embedding
+                    FROM juridico.chunks
                     WHERE embedding IS NOT NULL
                     ORDER BY random()
                     LIMIT 1;

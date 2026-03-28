@@ -22,7 +22,7 @@ def main():
                 # Pegar um embedding de exemplo
                 cur.execute("""
                     SELECT id, embedding
-                    FROM rag_chunks
+                    FROM juridico.chunks
                     WHERE embedding IS NOT NULL
                     LIMIT 1;
                 """)
@@ -48,7 +48,7 @@ def main():
                         metadados->>'ano' as ano,
                         metadados->>'banca' as banca,
                         1 - (embedding <=> %s::vector) as similarity
-                    FROM rag_chunks
+                    FROM juridico.chunks
                     WHERE id != %s
                     ORDER BY embedding <=> %s::vector
                     LIMIT 5;
