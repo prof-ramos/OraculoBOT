@@ -25,15 +25,12 @@ from oraculo_bot.ingestion.models import (
     # Score
     calcular_prioridade_recuperacao,
 )
-from oraculo_bot.ingestion.repository import IngestionRepository
-
 __all__ = [
     "Autoridade",
     "calcular_prioridade_recuperacao",
     "DocumentChunk",
     "DocumentQuarantine",
     "FonteTipo",
-    "IngestionRepository",
     "IngestionRun",
     "PesoConfianca",
     "RamoJuridico",
