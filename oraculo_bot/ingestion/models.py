@@ -36,7 +36,8 @@ class FonteTipo(str, Enum):
     LEGISLACAO_ANOTADA = "legislacao_anotada"
     RESOLUCAO = "resolucao"
     DECRETO = "decreto"
-    DOCTRINA = "doutrina"
+    DOUTRINA = "doutrina"
+    DOCTRINA = "doutrina"  # compat alias
     QUESTAO = "questao"
     MATERIAL_APOIO = "material_de_apoio"
     CONVENCAO = "convencao"
@@ -347,7 +348,7 @@ FONTE_TIPO_SCORE = {
     FonteTipo.CONVENCAO: 15,
     FonteTipo.SUMULA: 18,
     FonteTipo.LEGISLACAO_ANOTADA: 8,
-    FonteTipo.DOCTRINA: 5,
+    FonteTipo.DOUTRINA: 5,
     FonteTipo.MATERIAL_APOIO: 2,
     FonteTipo.QUESTAO: -5,
 }

@@ -141,6 +141,10 @@ class IngestionRepository:
                 started_at=datetime.now(timezone.utc),
                 created_by=created_by,
                 observacoes=observacoes,
+                ramo=ramo or SourceDocument.ramo,
+                fonte_tipo=fonte_tipo or SourceDocument.fonte_tipo,
+                autoridade=autoridade or SourceDocument.autoridade,
+                peso_confianca=peso_confianca or SourceDocument.peso_confianca,
                 created_at=row[1],
             )
 
@@ -256,6 +260,10 @@ class IngestionRepository:
         hash_sha256: str,
         extensao: str,
         tamanho_bytes: int,
+        ramo: Optional[str] = None,
+        fonte_tipo: Optional[str] = None,
+        autoridade: Optional[str] = None,
+        peso_confianca: Optional[str] = None,
     ) -> SourceDocument:
         """Registra um novo documento fonte.
 
@@ -291,8 +299,8 @@ class IngestionRepository:
                 sql.SQL("""
                     INSERT INTO {}.source_documents
                     (ingestion_run_id, documento_id_externo, arquivo_origem, arquivo_nome,
-                     pasta_origem, bloco_logico, hash_sha256, extensao, tamanho_bytes)
-                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                     pasta_origem, bloco_logico, hash_sha256, extensao, tamanho_bytes, ramo, fonte_tipo, autoridade, peso_confianca)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     RETURNING id, created_at
                 """).format(sql.Identifier(SCHEMA_JURIDICO)),
                 [
@@ -305,6 +313,10 @@ class IngestionRepository:
                     hash_sha256,
                     extensao,
                     tamanho_bytes,
+                    ramo,
+                    fonte_tipo,
+                    autoridade,
+                    peso_confianca,
                 ],
             )
             row = cur.fetchone()
@@ -321,6 +333,10 @@ class IngestionRepository:
                 hash_sha256=hash_sha256,
                 extensao=extensao,
                 tamanho_bytes=tamanho_bytes,
+                ramo=ramo or SourceDocument.ramo,
+                fonte_tipo=fonte_tipo or SourceDocument.fonte_tipo,
+                autoridade=autoridade or SourceDocument.autoridade,
+                peso_confianca=peso_confianca or SourceDocument.peso_confianca,
                 created_at=row[1],
             )
 
@@ -439,7 +455,9 @@ class IngestionRepository:
                     RETURNING ingestion_run_id, documento_id_externo, arquivo_origem,
                               arquivo_nome, pasta_origem, bloco_logico, hash_sha256,
                               extensao, tamanho_bytes, texto_extraido, extracao_status,
-                              created_at
+                              ramo, fonte_tipo, autoridade, peso_confianca, tem_anotacao,
+                              tem_atencao_documento, ano, banca, subtema, tipo,
+                              status_documento, motivo_status, created_at
                 """).format(sql.Identifier(SCHEMA_JURIDICO)),
                 [
                     ramo,
@@ -475,7 +493,19 @@ class IngestionRepository:
                     tamanho_bytes=row[8],
                     texto_extraido=row[9],
                     extracao_status=row[10],
-                    created_at=row[11],
+                    ramo=row[11],
+                    fonte_tipo=row[12],
+                    autoridade=row[13],
+                    peso_confianca=row[14],
+                    tem_anotacao=row[15],
+                    tem_atencao_documento=row[16],
+                    ano=row[17],
+                    banca=row[18],
+                    subtema=row[19],
+                    tipo=row[20],
+                    status_documento=row[21],
+                    motivo_status=row[22],
+                    created_at=row[23],
                 )
             return None
 
@@ -706,6 +736,10 @@ class IngestionRepository:
                 top_k_json=top_k_json,
                 resultado=resultado,
                 observacao=observacao,
+                ramo=ramo or SourceDocument.ramo,
+                fonte_tipo=fonte_tipo or SourceDocument.fonte_tipo,
+                autoridade=autoridade or SourceDocument.autoridade,
+                peso_confianca=peso_confianca or SourceDocument.peso_confianca,
                 created_at=row[1],
             )
 
@@ -774,6 +808,10 @@ class IngestionRepository:
                 motivo=motivo,
                 detalhes=detalhes,
                 needs_review=needs_review,
+                ramo=ramo or SourceDocument.ramo,
+                fonte_tipo=fonte_tipo or SourceDocument.fonte_tipo,
+                autoridade=autoridade or SourceDocument.autoridade,
+                peso_confianca=peso_confianca or SourceDocument.peso_confianca,
                 created_at=row[1],
             )
 

@@ -3,6 +3,10 @@
 -- Schema: juridico
 -- Baseado em: docs/RAG_LOTE1/PASSO_5_ESPECIFICACAO_IMPLEMENTACAO.md
 
+-- Extensoes necessarias
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+CREATE EXTENSION IF NOT EXISTS vector;
+
 -- Criar schema juridico se nao existir
 CREATE SCHEMA IF NOT EXISTS juridico;
 
@@ -13,7 +17,7 @@ CREATE SCHEMA IF NOT EXISTS juridico;
 -- Status de rodada de ingestao
 DO $$
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'status_ingestao_run') THEN
+    IF to_regtype('juridico.status_ingestao_run') IS NULL THEN
         CREATE TYPE juridico.status_ingestao_run AS ENUM (
             'planned', 'running', 'validated', 'failed', 'rolled_back'
         );
@@ -23,7 +27,7 @@ END $$;
 -- Status de documento
 DO $$
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'status_documento') THEN
+    IF to_regtype('juridico.status_documento') IS NULL THEN
         CREATE TYPE juridico.status_documento AS ENUM (
             'aprovado', 'quarentena', 'descartado', 'revisao_manual'
         );
@@ -33,7 +37,7 @@ END $$;
 -- Status de extracao
 DO $$
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'status_extracao') THEN
+    IF to_regtype('juridico.status_extracao') IS NULL THEN
         CREATE TYPE juridico.status_extracao AS ENUM (
             'ok', 'parcial', 'falha'
         );
@@ -43,7 +47,7 @@ END $$;
 -- Status de validacao
 DO $$
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'status_validacao') THEN
+    IF to_regtype('juridico.status_validacao') IS NULL THEN
         CREATE TYPE juridico.status_validacao AS ENUM (
             'pendente', 'aprovado', 'rejeitado'
         );
@@ -53,7 +57,7 @@ END $$;
 -- Status de embedding
 DO $$
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'status_embedding') THEN
+    IF to_regtype('juridico.status_embedding') IS NULL THEN
         CREATE TYPE juridico.status_embedding AS ENUM (
             'pendente', 'gerado', 'falha'
         );
@@ -63,7 +67,7 @@ END $$;
 -- Tipo de teste de retrieval
 DO $$
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'tipo_teste_retrieval') THEN
+    IF to_regtype('juridico.tipo_teste_retrieval') IS NULL THEN
         CREATE TYPE juridico.tipo_teste_retrieval AS ENUM (
             'canonica', 'autoridade', 'contaminacao', 'atencao'
         );
@@ -73,7 +77,7 @@ END $$;
 -- Resultado de teste
 DO $$
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'resultado_teste') THEN
+    IF to_regtype('juridico.resultado_teste') IS NULL THEN
         CREATE TYPE juridico.resultado_teste AS ENUM (
             'pass', 'warning', 'fail'
         );
@@ -83,7 +87,7 @@ END $$;
 -- Status de revisao de quarentena
 DO $$
 BEGIN
-    IF NOT EXISTS (SELECT 1 FROM pg_type WHERE typname = 'status_review') THEN
+    IF to_regtype('juridico.status_review') IS NULL THEN
         CREATE TYPE juridico.status_review AS ENUM (
             'pendente', 'liberado', 'mantido_fora'
         );
@@ -147,12 +151,12 @@ CREATE TABLE IF NOT EXISTS juridico.source_documents (
     extracao_metodo VARCHAR(128),
 
     -- Classificacao
-    ramo VARCHAR(64) NOT NULL,
-    fonte_tipo VARCHAR(64) NOT NULL,
-    autoridade VARCHAR(64) NOT NULL DEFAULT 'desconhecida',
+    ramo VARCHAR(64),
+    fonte_tipo VARCHAR(64),
+    autoridade VARCHAR(64) DEFAULT 'desconhecida',
     tem_anotacao BOOLEAN NOT NULL DEFAULT FALSE,
     tem_atencao_documento BOOLEAN NOT NULL DEFAULT FALSE,
-    peso_confianca VARCHAR(16) NOT NULL DEFAULT 'medio',
+    peso_confianca VARCHAR(16),
     ano INTEGER,
     banca VARCHAR(128),
     subtema VARCHAR(256),
@@ -222,7 +226,7 @@ CREATE TABLE IF NOT EXISTS juridico.document_chunks (
     relevancia_estudo VARCHAR(32),
 
     -- Classificacao
-    peso_confianca VARCHAR(16) NOT NULL DEFAULT 'medio',
+    peso_confianca VARCHAR(16),
     ano INTEGER,
     banca VARCHAR(128),
     subtema VARCHAR(256),

@@ -1,6 +1,6 @@
 # Passo 5 — Especificação de Implementação do Pipeline de Ingestão do Lote 1
 
-## Objetivo
+### Objetivo
 
 Definir a especificação concreta para implementação do pipeline do Lote 1 no schema `juridico`, incluindo:
 
@@ -72,7 +72,7 @@ Opcional, mas muito útil:
 
 ## Tabela 1 — `ingestion_runs`
 
-## Finalidade
+### Finalidade
 Registrar cada rodada de ingestão de forma auditável.
 
 ### Campos recomendados
@@ -97,7 +97,7 @@ Registrar cada rodada de ingestão de forma auditável.
 
 ## Tabela 2 — `source_documents`
 
-## Finalidade
+### Finalidade
 Representar o documento fonte antes e depois da extração/classificação.
 
 ### Campos obrigatórios
@@ -114,12 +114,12 @@ Representar o documento fonte antes e depois da extração/classificação.
 - `texto_extraido` — texto nullable
 - `extracao_status` — `ok`, `parcial`, `falha`
 - `extracao_metodo` — texto nullable
-- `ramo` — texto
-- `fonte_tipo` — texto
-- `autoridade` — texto
+- `ramo` — texto nullable
+- `fonte_tipo` — texto nullable
+- `autoridade` — texto nullable
 - `tem_anotacao` — boolean
 - `tem_atencao_documento` — boolean
-- `peso_confianca` — `alto`, `medio`, `baixo`
+- `peso_confianca` — `alto`, `medio`, `baixo` nullable
 - `ano` — integer nullable
 - `banca` — texto nullable
 - `subtema` — texto nullable
@@ -141,12 +141,13 @@ Representar o documento fonte antes e depois da extração/classificação.
 ### Observações
 - `documento_id_externo` pode ser derivado de hash + caminho normalizado
 - `texto_extraido` pode ficar fora da tabela se o volume for absurdo, mas para a primeira versão pode ficar aqui sem drama
+- Como o registro inicial ocorre antes da classificação completa, `ramo`, `fonte_tipo`, `autoridade` e `peso_confianca` podem nascer nulos e ser preenchidos depois via atualização.
 
 ---
 
 ## Tabela 3 — `document_chunks`
 
-## Finalidade
+### Finalidade
 Armazenar a unidade real de recuperação.
 
 ### Campos obrigatórios
@@ -168,7 +169,7 @@ Armazenar a unidade real de recuperação.
 - `tem_atencao` — boolean
 - `tipo_marcacao` — texto nullable
 - `relevancia_estudo` — texto nullable
-- `peso_confianca` — `alto`, `medio`, `baixo`
+- `peso_confianca` — `alto`, `medio`, `baixo` nullable
 - `ano` — integer nullable
 - `banca` — texto nullable
 - `subtema` — texto nullable
@@ -199,7 +200,7 @@ Depende do stack, mas precisa existir no campo de embedding.
 
 ## Tabela 4 — `retrieval_eval_runs`
 
-## Finalidade
+### Finalidade
 Guardar testes de recuperação por rodada.
 
 ### Campos recomendados
@@ -220,7 +221,7 @@ Sem isso, “pareceu bom” vira metodologia oficial. E isso é péssimo.
 
 ## Tabela 5 — `document_quarantine` (recomendada)
 
-## Finalidade
+### Finalidade
 Segurar documentos problemáticos fora do fluxo principal.
 
 ### Campos recomendados
@@ -335,7 +336,7 @@ Herda isso e adiciona:
 
 ## Regras iniciais de score/ranking
 
-## Objetivo
+### Objetivo
 Gerar uma `prioridade_recuperacao` inicial simples, estável e auditável.
 
 ### Modelo recomendado: score heurístico

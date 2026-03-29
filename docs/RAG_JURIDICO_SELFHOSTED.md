@@ -1,5 +1,7 @@
 # RAG Jurídico Self-Hosted — Arquitetura, Decisões e Estado Atual
 
+> **Nota:** este documento descreve o **schema de retrieval em produção** (`juridico.documents`, `juridico.chunks`, `juridico.content_links`, `juridico.match_chunks(...)`, `juridico.match_chunks_hybrid(...)`). O **schema de ingestão** do Lote 1 é separado e é definido pela migration `migrations/001_rag_lote1_ingestion_schema.sql` (`juridico.source_documents`, `juridico.document_chunks`, `juridico.ingestion_runs`, `juridico.retrieval_eval_runs`, `juridico.document_quarantine`). Retrieval e ingestão têm propósitos distintos.
+
 ## Resumo
 
 Este projeto foi adaptado para usar um **Supabase self-hosted** com um schema dedicado chamado **`juridico`**.
@@ -69,9 +71,11 @@ Atualmente existe, mas está sem uso relevante em produção de dados.
 
 ## Segurança aplicada
 
+
 ### RLS
 
 As tabelas do schema `juridico` têm RLS habilitada.
+
 
 ### Grants
 
@@ -82,12 +86,15 @@ O acesso foi restringido para evitar exposição acidental:
 - `public`: sem acesso às tabelas do RAG
 - `service_role`: acesso permitido
 
+
 ### Funções
 
 As funções de recuperação do schema `juridico` foram fechadas para uso via backend/service role.
 
+
 #### `juridico.match_chunks(...)`
 - acesso: `service_role`
+
 
 #### `juridico.match_chunks_hybrid(...)`
 - acesso: `service_role`

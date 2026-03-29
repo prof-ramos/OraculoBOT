@@ -1,6 +1,6 @@
 # Passo 4 — Plano Técnico Executável de Ingestão do Lote 1
 
-## Objetivo
+### Objetivo
 
 Converter a estratégia operacional do Passo 3 em um **plano técnico de execução**, com pipeline, etapas objetivas, checkpoints, critérios de aceite e estrutura mínima para implementação da ingestão no schema `juridico`.
 
@@ -108,7 +108,7 @@ Sem versionamento, rollback vira loteria.
 
 ## Fase 1 — Descoberta e inventário de arquivos
 
-## Objetivo
+### Objetivo
 Mapear todos os documentos disponíveis antes de processar qualquer um.
 
 ### Entradas
@@ -140,7 +140,7 @@ Um manifesto com colunas como:
 
 ## Fase 2 — Extração de texto
 
-## Objetivo
+### Objetivo
 Transformar os documentos em texto utilizável sem perder referência de origem.
 
 ### Saída esperada por documento
@@ -167,7 +167,7 @@ Documento com texto insuficiente ou lixo excessivo:
 
 ## Fase 3 — Pré-classificação documental
 
-## Objetivo
+### Objetivo
 Classificar cada documento antes do chunking.
 
 ### Campos a preencher no nível do documento
@@ -201,7 +201,7 @@ Se a classificação for ambígua:
 
 ## Fase 4 — Detecção de sinais didáticos
 
-## Objetivo
+### Objetivo
 Marcar presença de anotação e destaque relevante para estudo.
 
 ### Detectar no mínimo
@@ -231,7 +231,7 @@ Não inventa NLP sofisticado aqui de cara. Regex bem feita resolve o primeiro ro
 
 ## Fase 5 — Chunking estruturado
 
-## Objetivo
+### Objetivo
 Quebrar o texto em unidades úteis para recuperação.
 
 ### Regra geral
@@ -279,7 +279,7 @@ Isso melhora muito a recuperação. Misturar tudo é pedir resposta confusa.
 
 ## Fase 6 — Enriquecimento e score operacional
 
-## Objetivo
+### Objetivo
 Aplicar metadados finais de ranking e controle.
 
 ### Campos operacionais recomendados
@@ -310,7 +310,7 @@ Não vira passe VIP para passar na frente de fonte superior.
 
 ## Fase 7 — Persistência no schema `juridico`
 
-## Objetivo
+### Objetivo
 Salvar documento e chunks de forma rastreável e reversível.
 
 ### Requisito mínimo
@@ -340,7 +340,7 @@ Se isso não existir, qualquer erro vira trabalho braçal de limpeza.
 
 ## Fase 8 — Indexação vetorial
 
-## Objetivo
+### Objetivo
 Gerar embeddings e preparar recuperação híbrida ou vetorial.
 
 ### Regras mínimas
@@ -356,7 +356,7 @@ Sem isso, quando entrar constitucional misturado com internacional, vai dar ruim
 
 ## Fase 9 — Testes de recuperação
 
-## Objetivo
+### Objetivo
 Medir se a ingestão melhorou ou piorou o sistema.
 
 ### Tipos de teste
@@ -518,14 +518,16 @@ Executar de forma separada e conservadora.
 
 ## Artefatos obrigatórios por sprint
 
-Cada sprint deve produzir:
+Cada sprint deve produzir, **para cada bloco lógico incluído na sprint**:
 
 1. manifesto de arquivos do bloco
 2. relatório de amostragem
 3. relatório de erros de extração
 4. relatório de classificação
 5. relatório de testes de recuperação
-6. decisão final: `aprovado`, `ajustar`, `rollback`
+6. decisão final do bloco: `aprovado`, `ajustar`, `rollback`
+
+Se uma sprint contiver múltiplos blocos lógicos (como `eca` + `educacao`, ou `constitucional` + `direitos_humanos` + `internacional`), **cada bloco deve ter seu próprio `run_key`, seu próprio conjunto de relatórios e sua própria decisão final**. Não existe aprovação única da sprint inteira nesses casos.
 
 ---
 

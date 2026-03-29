@@ -157,11 +157,13 @@ A ordem de ingestão deve considerar quatro fatores:
 
 ## Estratégia operacional de ingestão
 
-A ingestão deve ocorrer em **6 fases**, uma por ramo/pasta, com gate de validação entre elas.
+A ingestão deve ocorrer em **6 fases**, uma por ramo/pasta (**cada sub-ramo/bloco lógico fecha seu próprio gate**), com gate de validação entre elas.
 
 ### Regra geral por fase
 
 Cada fase deve seguir este fluxo:
+
+Para pastas mistas, o gate é avaliado por **bloco lógico independente**. Ex.: `eca` e `educacao` fecham gates separados; `constitucional`, `direitos_humanos` e `internacional` também.
 
 1. amostragem dos arquivos da pasta
 2. validação manual dos padrões reais da pasta
