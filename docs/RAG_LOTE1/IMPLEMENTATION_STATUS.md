@@ -104,17 +104,21 @@ Observações:
 ---
 
 # EPIC 2 — Descoberta de arquivos
+
 ## 2.1 Scanner do Lote 1
+
 - [x] scanner implementado
 - [x] percorre pastas físicas corretamente
 - [x] preserva caminho original
 
 ## 2.2 Manifesto versionado
+
 - [x] manifesto gerado por run
 - [x] manifesto persistido em staging ou equivalente
 - [x] manifesto reproduz a rodada
 
 ## 2.3 Deduplicação inicial por hash
+
 - [x] hash SHA-256 calculado
 - [x] duplicatas detectadas
 - [x] duplicatas registradas com status explícito
@@ -152,6 +156,7 @@ Observações:
 - [ ] regra não depende só da pasta física
 
 ## 4.2 Classificador de `fonte_tipo`
+
 - [ ] `lei`
 - [ ] `resolucao`
 - [ ] `decreto`
@@ -169,12 +174,14 @@ Observações:
 - [ ] `desconhecida`
 
 ## 4.4 Cálculo de `peso_confianca`
+
 - [ ] `alto`
 - [ ] `medio`
 - [ ] `baixo`
 - [ ] coerência validada por amostragem
 
 ## 4.5 Tratamento de ambiguidade
+
 - [ ] `revisao_manual`
 - [ ] `quarentena`
 - [ ] `motivo_status`
@@ -424,6 +431,8 @@ Observações:
 - [x] 2026-03-30 — Testes unitários para scanner, manifest e extractor passando
 
 # PR 2 — Scanner + manifesto + extração
+
+- [x] Scanner + manifesto + extração
 - [x] 2026-03-30 — EPIC 2 (scanner, manifesto, deduplicação) implementado
 - [x] 2026-03-30 — EPIC 3 (extração e detecção de texto ruim) implementado
 - [x] 2026-03-30 — test_scanner.py: 20 testes passando
