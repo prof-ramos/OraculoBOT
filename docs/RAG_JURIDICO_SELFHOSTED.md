@@ -35,6 +35,7 @@ O banco estava funcional, mas organizado com cara de projeto único. Como a inte
 ### Schema canônico do RAG
 
 #### `juridico.documents`
+
 Tabela de documentos do corpus jurídico.
 
 Campos principais:
@@ -48,6 +49,7 @@ Campos principais:
 - `created_at`
 
 #### `juridico.chunks`
+
 Tabela principal de recuperação.
 
 Campos principais:
@@ -63,6 +65,7 @@ Campos principais:
 - `created_at`
 
 #### `juridico.content_links`
+
 Tabela para relacionamentos entre chunks.
 
 Atualmente existe, mas está sem uso relevante em produção de dados.
@@ -71,11 +74,9 @@ Atualmente existe, mas está sem uso relevante em produção de dados.
 
 ## Segurança aplicada
 
-
 ### RLS
 
 As tabelas do schema `juridico` têm RLS habilitada.
-
 
 ### Grants
 
@@ -86,17 +87,16 @@ O acesso foi restringido para evitar exposição acidental:
 - `public`: sem acesso às tabelas do RAG
 - `service_role`: acesso permitido
 
-
 ### Funções
 
 As funções de recuperação do schema `juridico` foram fechadas para uso via backend/service role.
 
-
 #### `juridico.match_chunks(...)`
+
 - acesso: `service_role`
 
-
 #### `juridico.match_chunks_hybrid(...)`
+
 - acesso: `service_role`
 
 ### Search path de funções
@@ -117,6 +117,7 @@ Observação importante:
 ## Extensões usadas
 
 ### `vector`
+
 Usada para embeddings via pgvector.
 
 Observação:
@@ -125,6 +126,7 @@ Observação:
 - **não foi movida**, porque essa migração é mais sensível e não era necessária para estabilizar o sistema
 
 ### `unaccent`
+
 Habilitada para melhorar a recuperação textual em português.
 
 ---
@@ -248,6 +250,7 @@ No momento da validação:
 ### Passou
 
 #### `test_rag_db_connection.py`
+
 Valida:
 - acesso ao Postgres
 - existência da tabela
@@ -255,12 +258,14 @@ Valida:
 - leitura de chunk de exemplo
 
 #### `test_rag_retriever.py`
+
 Valida:
 - `RAGRetriever`
 - uso da função híbrida
 - recuperação de chunks semelhantes
 
 #### `test_full_rag_flow.py`
+
 Valida:
 - query simulada
 - embedding de entrada
