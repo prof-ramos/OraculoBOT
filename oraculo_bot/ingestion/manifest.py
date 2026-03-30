@@ -10,9 +10,9 @@ from __future__ import annotations
 
 import csv
 import json
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Union
+from typing import Optional
 
 from oraculo_bot.ingestion.scanner import ResultadoScanner, ArquivoDescoberto
 
@@ -25,7 +25,7 @@ class ManifestoWriter:
     - JSONL: mais adequado para processamento programatico
     """
 
-    def __init__(self, diretorio_saida: str):
+    def __init__(self, diretorio_saida: str) -> None:
         """Inicializa o writer de manifestos.
 
         Args:
@@ -44,10 +44,10 @@ class ManifestoWriter:
         Returns:
             Caminho completo do arquivo
         """
-        timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+        timestamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
         return self.diretorio_saida / f"manifest_{run_key}_{timestamp}.{formato}"
 
-    def _arquivo_para_dict(self, arquivo: ArquivoDescoberto) -> Dict:
+    def _arquivo_para_dict(self, arquivo: ArquivoDescoberto) -> dict:
         """Converte ArquivoDescoberto para dicionario serializavel.
 
         Args:
@@ -114,6 +114,7 @@ class ManifestoWriter:
         self,
         resultado: ResultadoScanner,
         arquivo_saida: Optional[str] = None,
+        *,
         incluir_metadados: bool = True,
     ) -> Path:
         """Escreve manifesto em formato JSONL.
@@ -176,7 +177,7 @@ class ManifestoWriter:
         if arquivo_saida:
             caminho = Path(arquivo_saida)
         else:
-            timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+            timestamp = datetime.now(UTC).strftime("%Y%m%d_%H%M%S")
             caminho = self.diretorio_saida / f"summary_{resultado.run_key}_{timestamp}.json"
 
         resumo = {
@@ -209,7 +210,7 @@ class ManifestoReader:
     """
 
     @staticmethod
-    def ler_jsonl(caminho: str) -> tuple[Dict, List[Dict]]:
+    def ler_jsonl(caminho: str) -> tuple[dict, list[dict]]:
         """Le manifesto em formato JSONL.
 
         Args:
@@ -233,7 +234,7 @@ class ManifestoReader:
         return metadados, arquivos
 
     @staticmethod
-    def ler_csv(caminho: str) -> List[Dict]:
+    def ler_csv(caminho: str) -> list[dict]:
         """Le manifesto em formato CSV.
 
         Args:
@@ -256,10 +257,10 @@ class ManifestoReader:
 
     @staticmethod
     def comparar_manifestos(
-        manifesto1: List[Dict],
-        manifesto2: List[Dict],
+        manifesto1: list[dict],
+        manifesto2: list[dict],
         chave: str = "hash_sha256",
-    ) -> Dict:
+    ) -> dict:
         """Compara dois manifestos e retorna diferencas.
 
         Args:
@@ -281,12 +282,11 @@ class ManifestoReader:
         comuns = chaves1 & chaves2
 
         # Verificar alteracoes em campos importantes
-        alterados = []
         campos_monitorados = {"arquivo_nome", "tamanho_bytes", "bloco_logico"}
-
-        for h in comuns:
-            if any(hashes1[h].get(c) != hashes2[h].get(c) for c in campos_monitorados):
-                alterados.append(h)
+        alterados = [
+            h for h in comuns
+            if any(hashes1[h].get(c) != hashes2[h].get(c) for c in campos_monitorados)
+        ]
 
         return {
             "adicionados": list(adicionados),

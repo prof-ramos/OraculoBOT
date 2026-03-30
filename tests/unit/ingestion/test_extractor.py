@@ -89,13 +89,13 @@ class TestTextoRuimDetector:
         assert "vazio" in motivo.lower()
 
     def test_avaliar_texto_curto(self):
-        status, quarentena, motivo = TextoRuimDetector.avaliar_texto("texto curto")
+        status, quarentena, _motivo = TextoRuimDetector.avaliar_texto("texto curto")
         assert status == StatusExtracao.CURTO_DEMAIS
         assert quarentena is True
 
     def test_avaliar_texto_corrompido(self):
         texto = "x" * 50 + "�" * 50
-        status, quarentena, motivo = TextoRuimDetector.avaliar_texto(texto)
+        status, quarentena, _motivo = TextoRuimDetector.avaliar_texto(texto)
         assert status == StatusExtracao.CORROMPIDO
         assert quarentena is True
 

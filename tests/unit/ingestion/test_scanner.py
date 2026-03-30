@@ -202,7 +202,7 @@ class TestScannerLote1:
 
 
 class TestConstantes:
-    def test_extensoes_suptadas_contem_principais(self):
+    def test_extensoes_suportadas_contem_principais(self):
         assert ".pdf" in EXTENSOES_SUPORTADAS
         assert ".docx" in EXTENSOES_SUPORTADAS
         assert ".txt" in EXTENSOES_SUPORTADAS

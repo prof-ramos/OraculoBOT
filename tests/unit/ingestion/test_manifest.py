@@ -2,7 +2,7 @@
 
 import json
 import tempfile
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
@@ -50,8 +50,8 @@ class TestManifestoWriter:
             arquivos=arquivos,
             total_arquivos=2,
             total_duplicatas=1,
-            started_at=datetime(2024, 1, 1, 10, 0, 0, tzinfo=timezone.utc),
-            finished_at=datetime(2024, 1, 1, 10, 0, 5, tzinfo=timezone.utc),
+            started_at=datetime(2024, 1, 1, 10, 0, 0, tzinfo=UTC),
+            finished_at=datetime(2024, 1, 1, 10, 0, 5, tzinfo=UTC),
             stats={"duracao_segundos": 5.0},
         )
 
@@ -162,7 +162,7 @@ class TestManifestoReader:
         ]
 
         with open(caminho, "w", encoding="utf-8") as f:
-            f.write("\n".join(linhas))
+            f.write("\n".join(linhas) + "\n")
 
         return caminho
 

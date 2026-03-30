@@ -16,7 +16,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from enum import Enum
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import Optional
 
 
 class MetodoExtracao(str, Enum):
@@ -102,7 +102,7 @@ class TextoRuimDetector:
         return ratio > max_ratio
 
     @staticmethod
-    def avaliar_texto(texto: Optional[str]) -> Tuple[StatusExtracao, bool, Optional[str]]:
+    def avaliar_texto(texto: Optional[str]) -> tuple[StatusExtracao, bool, Optional[str]]:
         """Avalia qualidade do texto extraido.
 
         Args:
@@ -238,7 +238,7 @@ class ExtratorTexto:
                 motivo_quarentena="Dependencia pdfplumber nao disponivel",
             )
 
-        texto_paginas: List[str] = []
+        texto_paginas: list[str] = []
         total_paginas = 0
         paginas_com_texto = 0
         metodo = MetodoExtracao.PDF_TEXTO
@@ -314,7 +314,7 @@ class ExtratorTexto:
             imagens = convert_from_path(caminho, dpi=200)
             texto_paginas = []
 
-            for i, imagem in enumerate(imagens):
+            for imagem in imagens:
                 texto = pytesseract.image_to_string(imagem, lang="por")
                 if texto and texto.strip():
                     texto_paginas.append(texto.strip())
@@ -517,7 +517,7 @@ class ExtratorTexto:
 
             for elemento in doc.getElementsByType(text.P):
                 if elemento.firstChild:
-                    paragrafos.append(str(elemente.firstChild))
+                    paragrafos.append(str(elemento.firstChild))
 
             texto = "\n\n".join(paragrafos)
 

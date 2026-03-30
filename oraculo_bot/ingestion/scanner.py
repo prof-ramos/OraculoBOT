@@ -11,9 +11,9 @@ from __future__ import annotations
 import hashlib
 import os
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Set
+from typing import Optional
 
 
 # Extensoes suportadas pelo pipeline
@@ -59,7 +59,7 @@ class ArquivoDescoberto:
     bloco_logico: str = ""
     eh_duplicata: bool = False
     duplicata_de: Optional[str] = None  # hash do arquivo original
-    created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = field(default_factory=lambda: datetime.now(UTC))
 
 
 @dataclass
@@ -67,15 +67,15 @@ class ResultadoScanner:
     """Resultado completo de uma execucao do scanner."""
     run_key: str
     raiz_corpus: str
-    blocos_logicos: List[str]
-    arquivos: List[ArquivoDescoberto] = field(default_factory=list)
-    duplicatas: Dict[str, List[str]] = field(default_factory=dict)  # hash -> [caminhos]
+    blocos_logicos: list[str]
+    arquivos: list[ArquivoDescoberto] = field(default_factory=list)
+    duplicatas: dict[str, list[str]] = field(default_factory=dict)  # hash -> [caminhos]
     total_arquivos: int = 0
     total_duplicatas: int = 0
-    erros: List[str] = field(default_factory=list)
+    erros: list[str] = field(default_factory=list)
     started_at: Optional[datetime] = None
     finished_at: Optional[datetime] = None
-    stats: Dict = field(default_factory=dict)
+    stats: dict = field(default_factory=dict)
 
 
 class ScannerLote1:
@@ -89,9 +89,9 @@ class ScannerLote1:
     def __init__(
         self,
         raiz_corpus: str,
-        extensoes: Optional[Set[str]] = None,
-        pastas_ignoradas: Optional[Set[str]] = None,
-    ):
+        extensoes: Optional[set[str]] = None,
+        pastas_ignoradas: Optional[set[str]] = None,
+    ) -> None:
         """Inicializa o scanner.
 
         Args:
@@ -156,7 +156,7 @@ class ScannerLote1:
 
     def escanear(
         self,
-        pastas_alvo: Optional[List[str]] = None,
+        pastas_alvo: Optional[list[str]] = None,
         run_key: Optional[str] = None,
     ) -> ResultadoScanner:
         """Escanear arquivos do Lote 1.
@@ -169,7 +169,7 @@ class ScannerLote1:
         Returns:
             ResultadoScanner com todos os arquivos descobertos.
         """
-        started_at = datetime.now(timezone.utc)
+        started_at = datetime.now(UTC)
         run_key = run_key or f"scan_{started_at.strftime('%Y%m%d_%H%M%S')}"
 
         # Determinar pastas a escanear
@@ -178,10 +178,10 @@ class ScannerLote1:
         else:
             pastas = [self.raiz_corpus]
 
-        arquivos: List[ArquivoDescoberto] = []
-        hash_para_caminhos: Dict[str, List[str]] = {}
-        erros: List[str] = []
-        blocos_logicos: Set[str] = set()
+        arquivos: list[ArquivoDescoberto] = []
+        hash_para_caminhos: dict[str, list[str]] = {}
+        erros: list[str] = []
+        blocos_logicos: set[str] = set()
 
         for pasta_base in pastas:
             if not pasta_base.exists():
@@ -232,22 +232,24 @@ class ScannerLote1:
                         arquivos.append(arquivo)
 
                     except Exception as e:
-                        erros.append(f"Erro ao processar {caminho}: {e}")
+                        erros.append(
+                            f"Erro ao processar {caminho}: {e.__class__.__name__}: {e}"
+                        )
 
         # Marcar duplicatas
-        duplicatas: Dict[str, List[str]] = {}
+        duplicatas: dict[str, list[str]] = {}
         for hash_val, caminhos in hash_para_caminhos.items():
             if len(caminhos) > 1:
-                # Primeiro arquivo e o original, resto sao duplicatas
-                original = caminhos[0]
-                duplicatas[hash_val] = caminhos
+                caminhos_ordenados = sorted(caminhos)
+                original = caminhos_ordenados[0]
+                duplicatas[hash_val] = caminhos_ordenados
 
                 for arquivo in arquivos:
                     if arquivo.hash_sha256 == hash_val and arquivo.caminho_absoluto != original:
                         arquivo.eh_duplicata = True
                         arquivo.duplicata_de = hash_val
 
-        finished_at = datetime.now(timezone.utc)
+        finished_at = datetime.now(UTC)
 
         # Calcular estatisticas
         total_duplicatas = sum(len(c) - 1 for c in duplicatas.values())
@@ -256,7 +258,7 @@ class ScannerLote1:
             "total_unicos": len(arquivos) - total_duplicatas,
             "total_duplicatas": total_duplicatas,
             "total_hashes_unicos": len(hash_para_caminhos),
-            "extensoes_encontradas": list(set(a.extensao for a in arquivos)),
+            "extensoes_encontradas": list({a.extensao for a in arquivos}),
             "blocos_logicos": list(blocos_logicos),
             "duracao_segundos": (finished_at - started_at).total_seconds(),
         }
