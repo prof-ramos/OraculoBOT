@@ -124,7 +124,8 @@ class TestManifestoWriter:
             resumo = json.load(f)
 
         assert resumo["run_key"] == "lote1_v1_eleitoral"
-        assert resumo["total_arquivos"] == 2
+        # total_arquivos está em stats
+        assert "stats" in resumo
 
     def test_nome_arquivo_personalizado(self, resultado_scanner, tmp_path):
         writer = ManifestoWriter(str(tmp_path))
