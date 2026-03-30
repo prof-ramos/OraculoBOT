@@ -84,7 +84,12 @@ Observações:
 ## 1.2 Migração/schema SQL
 - [x] script/migração criada
 - [x] índices principais criados
+- [x] migração validada no banco real
 - [ ] rollback da migração validado
+
+Observações:
+- [x] 2026-03-30 — migration aplicada e validada no Postgres real do Supabase (tabelas, enums, extensões `pgcrypto`/`vector`, índices-chave e trigger function confirmados)
+- [ ] rollback completo da migration ainda não validado em ambiente isolado
 
 ## 1.3 Camada de persistência/repositório
 - [x] `create_ingestion_run(...)`
@@ -101,39 +106,45 @@ Observações:
 # EPIC 2 — Descoberta de arquivos
 
 ## 2.1 Scanner do Lote 1
-- [ ] scanner implementado
-- [ ] percorre pastas físicas corretamente
-- [ ] preserva caminho original
+
+- [x] scanner implementado
+- [x] percorre pastas físicas corretamente
+- [x] preserva caminho original
 
 ## 2.2 Manifesto versionado
-- [ ] manifesto gerado por run
-- [ ] manifesto persistido em staging ou equivalente
-- [ ] manifesto reproduz a rodada
+
+- [x] manifesto gerado por run
+- [x] manifesto persistido em staging ou equivalente
+- [x] manifesto reproduz a rodada
 
 ## 2.3 Deduplicação inicial por hash
-- [ ] hash SHA-256 calculado
-- [ ] duplicatas detectadas
-- [ ] duplicatas registradas com status explícito
+
+- [x] hash SHA-256 calculado
+- [x] duplicatas detectadas
+- [x] duplicatas registradas com status explícito
 
 ---
 
 # EPIC 3 — Extração de texto
 
 ## 3.1 Extractor por tipo de arquivo
-- [ ] PDF texto
-- [ ] DOCX
-- [ ] TXT/MD
-- [ ] fallback OCR
+- [x] PDF texto
+- [x] DOCX
+- [x] TXT/MD
+- [x] fallback OCR
 
 ## 3.2 Detecção de extração ruim
-- [ ] texto vazio detectado
-- [ ] texto muito curto detectado
-- [ ] texto corrompido/lixo detectado
-- [ ] documentos ruins desviados do fluxo principal
+- [x] texto vazio detectado
+- [x] texto muito curto detectado
+- [x] texto corrompido/lixo detectado
+- [x] documentos ruins desviados do fluxo principal
 
 ## 3.3 Persistência do texto bruto
-- [ ] texto bruto salvo com rastreabilidade
-- [ ] vínculo com `source_document`
+- [x] texto bruto salvo com rastreabilidade
+- [x] vínculo com `source_document`
+
+Observações:
+- [x] 2026-03-30 — extractor, detecção de texto ruim e rastreabilidade implementados no PR 2 (`fb67ec2`, `261537b`)
 
 ---
 
@@ -145,6 +156,7 @@ Observações:
 - [ ] regra não depende só da pasta física
 
 ## 4.2 Classificador de `fonte_tipo`
+
 - [ ] `lei`
 - [ ] `resolucao`
 - [ ] `decreto`
@@ -162,12 +174,14 @@ Observações:
 - [ ] `desconhecida`
 
 ## 4.4 Cálculo de `peso_confianca`
+
 - [ ] `alto`
 - [ ] `medio`
 - [ ] `baixo`
 - [ ] coerência validada por amostragem
 
 ## 4.5 Tratamento de ambiguidade
+
 - [ ] `revisao_manual`
 - [ ] `quarentena`
 - [ ] `motivo_status`
@@ -409,3 +423,18 @@ A v1 só está pronta quando todos estes itens forem verdadeiros:
 - [ ] `eleitoral` roda de ponta a ponta
 
 Se isso ainda não estiver marcado, então ainda não está pronto. Simples.
+
+Observações:
+- [x] 2026-03-30 — extractor implementado em oraculo_bot/ingestion/extractor.py
+- [x] 2026-03-30 — detector de texto ruim implementado com heurísticas configuráveis
+- [x] 2026-03-30 — ResultadoExtracao rastreável, vinculado ao caminho do documento
+- [x] 2026-03-30 — Testes unitários para scanner, manifest e extractor passando
+
+# PR 2 — Scanner + manifesto + extração
+
+- [x] Scanner + manifesto + extração
+- [x] 2026-03-30 — EPIC 2 (scanner, manifesto, deduplicação) implementado
+- [x] 2026-03-30 — EPIC 3 (extração e detecção de texto ruim) implementado
+- [x] 2026-03-30 — test_scanner.py: 20 testes passando
+- [x] 2026-03-30 — test_manifest.py: 13 testes passando
+- [x] 2026-03-30 — test_extractor.py: 20 testes passando
