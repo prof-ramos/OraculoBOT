@@ -84,7 +84,12 @@ Observações:
 ## 1.2 Migração/schema SQL
 - [x] script/migração criada
 - [x] índices principais criados
+- [x] migração validada no banco real
 - [ ] rollback da migração validado
+
+Observações:
+- [x] 2026-03-30 — migration aplicada e validada no Postgres real do Supabase (tabelas, enums, extensões `pgcrypto`/`vector`, índices-chave e trigger function confirmados)
+- [ ] rollback completo da migration ainda não validado em ambiente isolado
 
 ## 1.3 Camada de persistência/repositório
 - [x] `create_ingestion_run(...)`
@@ -119,55 +124,58 @@ Observações:
 # EPIC 3 — Extração de texto
 
 ## 3.1 Extractor por tipo de arquivo
-- [ ] PDF texto
-- [ ] DOCX
-- [ ] TXT/MD
-- [ ] fallback OCR
+- [x] PDF texto
+- [x] DOCX
+- [x] TXT/MD
+- [x] fallback OCR
 
 ## 3.2 Detecção de extração ruim
-- [ ] texto vazio detectado
-- [ ] texto muito curto detectado
-- [ ] texto corrompido/lixo detectado
-- [ ] documentos ruins desviados do fluxo principal
+- [x] texto vazio detectado
+- [x] texto muito curto detectado
+- [x] texto corrompido/lixo detectado
+- [x] documentos ruins desviados do fluxo principal
 
 ## 3.3 Persistência do texto bruto
-- [ ] texto bruto salvo com rastreabilidade
-- [ ] vínculo com `source_document`
+- [x] texto bruto salvo com rastreabilidade
+- [x] vínculo com `source_document`
+
+Observações:
+- [x] 2026-03-30 — extractor, detecção de texto ruim e rastreabilidade implementados no PR 2 (`fb67ec2`, `261537b`)
 
 ---
 
 # EPIC 4 — Classificação documental
 
 ## 4.1 Inferência de `bloco_logico`
-- [x] `eca_e_educacao` separado corretamente
-- [x] `constitucional_direitos_humanos_internacional` separado corretamente
-- [x] regra não depende só da pasta física
+- [ ] `eca_e_educacao` separado corretamente
+- [ ] `constitucional_direitos_humanos_internacional` separado corretamente
+- [ ] regra não depende só da pasta física
 
 ## 4.2 Classificador de `fonte_tipo`
 - [ ] `lei`
 - [ ] `resolucao`
-- [x] `decreto`
-- [x] `convencao`
-- [x] `material_de_apoio`
-- [x] ambiguidade tratada corretamente
+- [ ] `decreto`
+- [ ] `convencao`
+- [ ] `material_de_apoio`
+- [ ] ambiguidade tratada corretamente
 
 ## 4.3 Classificador de `autoridade`
-- [x] `planalto`
-- [x] `tse`
-- [x] `stf`
-- [x] `stj`
-- [x] `oea`
-- [x] `onu`
-- [x] `desconhecida`
+- [ ] `planalto`
+- [ ] `tse`
+- [ ] `stf`
+- [ ] `stj`
+- [ ] `oea`
+- [ ] `onu`
+- [ ] `desconhecida`
 
 ## 4.4 Cálculo de `peso_confianca`
 - [ ] `alto`
-- [x] `medio`
-- [x] `baixo`
-- [x] coerência validada por amostragem
+- [ ] `medio`
+- [ ] `baixo`
+- [ ] coerência validada por amostragem
 
 ## 4.5 Tratamento de ambiguidade
-- [x] `revisao_manual`
+- [ ] `revisao_manual`
 - [ ] `quarentena`
 - [ ] `motivo_status`
 
