@@ -194,30 +194,32 @@ class TestExtratorTexto:
         assert resultado.status == StatusExtracaoTexto.CURTO_DEMAIS
         assert resultado.precisa_quarentena is True
 
-    @patch("oraculo_bot.ingestion.extractor.pdfplumber", create=True)
-    def test_extrair_pdf_com_texto(self, mock_pdfplumber, extrator, tmp_path):
+    def test_extrair_pdf_com_texto(self, extrator, tmp_path):
         # Skip se pdfplumber nao estiver instalado
         try:
             import pdfplumber  # noqa: F401
         except ImportError:
             pytest.skip("pdfplumber nao instalado")
 
-        # Mock pdfplumber
-        mock_pdf = MagicMock()
-        mock_page = MagicMock()
-        mock_page.extract_text.return_value = "Texto extraido do PDF com mais de cinquenta caracteres para validacao."
-        mock_pdf.pages = [mock_page]
-        mock_pdf.__enter__ = Mock(return_value=mock_pdf)
-        mock_pdf.__exit__ = Mock(return_value=False)
-        mock_pdfplumber.open.return_value = mock_pdf
+        # Patch pdfplumber.open diretamente no modulo (o import local em
+        # _extrair_pdf busca em sys.modules, entao patch no atributo do
+        # modulo extractor nao intercepta)
+        with patch("pdfplumber.open") as mock_open:
+            mock_pdf = MagicMock()
+            mock_page = MagicMock()
+            mock_page.extract_text.return_value = "Texto extraido do PDF com mais de cinquenta caracteres para validacao."
+            mock_pdf.pages = [mock_page]
+            mock_pdf.__enter__ = Mock(return_value=mock_pdf)
+            mock_pdf.__exit__ = Mock(return_value=False)
+            mock_open.return_value = mock_pdf
 
-        arquivo = tmp_path / "test.pdf"
-        arquivo.write_bytes(b"fake pdf")
+            arquivo = tmp_path / "test.pdf"
+            arquivo.write_bytes(b"fake pdf")
 
-        resultado = extrator.extrair(str(arquivo))
-        assert resultado.status == StatusExtracaoTexto.OK
-        assert resultado.metodo == MetodoExtracao.PDF_TEXTO
-        assert resultado.texto is not None
+            resultado = extrator.extrair(str(arquivo))
+            assert resultado.status == StatusExtracaoTexto.OK
+            assert resultado.metodo == MetodoExtracao.PDF_TEXTO
+            assert resultado.texto is not None
 
     @patch("oraculo_bot.ingestion.extractor.Document", create=True)
     def test_extrair_docx(self, mock_document, extrator, tmp_path):

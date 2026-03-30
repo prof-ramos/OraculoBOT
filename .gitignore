@@ -22,3 +22,5 @@ uv.lock
 
 # oh-my-claudecode state
 .omc/state/
+.omc/project-memory.json
+.omc/sessions/
