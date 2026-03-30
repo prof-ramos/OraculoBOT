@@ -99,21 +99,20 @@ Observações:
 ---
 
 # EPIC 2 — Descoberta de arquivos
-
 ## 2.1 Scanner do Lote 1
-- [ ] scanner implementado
-- [ ] percorre pastas físicas corretamente
-- [ ] preserva caminho original
+- [x] scanner implementado
+- [x] percorre pastas físicas corretamente
+- [x] preserva caminho original
 
 ## 2.2 Manifesto versionado
-- [ ] manifesto gerado por run
-- [ ] manifesto persistido em staging ou equivalente
-- [ ] manifesto reproduz a rodada
+- [x] manifesto gerado por run
+- [x] manifesto persistido em staging ou equivalente
+- [x] manifesto reproduz a rodada
 
 ## 2.3 Deduplicação inicial por hash
-- [ ] hash SHA-256 calculado
-- [ ] duplicatas detectadas
-- [ ] duplicatas registradas com status explícito
+- [x] hash SHA-256 calculado
+- [x] duplicatas detectadas
+- [x] duplicatas registradas com status explícito
 
 ---
 
@@ -140,35 +139,35 @@ Observações:
 # EPIC 4 — Classificação documental
 
 ## 4.1 Inferência de `bloco_logico`
-- [ ] `eca_e_educacao` separado corretamente
-- [ ] `constitucional_direitos_humanos_internacional` separado corretamente
-- [ ] regra não depende só da pasta física
+- [x] `eca_e_educacao` separado corretamente
+- [x] `constitucional_direitos_humanos_internacional` separado corretamente
+- [x] regra não depende só da pasta física
 
 ## 4.2 Classificador de `fonte_tipo`
 - [ ] `lei`
 - [ ] `resolucao`
-- [ ] `decreto`
-- [ ] `convencao`
-- [ ] `material_de_apoio`
-- [ ] ambiguidade tratada corretamente
+- [x] `decreto`
+- [x] `convencao`
+- [x] `material_de_apoio`
+- [x] ambiguidade tratada corretamente
 
 ## 4.3 Classificador de `autoridade`
-- [ ] `planalto`
-- [ ] `tse`
-- [ ] `stf`
-- [ ] `stj`
-- [ ] `oea`
-- [ ] `onu`
-- [ ] `desconhecida`
+- [x] `planalto`
+- [x] `tse`
+- [x] `stf`
+- [x] `stj`
+- [x] `oea`
+- [x] `onu`
+- [x] `desconhecida`
 
 ## 4.4 Cálculo de `peso_confianca`
 - [ ] `alto`
-- [ ] `medio`
-- [ ] `baixo`
-- [ ] coerência validada por amostragem
+- [x] `medio`
+- [x] `baixo`
+- [x] coerência validada por amostragem
 
 ## 4.5 Tratamento de ambiguidade
-- [ ] `revisao_manual`
+- [x] `revisao_manual`
 - [ ] `quarentena`
 - [ ] `motivo_status`
 
@@ -409,3 +408,16 @@ A v1 só está pronta quando todos estes itens forem verdadeiros:
 - [ ] `eleitoral` roda de ponta a ponta
 
 Se isso ainda não estiver marcado, então ainda não está pronto. Simples.
+
+Observações:
+- [x] 2026-03-30 — extractor implementado em oraculo_bot/ingestion/extractor.py
+- [x] 2026-03-30 — detector de texto ruim implementado com heurísticas configuráveis
+- [x] 2026-03-30 — ResultadoExtracao rastreável, vinculado ao caminho do documento
+- [x] 2026-03-30 — Testes unitários para scanner, manifest e extractor passando
+
+# PR 2 — Scanner + manifesto + extração
+- [x] 2026-03-30 — EPIC 2 (scanner, manifesto, deduplicação) implementado
+- [x] 2026-03-30 — EPIC 3 (extração e detecção de texto ruim) implementado
+- [x] 2026-03-30 — test_scanner.py: 20 testes passando
+- [x] 2026-03-30 — test_manifest.py: 13 testes passando
+- [x] 2026-03-30 — test_extractor.py: 20 testes passando
