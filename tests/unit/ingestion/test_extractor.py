@@ -10,7 +10,7 @@ from oraculo_bot.ingestion.extractor import (
     ExtratorTexto,
     ResultadoExtracao,
     MetodoExtracao,
-    StatusExtracao,
+    StatusExtracaoTexto,
     TextoRuimDetector,
     MIN_CHARS_TEXTO,
     MAX_RATIO_CHARS_QUEBRADOS,
@@ -26,14 +26,14 @@ class TestMetodoExtracao:
         assert MetodoExtracao.MARKDOWN.value == "markdown"
 
 
-class TestStatusExtracao:
+class TestStatusExtracaoTexto:
     def test_status_validos(self):
-        assert StatusExtracao.OK.value == "ok"
-        assert StatusExtracao.PARCIAL.value == "parcial"
-        assert StatusExtracao.FALHA.value == "falha"
-        assert StatusExtracao.VAZIO.value == "vazio"
-        assert StatusExtracao.CURTO_DEMAIS.value == "curto_demais"
-        assert StatusExtracao.CORROMPIDO.value == "corrompido"
+        assert StatusExtracaoTexto.OK.value == "ok"
+        assert StatusExtracaoTexto.PARCIAL.value == "parcial"
+        assert StatusExtracaoTexto.FALHA.value == "falha"
+        assert StatusExtracaoTexto.VAZIO.value == "vazio"
+        assert StatusExtracaoTexto.CURTO_DEMAIS.value == "curto_demais"
+        assert StatusExtracaoTexto.CORROMPIDO.value == "corrompido"
 
 
 class TestTextoRuimDetector:
@@ -84,25 +84,25 @@ class TestTextoRuimDetector:
 
     def test_avaliar_texto_vazio(self):
         status, quarentena, motivo = TextoRuimDetector.avaliar_texto(None)
-        assert status == StatusExtracao.VAZIO
+        assert status == StatusExtracaoTexto.VAZIO
         assert quarentena is True
         assert "vazio" in motivo.lower()
 
     def test_avaliar_texto_curto(self):
         status, quarentena, _motivo = TextoRuimDetector.avaliar_texto("texto curto")
-        assert status == StatusExtracao.CURTO_DEMAIS
+        assert status == StatusExtracaoTexto.CURTO_DEMAIS
         assert quarentena is True
 
     def test_avaliar_texto_corrompido(self):
         texto = "x" * 50 + "�" * 50
         status, quarentena, _motivo = TextoRuimDetector.avaliar_texto(texto)
-        assert status == StatusExtracao.CORROMPIDO
+        assert status == StatusExtracaoTexto.CORROMPIDO
         assert quarentena is True
 
     def test_avaliar_texto_valido(self):
         texto = "Este e um texto valido com mais de cinquenta caracteres para teste."
         status, quarentena, motivo = TextoRuimDetector.avaliar_texto(texto)
-        assert status == StatusExtracao.OK
+        assert status == StatusExtracaoTexto.OK
         assert quarentena is False
         assert motivo is None
 
@@ -112,7 +112,7 @@ class TestResultadoExtracao:
         resultado = ResultadoExtracao(caminho_arquivo="/data/test.pdf")
         assert resultado.caminho_arquivo == "/data/test.pdf"
         assert resultado.texto is None
-        assert resultado.status == StatusExtracao.OK
+        assert resultado.status == StatusExtracaoTexto.OK
         assert resultado.char_count == 0
 
     def test_create_with_text(self):
@@ -136,7 +136,7 @@ class TestExtratorTexto:
 
     def test_extrair_arquivo_inexistente(self, extrator):
         resultado = extrator.extrair("/caminho/inexistente.pdf")
-        assert resultado.status == StatusExtracao.FALHA
+        assert resultado.status == StatusExtracaoTexto.FALHA
         assert resultado.precisa_quarentena is True
         assert "nao existe" in resultado.erro.lower()
 
@@ -145,7 +145,7 @@ class TestExtratorTexto:
         arquivo.write_text("conteudo")
 
         resultado = extrator.extrair(str(arquivo))
-        assert resultado.status == StatusExtracao.FALHA
+        assert resultado.status == StatusExtracaoTexto.FALHA
         assert "nao suportado" in resultado.erro.lower()
 
     def test_extrair_txt_utf8(self, extrator, tmp_path):
@@ -154,7 +154,7 @@ class TestExtratorTexto:
         arquivo.write_text(conteudo, encoding="utf-8")
 
         resultado = extrator.extrair(str(arquivo))
-        assert resultado.status == StatusExtracao.OK
+        assert resultado.status == StatusExtracaoTexto.OK
         assert resultado.texto == conteudo
         assert resultado.metodo == MetodoExtracao.TEXTO
         assert resultado.char_count == len(conteudo)
@@ -166,7 +166,7 @@ class TestExtratorTexto:
 
         resultado = extrator.extrair(str(arquivo))
         # Latin-1 decode might not always succeed, could be curto or OK
-        assert resultado.status in StatusExtracao
+        assert resultado.status in StatusExtracaoTexto
         assert resultado.metodo == MetodoExtracao.TEXTO
 
     def test_extrair_markdown(self, extrator, tmp_path):
@@ -175,7 +175,7 @@ class TestExtratorTexto:
         arquivo.write_text(conteudo, encoding="utf-8")
 
         resultado = extrator.extrair(str(arquivo))
-        assert resultado.status == StatusExtracao.OK
+        assert resultado.status == StatusExtracaoTexto.OK
         assert resultado.metodo == MetodoExtracao.MARKDOWN
 
     def test_extrair_txt_vazio(self, extrator, tmp_path):
@@ -183,7 +183,7 @@ class TestExtratorTexto:
         arquivo.write_text("")
 
         resultado = extrator.extrair(str(arquivo))
-        assert resultado.status == StatusExtracao.VAZIO
+        assert resultado.status == StatusExtracaoTexto.VAZIO
         assert resultado.precisa_quarentena is True
 
     def test_extrair_txt_curto_demais(self, extrator, tmp_path):
@@ -191,7 +191,7 @@ class TestExtratorTexto:
         arquivo.write_text("curto")
 
         resultado = extrator.extrair(str(arquivo))
-        assert resultado.status == StatusExtracao.CURTO_DEMAIS
+        assert resultado.status == StatusExtracaoTexto.CURTO_DEMAIS
         assert resultado.precisa_quarentena is True
 
     @patch("oraculo_bot.ingestion.extractor.pdfplumber", create=True)
@@ -215,7 +215,7 @@ class TestExtratorTexto:
         arquivo.write_bytes(b"fake pdf")
 
         resultado = extrator.extrair(str(arquivo))
-        assert resultado.status == StatusExtracao.OK
+        assert resultado.status == StatusExtracaoTexto.OK
         assert resultado.metodo == MetodoExtracao.PDF_TEXTO
         assert resultado.texto is not None
 
@@ -239,7 +239,7 @@ class TestExtratorTexto:
         arquivo.write_bytes(b"fake docx")
 
         resultado = extrator.extrair(str(arquivo))
-        assert resultado.status == StatusExtracao.OK
+        assert resultado.status == StatusExtracaoTexto.OK
         assert resultado.metodo == MetodoExtracao.DOCX
 
     def test_extrair_preserva_metadados(self, extrator, tmp_path):

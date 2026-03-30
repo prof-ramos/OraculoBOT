@@ -37,7 +37,7 @@ from oraculo_bot.ingestion.extractor import (
     ExtratorTexto,
     ResultadoExtracao,
     MetodoExtracao,
-    StatusExtracao as StatusExtracaoTexto,
+    StatusExtracaoTexto,
     TextoRuimDetector,
 )
 
