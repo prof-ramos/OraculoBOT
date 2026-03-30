@@ -57,6 +57,25 @@ uv run python -m oraculo_bot
 
 O bot está preparado para consultar o RAG jurídico no schema `juridico` do Supabase self-hosted.
 
+### Documentação do pipeline de ingestão do Lote 1
+
+Se você vai implementar, revisar ou continuar o pipeline de ingestão do corpus jurídico, comece por:
+
+- `docs/RAG_LOTE1/README.md`
+- `docs/RAG_LOTE1/PASSO_2_CLASSIFICACAO_OPERACIONAL.md`
+- `docs/RAG_LOTE1/PASSO_3_ESTRATEGIA_INGESTAO.md`
+- `docs/RAG_LOTE1/PASSO_4_PLANO_TECNICO_EXECUTAVEL.md`
+- `docs/RAG_LOTE1/PASSO_5_ESPECIFICACAO_IMPLEMENTACAO.md`
+
+Esses arquivos definem:
+- taxonomia e metadados
+- ordem oficial de ingestão
+- pipeline técnico
+- schema lógico e pseudocódigo
+- critérios de teste, quarentena e rollback
+
+Regra prática: não implemente a ingestão “no improviso”. Comece por `eleitoral` e siga a ordem oficial.
+
 Pontos esperados no banco:
 - `juridico.documents`
 - `juridico.chunks`
