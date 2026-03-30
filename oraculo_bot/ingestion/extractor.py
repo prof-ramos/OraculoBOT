@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from enum import Enum
 from pathlib import Path
 from typing import Optional
@@ -32,8 +32,13 @@ class MetodoExtracao(str, Enum):
     DESCONHECIDO = "desconhecido"
 
 
-class StatusExtracao(str, Enum):
-    """Status de extracao."""
+class StatusExtracaoTexto(str, Enum):
+    """Status de extracao de texto (qualidade).
+
+    Distinto de StatusExtracao (models.py) que mapeia para o banco de dados
+    com apenas 3 valores (ok/parcial/falha). Esta enum e mais granular e
+    usada internamente pelo extractor para classificar problemas de texto.
+    """
     OK = "ok"
     PARCIAL = "parcial"
     FALHA = "falha"
@@ -57,14 +62,14 @@ class ResultadoExtracao:
     caminho_arquivo: str
     texto: Optional[str] = None
     metodo: MetodoExtracao = MetodoExtracao.DESCONHECIDO
-    status: StatusExtracao = StatusExtracao.OK
+    status: StatusExtracaoTexto = StatusExtracaoTexto.OK
     char_count: int = 0
     pagina_count: Optional[int] = None
     erro: Optional[str] = None
     precisa_quarentena: bool = False
     motivo_quarentena: Optional[str] = None
     metadata: dict = field(default_factory=dict)
-    extracted_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
+    extracted_at: datetime = field(default_factory=lambda: datetime.now(UTC))
 
 
 class TextoRuimDetector:
@@ -102,7 +107,7 @@ class TextoRuimDetector:
         return ratio > max_ratio
 
     @staticmethod
-    def avaliar_texto(texto: Optional[str]) -> tuple[StatusExtracao, bool, Optional[str]]:
+    def avaliar_texto(texto: Optional[str]) -> tuple[StatusExtracaoTexto, bool, Optional[str]]:
         """Avalia qualidade do texto extraido.
 
         Args:
@@ -112,15 +117,15 @@ class TextoRuimDetector:
             Tupla (status, precisa_quarentena, motivo)
         """
         if TextoRuimDetector.detectar_vazio(texto):
-            return StatusExtracao.VAZIO, True, "Texto vazio"
+            return StatusExtracaoTexto.VAZIO, True, "Texto vazio"
 
         if TextoRuimDetector.detectar_curto_demais(texto):
-            return StatusExtracao.CURTO_DEMAIS, True, f"Texto muito curto ({len(texto)} chars, min {MIN_CHARS_TEXTO})"
+            return StatusExtracaoTexto.CURTO_DEMAIS, True, f"Texto muito curto ({len(texto)} chars, min {MIN_CHARS_TEXTO})"
 
         if TextoRuimDetector.detectar_corrompido(texto):
-            return StatusExtracao.CORROMPIDO, True, "Texto aparenta estar corrompido"
+            return StatusExtracaoTexto.CORROMPIDO, True, "Texto aparenta estar corrompido"
 
-        return StatusExtracao.OK, False, None
+        return StatusExtracaoTexto.OK, False, None
 
 
 class ExtratorTexto:
@@ -128,10 +133,11 @@ class ExtratorTexto:
 
     def __init__(
         self,
+        *,
         tentar_ocr: bool = True,
         min_chars_texto: int = MIN_CHARS_TEXTO,
         max_ratio_chars_quebrados: float = MAX_RATIO_CHARS_QUEBRADOS,
-    ):
+    ) -> None:
         """Inicializa o extrator.
 
         Args:
@@ -157,7 +163,7 @@ class ExtratorTexto:
         if not caminho_path.exists():
             return ResultadoExtracao(
                 caminho_arquivo=caminho,
-                status=StatusExtracao.FALHA,
+                status=StatusExtracaoTexto.FALHA,
                 erro="Arquivo nao existe",
                 precisa_quarentena=True,
                 motivo_quarentena="Arquivo nao encontrado",
@@ -179,7 +185,7 @@ class ExtratorTexto:
             else:
                 return ResultadoExtracao(
                     caminho_arquivo=caminho,
-                    status=StatusExtracao.FALHA,
+                    status=StatusExtracaoTexto.FALHA,
                     erro=f"Formato nao suportado: {extensao}",
                     precisa_quarentena=True,
                     motivo_quarentena=f"Extensao nao suportada: {extensao}",
@@ -188,7 +194,7 @@ class ExtratorTexto:
         except Exception as e:
             return ResultadoExtracao(
                 caminho_arquivo=caminho,
-                status=StatusExtracao.FALHA,
+                status=StatusExtracaoTexto.FALHA,
                 erro=str(e),
                 precisa_quarentena=True,
                 motivo_quarentena=f"Erro na extracao: {str(e)}",
@@ -206,7 +212,7 @@ class ExtratorTexto:
         Returns:
             ResultadoExtracao com status atualizado
         """
-        if resultado.status != StatusExtracao.OK:
+        if resultado.status != StatusExtracaoTexto.OK:
             return resultado
 
         status, precisa_quarentena, motivo = TextoRuimDetector.avaliar_texto(resultado.texto)
@@ -232,7 +238,7 @@ class ExtratorTexto:
         except ImportError:
             return ResultadoExtracao(
                 caminho_arquivo=caminho,
-                status=StatusExtracao.FALHA,
+                status=StatusExtracaoTexto.FALHA,
                 erro="pdfplumber nao instalado",
                 precisa_quarentena=True,
                 motivo_quarentena="Dependencia pdfplumber nao disponivel",
@@ -283,7 +289,7 @@ class ExtratorTexto:
         except Exception as e:
             return ResultadoExtracao(
                 caminho_arquivo=caminho,
-                status=StatusExtracao.FALHA,
+                status=StatusExtracaoTexto.FALHA,
                 metodo=MetodoExtracao.PDF_TEXTO,
                 erro=str(e),
                 precisa_quarentena=True,
@@ -305,7 +311,7 @@ class ExtratorTexto:
         except ImportError:
             return ResultadoExtracao(
                 caminho_arquivo=caminho,
-                status=StatusExtracao.FALHA,
+                status=StatusExtracaoTexto.FALHA,
                 metodo=MetodoExtracao.PDF_OCR,
                 erro="Dependencias OCR nao instaladas (pytesseract, pdf2image)",
             )
@@ -335,7 +341,7 @@ class ExtratorTexto:
         except Exception as e:
             return ResultadoExtracao(
                 caminho_arquivo=caminho,
-                status=StatusExtracao.FALHA,
+                status=StatusExtracaoTexto.FALHA,
                 metodo=MetodoExtracao.PDF_OCR,
                 erro=str(e),
             )
@@ -354,7 +360,7 @@ class ExtratorTexto:
         except ImportError:
             return ResultadoExtracao(
                 caminho_arquivo=caminho,
-                status=StatusExtracao.FALHA,
+                status=StatusExtracaoTexto.FALHA,
                 erro="python-docx nao instalado",
                 precisa_quarentena=True,
                 motivo_quarentena="Dependencia python-docx nao disponivel",
@@ -362,15 +368,16 @@ class ExtratorTexto:
 
         try:
             doc = Document(caminho)
-            paragrafos = [p.text for p in doc.paragraphs if p.text.strip()]
-            texto = "\n\n".join(paragrafos)
+            partes: list[str] = [p.text for p in doc.paragraphs if p.text.strip()]
 
             # Tambem extrair texto de tabelas
             for tabela in doc.tables:
                 for linha in tabela.rows:
                     for celula in linha.cells:
                         if celula.text.strip():
-                            texto += f"\n{celula.text.strip()}"
+                            partes.append(celula.text.strip())
+
+            texto = "\n\n".join(partes)
 
             resultado = ResultadoExtracao(
                 caminho_arquivo=caminho,
@@ -387,7 +394,7 @@ class ExtratorTexto:
         except Exception as e:
             return ResultadoExtracao(
                 caminho_arquivo=caminho,
-                status=StatusExtracao.FALHA,
+                status=StatusExtracaoTexto.FALHA,
                 metodo=MetodoExtracao.DOCX,
                 erro=str(e),
                 precisa_quarentena=True,
@@ -429,7 +436,7 @@ class ExtratorTexto:
 
             return ResultadoExtracao(
                 caminho_arquivo=caminho,
-                status=StatusExtracao.FALHA,
+                status=StatusExtracaoTexto.FALHA,
                 metodo=MetodoExtracao.TEXTO,
                 erro="Nao foi possivel decodificar arquivo",
                 precisa_quarentena=True,
@@ -439,7 +446,7 @@ class ExtratorTexto:
         except Exception as e:
             return ResultadoExtracao(
                 caminho_arquivo=caminho,
-                status=StatusExtracao.FALHA,
+                status=StatusExtracaoTexto.FALHA,
                 metodo=MetodoExtracao.TEXTO,
                 erro=str(e),
                 precisa_quarentena=True,
@@ -460,7 +467,7 @@ class ExtratorTexto:
         except ImportError:
             return ResultadoExtracao(
                 caminho_arquivo=caminho,
-                status=StatusExtracao.FALHA,
+                status=StatusExtracaoTexto.FALHA,
                 erro="striprtf nao instalado",
                 precisa_quarentena=True,
                 motivo_quarentena="Dependencia striprtf nao disponivel",
@@ -483,7 +490,7 @@ class ExtratorTexto:
         except Exception as e:
             return ResultadoExtracao(
                 caminho_arquivo=caminho,
-                status=StatusExtracao.FALHA,
+                status=StatusExtracaoTexto.FALHA,
                 metodo=MetodoExtracao.RTF,
                 erro=str(e),
                 precisa_quarentena=True,
@@ -505,7 +512,7 @@ class ExtratorTexto:
         except ImportError:
             return ResultadoExtracao(
                 caminho_arquivo=caminho,
-                status=StatusExtracao.FALHA,
+                status=StatusExtracaoTexto.FALHA,
                 erro="odfpy nao instalado",
                 precisa_quarentena=True,
                 motivo_quarentena="Dependencia odfpy nao disponivel",
@@ -532,7 +539,7 @@ class ExtratorTexto:
         except Exception as e:
             return ResultadoExtracao(
                 caminho_arquivo=caminho,
-                status=StatusExtracao.FALHA,
+                status=StatusExtracaoTexto.FALHA,
                 metodo=MetodoExtracao.ODT,
                 erro=str(e),
                 precisa_quarentena=True,
