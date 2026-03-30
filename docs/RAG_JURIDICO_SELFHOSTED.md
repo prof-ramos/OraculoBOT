@@ -221,8 +221,7 @@ A porta `5432/tcp` foi publicada no host **com firewall restritivo**.
 
 ### Regra atual
 
-Permitido apenas para:
-- VPS OpenClaw: `84.247.186.181`
+Permitido apenas para a VPS OpenClaw autorizada.
 
 Negado para o restante da internet.
 

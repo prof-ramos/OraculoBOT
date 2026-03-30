@@ -1,6 +1,6 @@
 # Passo 5 — Especificação de Implementação do Pipeline de Ingestão do Lote 1
 
-### Objetivo
+## Objetivo
 
 Definir a especificação concreta para implementação do pipeline do Lote 1 no schema `juridico`, incluindo:
 
@@ -238,7 +238,7 @@ Segurar documentos problemáticos fora do fluxo principal.
 
 ## Enumerações recomendadas
 
-## `ramo`
+### `ramo`
 - `administrativo`
 - `constitucional`
 - `direitos_humanos`
@@ -249,7 +249,7 @@ Segurar documentos problemáticos fora do fluxo principal.
 - `educacao`
 - `consumidor`
 
-## `fonte_tipo`
+### `fonte_tipo`
 - `lei`
 - `legislacao_anotada`
 - `resolucao`
@@ -260,7 +260,7 @@ Segurar documentos problemáticos fora do fluxo principal.
 - `convencao`
 - `sumula`
 
-## `autoridade`
+### `autoridade`
 - `planalto`
 - `stf`
 - `stj`
@@ -276,12 +276,12 @@ Segurar documentos problemáticos fora do fluxo principal.
 - `material_proprio`
 - `desconhecida`
 
-## `peso_confianca`
+### `peso_confianca`
 - `alto`
 - `medio`
 - `baixo`
 
-## `status_documento`
+### `status_documento`
 - `aprovado`
 - `quarentena`
 - `descartado`
@@ -527,7 +527,7 @@ Sempre registrar:
 
 ## Formato de relatório operacional por ingestão
 
-## Relatório resumido JSON
+### Relatório resumido JSON
 
 ```json
 {
@@ -544,7 +544,7 @@ Sempre registrar:
 }
 ```
 
-## Relatório humano em markdown
+### Relatório humano em markdown
 
 ```text
 Run: lote1_v1_eleitoral
@@ -575,7 +575,7 @@ Aprovado para permanência no índice.
 
 ## Regras de avaliação de recuperação
 
-## Critério mínimo por query
+### Critério mínimo por query
 Para cada consulta de teste, registrar:
 - top 10 retornados
 - posição da fonte ideal

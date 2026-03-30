@@ -1,6 +1,6 @@
 # Passo 4 — Plano Técnico Executável de Ingestão do Lote 1
 
-### Objetivo
+## Objetivo
 
 Converter a estratégia operacional do Passo 3 em um **plano técnico de execução**, com pipeline, etapas objetivas, checkpoints, critérios de aceite e estrutura mínima para implementação da ingestão no schema `juridico`.
 
@@ -490,7 +490,7 @@ Essa camada evita contaminar a base principal com tralha jurídica.
 
 ## Ordem prática de execução
 
-## Sprint 1 — Eleitoral
+### Sprint 1 — Eleitoral
 Entregas:
 - manifesto do ramo
 - extração validada
@@ -499,19 +499,19 @@ Entregas:
 - bateria de testes
 - relatório de aprovação
 
-## Sprint 2 — Administrativo
+### Sprint 2 — Administrativo
 Entregas equivalentes, ajustando regras conforme aprendizado do Sprint 1.
 
-## Sprint 3 — Penal
+### Sprint 3 — Penal
 Mesmo padrão.
 
-## Sprint 4 — Consumidor
+### Sprint 4 — Consumidor
 Mesmo padrão.
 
-## Sprint 5 — ECA + Educação
+### Sprint 5 — ECA + Educação
 Executar como dois blocos lógicos distintos.
 
-## Sprint 6 — Constitucional + Direitos Humanos + Internacional
+### Sprint 6 — Constitucional + Direitos Humanos + Internacional
 Executar de forma separada e conservadora.
 
 ---
